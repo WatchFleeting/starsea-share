@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件分享 - 个人资源下载</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        /* 文件信息区域 */
+        .file-header {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(120deg, var(--primary), #8e44ad);
+            color: white;
+        }
+        
+        .file-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .file-name {
+            font-size: 26px;
+            font-weight: 600;
+            margin: 10px 0 5px;
+        }
+        
+        .file-meta {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* 下载区域 */
+        .download-section {
+            padding: 30px;
+            text-align: center;
+            background: #f8fafc;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: linear-gradient(to right, var(--secondary), #27ae60);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            transition: all 0.3s ease;
+            margin: 15px 0;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+        }
+        
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* 广告区域 - 完全本地化 */
+        .ad-container {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        /* 顶部横幅广告样式 */
+        .ad-banner {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            border: 2px dashed #ff6b6b;
+        }
+        
+        /* 矩形广告样式 */
+        .ad-rect {
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            border: 2px dashed #4facfe;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .ad-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+        
+        .ad-content {
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding: 0 10px;
+        }
+        
+        .ad-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: white;
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        
+        .ad-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* 页脚区域 */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-size: 13px;
+        }
+        
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .container {
+                margin: 15px auto;
+            }
+            
+            .file-header, 
+            .download-section {
+                padding: 20px 15px;
+            }
+            
+            .file-name {
+                font-size: 22px;
+            }
+            
+            .file-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .download-btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 文件头部 -->
+        <div class="file-header">
+            <div class="file-icon">📁</div>
+            <h1 class="file-name">重要文档.zip</h1>
+            <p class="file-description">包含项目资料和设计素材</p>
+            <div class="file-meta">
+                <span>大小：24.7 MB</span>
+                <span>类型：ZIP压缩包</span>
+                <span>上传：2025-08-08</span>
+            </div>
+        </div>
+        
+        <!-- 下载区域 -->
+        <div class="download-section">
+            <a href="https://您的直链文件地址/重要文档.zip" 
+               class="download-btn"
+               download="重要文档.zip">
+                ↓ 立即下载
+            </a>
+            <p>安全提示：此文件已通过病毒扫描</p>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- 本地化广告区域 - 完全自定义内容 -->
+        <!-- ============================================ -->
+        
+        <!-- 横幅广告 1 -->
+        <div class="ad-container ad-banner">
+            <div class="ad-title">🌟 我的个人作品集</div>
+            <div class="ad-content">查看我最新设计的网站模板和UI套件</div>
+            <a href="https://您的网站地址/portfolio" 
+               target="_blank" 
+               class="ad-link">
+                点击查看
+            </a>
+        </div>
+        
+        <!-- 矩形广告 -->
+        <div class="ad-container ad-rect">
+            <div class="ad-title">📚 免费电子书</div>
+            <div class="ad-content">获取我编写的《前端开发实用技巧》电子书</div>
+            <a href="https://您的网站地址/free-ebook" 
+               target="_blank" 
+               class="ad-link">
+                立即领取
+            </a>
+        </div>
+        
+        <!-- 横幅广告 2 -->
+        <div class="ad-container ad-banner">
+            <div class="ad-title">💼 接项目合作</div>
+            <div class="ad-content">网站开发 | UI设计 | 技术咨询</div>
+            <a href="mailto:yourname@example.com" 
+               class="ad-link">
+                联系合作
+            </a>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>© 2025 个人文件分享 | <a href="privacy.html">隐私声明</a></p>
+            <p>此页面不包含第三方追踪代码</p>
+        </div>
+    </div>
+</body>
+</html>
