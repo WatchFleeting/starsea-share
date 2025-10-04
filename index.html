@@ -139,6 +139,7 @@
             width: 180px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .recommend-item:hover {
@@ -155,6 +156,21 @@
             font-size: 13px;
             color: #666;
             margin-bottom: 10px;
+        }
+        
+        .recommend-item-link {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .recommend-item-link:hover {
+            background: #2980b9;
         }
         
         /* 广告区域 - 完全本地化 */
@@ -395,6 +411,33 @@
             <button class="category-btn" data-category="other">其他资源</button>
         </div>
         
+        <!-- 推荐区域 - 修复后 -->
+        <div class="recommend-section">
+            <h2 class="section-title">🔥 本周推荐</h2>
+            <div class="recommend-items">
+                <div class="recommend-item" onclick="window.open('https://nhentai.net/', '_blank')">
+                    <div class="recommend-item-title">nhentai</div>
+                    <div class="recommend-item-desc">海量漫画资源，更新及时，画质清晰</div>
+                    <a href="https://nhentai.net/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item" onclick="window.open('https://shotalove.fun/', '_blank')">
+                    <div class="recommend-item-title">shotalove</div>
+                    <div class="recommend-item-desc">精品漫画分享平台，社区活跃</div>
+                    <a href="https://shotalove.fun/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item" onclick="window.open('https://www.chin2.net/', '_blank')">
+                    <div class="recommend-item-title">chin2</div>
+                    <div class="recommend-item-desc">优质漫画资源站，分类清晰</div>
+                    <a href="https://www.chin2.net/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item" onclick="window.open('https://space.bilibili.com/520978838', '_blank')">
+                    <div class="recommend-item-title">仓鼠xixi</div>
+                    <div class="recommend-item-desc">AI绘画分享，创意无限</div>
+                    <a href="https://space.bilibili.com/520978838" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+            </div>
+        </div>
+        
         <!-- ============================================ -->
         <!-- 本地化广告区域 - 完全自定义内容 -->
         <!-- ============================================ -->
@@ -454,25 +497,6 @@
             </a>
         </div>
         
-        <!-- 新增资源示例 -->
-        <div class="ad-container ad-comic" data-category="comic">
-            <div class="ad-title">📚 漫画大全</div>
-            <div class="ad-content">收录上万部热门漫画，分类清晰，更新迅速，支持离线下载</div>
-            <a href="#" class="ad-link">立即访问</a>
-        </div>
-        
-        <div class="ad-container ad-game" data-category="game">
-            <div class="ad-title">🎮 游戏中心</div>
-            <div class="ad-content">提供最新游戏下载、攻略和修改器，助您畅享游戏乐趣</div>
-            <a href="#" class="ad-link">立即访问</a>
-        </div>
-
-        <div class="ad-container ad-game" data-category="other">
-            <div class="ad-title">🩲 其他资源</div>
-            <div class="ad-content">提供各类优质网络资源，包括漫画、游戏和其他实用工具</div>
-            <a href="other" class="ad-link">立即访问</a>
-        </div>
-        
        <!-- 页脚 -->
         <div class="footer">
             <p>© 2025 个人文件分享 | 免责声明：本网站仅提供资源索引，不存储任何实际文件</p>
@@ -508,5 +532,3 @@
     </script>
 </body>
 </html>
-
-
