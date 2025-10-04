@@ -34,68 +34,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
-        
-        /* 文件信息区域 */
-        .file-header {
-            padding: 30px;
-            text-align: center;
-            background: linear-gradient(120deg, var(--primary), #8e44ad);
-            color: white;
-        }
-        
-        .file-icon {
-            font-size: 64px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        
-        .file-name {
-            font-size: 26px;
-            font-weight: 600;
-            margin: 10px 0 5px;
-        }
-        
-        .file-meta {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        /* 下载区域 */
-        .download-section {
-            padding: 30px;
-            text-align: center;
-            background: #f8fafc;
-        }
-        
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 40px;
-            background: linear-gradient(to right, var(--secondary), #27ae60);
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
-            transition: all 0.3s ease;
-            margin: 15px 0;
-        }
-        
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
-        }
-        
-        .download-btn:active {
-            transform: translateY(1px);
-        }
-        
+                
         /* 广告区域 - 完全本地化 */
         .ad-container {
             margin: 25px 0;
@@ -192,69 +131,46 @@
 </head>
 <body>
     <div class="container">
-        <!-- 文件头部 -->
-        <div class="file-header">
-            <div class="file-icon">📁</div>
-            <h1 class="file-name">重要文档.zip</h1>
-            <p class="file-description">包含项目资料和设计素材</p>
-            <div class="file-meta">
-                <span>大小：24.7 MB</span>
-                <span>类型：ZIP压缩包</span>
-                <span>上传：2025-08-08</span>
-            </div>
-        </div>
-        
-        <!-- 下载区域 -->
-        <div class="download-section">
-            <a href="https://您的直链文件地址/重要文档.zip" 
-               class="download-btn"
-               download="重要文档.zip">
-                ↓ 立即下载
-            </a>
-            <p>安全提示：此文件已通过病毒扫描</p>
-        </div>
-        
         <!-- ============================================ -->
         <!-- 本地化广告区域 - 完全自定义内容 -->
         <!-- ============================================ -->
         
         <!-- 横幅广告 1 -->
         <div class="ad-container ad-banner">
-            <div class="ad-title">🌟 我的个人作品集</div>
-            <div class="ad-content">查看我最新设计的网站模板和UI套件</div>
-            <a href="https://您的网站地址/portfolio" 
+            <div class="ad-title">🌟 nhentai</div>
+            <div class="ad-content"></div>
+            <a href="https://nhentai.net/" 
                target="_blank" 
                class="ad-link">
                 点击查看
             </a>
         </div>
         
-        <!-- 矩形广告 -->
-        <div class="ad-container ad-rect">
-            <div class="ad-title">📚 免费电子书</div>
-            <div class="ad-content">获取我编写的《前端开发实用技巧》电子书</div>
-            <a href="https://您的网站地址/free-ebook" 
-               target="_blank" 
-               class="ad-link">
-                立即领取
-            </a>
-        </div>
-        
         <!-- 横幅广告 2 -->
         <div class="ad-container ad-banner">
-            <div class="ad-title">💼 接项目合作</div>
-            <div class="ad-content">网站开发 | UI设计 | 技术咨询</div>
-            <a href="mailto:yourname@example.com" 
+            <div class="ad-title">🌟 shotalove</div>
+            <div class="ad-content"></div>
+            <a href="https://shotalove.fun/" 
                class="ad-link">
-                联系合作
+                点击查看
+            </a>
+        </div>
+
+        <!-- 横幅广告 3 -->
+        <div class="ad-container ad-banner">
+            <div class="ad-title">🌟 chin2</div>
+            <div class="ad-content"></div>
+            <a href="https://www.chin2.net//" 
+               class="ad-link">
+                点击查看
             </a>
         </div>
         
         <!-- 页脚 -->
         <div class="footer">
-            <p>© 2025 个人文件分享 | <a href="privacy.html">隐私声明</a></p>
-            <p>此页面不包含第三方追踪代码</p>
+            <p>© 2025 个人文件分享</a></p>
         </div>
     </div>
 </body>
 </html>
+
