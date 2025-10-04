@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,56 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
-                
+        
+        /* 页面标题 */
+        .page-header {
+            padding: 25px 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        
+        /* 分类导航 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .category-btn {
+            padding: 8px 16px;
+            margin: 5px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .category-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
         /* 广告区域 - 完全本地化 */
         .ad-container {
             margin: 25px 0;
@@ -104,6 +153,11 @@
             text-decoration: none;
         }
         
+        /* 隐藏类 */
+        .hidden {
+            display: none;
+        }
+        
         /* 平板设备优化 */
         @media (max-width: 1024px) and (min-width: 768px) {
             .container {
@@ -131,6 +185,15 @@
                 border-radius: 8px;
             }
             
+            .category-nav {
+                padding: 10px 15px;
+            }
+            
+            .category-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
             .ad-container {
                 margin: 20px 10px;
                 padding: 15px;
@@ -154,6 +217,19 @@
         @media (max-width: 480px) {
             .container {
                 margin: 10px auto;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .category-nav {
+                padding: 8px 10px;
+            }
+            
+            .category-btn {
+                padding: 5px 10px;
+                font-size: 12px;
             }
             
             .ad-container {
@@ -198,14 +274,28 @@
 </head>
 <body>
     <div class="container">
+        <!-- 页面标题 -->
+        <div class="page-header">
+            <h1 class="page-title">个人资源下载</h1>
+            <p class="page-subtitle">按分类浏览您需要的资源</p>
+        </div>
+        
+        <!-- 分类导航 -->
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">全部资源</button>
+            <button class="category-btn" data-category="comic">漫画资源</button>
+            <button class="category-btn" data-category="game">游戏资源</button>
+            <button class="category-btn" data-category="other">其他资源</button>
+        </div>
+        
         <!-- ============================================ -->
         <!-- 本地化广告区域 - 完全自定义内容 -->
         <!-- ============================================ -->
         
-        <!-- 横幅广告 1 -->
-        <div class="ad-container ad-banner">
+        <!-- 横幅广告 1 - 漫画分类 -->
+        <div class="ad-container ad-banner" data-category="comic">
             <div class="ad-title">🌟 nhentai</div>
-            <div class="ad-content"></div>
+            <div class="ad-content">优质漫画资源平台</div>
             <a href="https://nhentai.net/" 
                target="_blank" 
                class="ad-link">
@@ -213,10 +303,10 @@
             </a>
         </div>
         
-        <!-- 横幅广告 2 -->
-        <div class="ad-container ad-banner">
+        <!-- 横幅广告 2 - 游戏分类 -->
+        <div class="ad-container ad-banner" data-category="game">
             <div class="ad-title">🌟 shotalove</div>
-            <div class="ad-content"></div>
+            <div class="ad-content">优质漫画资源平台</div>
             <a href="https://shotalove.fun/" 
                 target="_blank"
                 class="ad-link">
@@ -224,10 +314,10 @@
             </a>
         </div>
 
-        <!-- 横幅广告 3 -->
-        <div class="ad-container ad-banner">
+        <!-- 横幅广告 3 - 其他分类 -->
+        <div class="ad-container ad-banner" data-category="other">
             <div class="ad-title">🌟 chin2</div>
-            <div class="ad-content"></div>
+            <div class="ad-content">优质漫画资源平台</div>
             <a href="https://www.chin2.net/" 
                 target="_blank"
                 class="ad-link">
@@ -237,8 +327,36 @@
         
         <!-- 页脚 -->
         <div class="footer">
-            <p>© 2025 个人文件分享</p>
+            <p>© 2025 个人文件分享 | @鸿渚 </p>
         </div>
     </div>
+    
+    <script>
+        // 分类筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const adContainers = document.querySelectorAll('.ad-container');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // 显示/隐藏广告容器
+                    adContainers.forEach(container => {
+                        if (category === 'all' || container.getAttribute('data-category') === category) {
+                            container.classList.remove('hidden');
+                        } else {
+                            container.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
