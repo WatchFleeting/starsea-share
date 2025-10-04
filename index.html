@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -81,6 +81,8 @@
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.2s;
+            min-height: 44px; /* 触摸友好 */
+            line-height: 28px; /* 垂直居中 */
         }
         
         .ad-link:hover {
@@ -102,29 +104,94 @@
             text-decoration: none;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 600px) {
+        /* 平板设备优化 */
+        @media (max-width: 1024px) and (min-width: 768px) {
+            .container {
+                max-width: 90%;
+            }
+            
+            .ad-container {
+                margin: 20px 15px;
+                padding: 18px;
+            }
+            
+            .ad-title {
+                font-size: 17px;
+            }
+        }
+        
+        /* 移动设备优化 */
+        @media (max-width: 767px) {
+            body {
+                padding: 10px;
+            }
+            
             .container {
                 margin: 15px auto;
+                border-radius: 8px;
             }
             
-            .file-header, 
-            .download-section {
-                padding: 20px 15px;
+            .ad-container {
+                margin: 20px 10px;
+                padding: 15px;
             }
             
-            .file-name {
-                font-size: 22px;
-            }
-            
-            .file-meta {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .download-btn {
-                padding: 14px 30px;
+            .ad-title {
                 font-size: 16px;
+            }
+            
+            .ad-content {
+                font-size: 13px;
+            }
+            
+            .ad-link {
+                padding: 10px 22px;
+                font-size: 15px;
+            }
+        }
+        
+        /* 超小屏幕设备优化 */
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px auto;
+            }
+            
+            .ad-container {
+                margin: 15px 8px;
+                padding: 12px;
+            }
+            
+            .ad-title {
+                font-size: 15px;
+            }
+            
+            .ad-content {
+                font-size: 12px;
+                padding: 0 5px;
+            }
+            
+            .ad-link {
+                padding: 10px 20px;
+                font-size: 14px;
+                min-width: 120px; /* 确保按钮足够宽 */
+            }
+            
+            .footer {
+                padding: 15px;
+                font-size: 12px;
+            }
+        }
+        
+        /* 横屏模式优化 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                margin: 15px auto;
+                max-width: 95%;
+            }
+            
+            .ad-container {
+                margin: 15px 10px;
+                padding: 15px;
             }
         }
     </style>
@@ -145,47 +212,33 @@
                 点击查看
             </a>
         </div>
-
+        
         <!-- 横幅广告 2 -->
         <div class="ad-container ad-banner">
             <div class="ad-title">🌟 shotalove</div>
             <div class="ad-content"></div>
             <a href="https://shotalove.fun/" 
-               target="_blank" 
-               class="ad-link">
+                target="_blank"
+                class="ad-link">
                 点击查看
             </a>
         </div>
 
         <!-- 横幅广告 3 -->
         <div class="ad-container ad-banner">
-            <div class="ad-title">🌟 shotalove</div>
+            <div class="ad-title">🌟 chin2</div>
             <div class="ad-content"></div>
             <a href="https://www.chin2.net/" 
-               target="_blank" 
-               class="ad-link">
-                点击查看
-            </a>
-        </div>
-
-        <!-- 横幅广告 4 -->
-        <div class="ad-container ad-banner">
-            <div class="ad-title">🌟 shotalove</div>
-            <div class="ad-content"></div>
-            <a href="https://www.chin2.net/" 
-               target="_blank" 
-               class="ad-link">
+                target="_blank"
+                class="ad-link">
                 点击查看
             </a>
         </div>
         
         <!-- 页脚 -->
         <div class="footer">
-            <p>© 2025 个人文件分享</a></p>
+            <p>© 2025 个人文件分享</p>
         </div>
     </div>
 </body>
 </html>
-
-
-
