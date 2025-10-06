@@ -188,12 +188,12 @@
             border: 2px dashed #ff6b6b;
         }
         
-        .ad-app {
+        .ad-game {
             background: linear-gradient(45deg, var(--game-bg), #c2e9fb);
             border: 2px dashed #4facfe;
         }
         
-        .ad-find {
+        .ad-other {
             background: linear-gradient(45deg, var(--other-bg), #a1c4fd);
             border: 2px dashed #84fab0;
         }
@@ -725,32 +725,4 @@
         });
     </script>
 </body>
-</html>        // 分类筛选功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryBtns = document.querySelectorAll('.category-btn');
-            const adContainers = document.querySelectorAll('.ad-container');
-            
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // 移除所有按钮的active类
-                    categoryBtns.forEach(b => b.classList.remove('active'));
-                    // 为当前点击的按钮添加active类
-                    this.classList.add('active');
-                    
-                    const category = this.getAttribute('data-category');
-                    
-                    // 显示/隐藏广告容器
-                    adContainers.forEach(container => {
-                        if (category === 'all' || container.getAttribute('data-category') === category) {
-                            container.classList.remove('hidden');
-                        } else {
-                            container.classList.add('hidden');
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-</body>
 </html>
-
