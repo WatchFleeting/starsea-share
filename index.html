@@ -110,13 +110,80 @@
             border-color: var(--primary);
         }
         
+        /* 推荐区域 */
+        .recommend-section {
+            padding: 20px;
+            background: linear-gradient(45deg, var(--recommend-bg), #96e6a1);
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .recommend-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .recommend-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 180px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .recommend-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recommend-item-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .recommend-item-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .recommend-item-link {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .recommend-item-link:hover {
+            background: #2980b9;
+        }
+        
         /* 广告区域 - 完全本地化 */
         .ad-container {
-            margin: 25px 0;
-            padding: 20px;
+            margin: 15px;
+            padding: 15px;
             border-radius: 10px;
             text-align: center;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 120px;
         }
         
         /* 不同分类的背景色 */
@@ -125,7 +192,7 @@
             border: 2px dashed #ff6b6b;
         }
         
-        .ad-app {
+        .ad-game {
             background: linear-gradient(45deg, var(--game-bg), #c2e9fb);
             border: 2px dashed #4facfe;
         }
@@ -140,12 +207,16 @@
             font-weight: bold;
             margin-bottom: 12px;
             color: #2c3e50;
+            max-width: 100%;
+            word-wrap: break-word;
         }
         
         .ad-content {
             font-size: 14px;
             margin-bottom: 15px;
             padding: 0 10px;
+            max-width: 100%;
+            word-wrap: break-word;
         }
         
         .ad-link {
@@ -165,6 +236,14 @@
         .ad-link:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* 广告网格布局 */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 20px;
         }
         
         /* 页脚区域 */
@@ -213,8 +292,8 @@
             }
             
             .ad-container {
-                margin: 20px 15px;
-                padding: 18px;
+                margin: 10px;
+                padding: 15px;
             }
             
             .ad-title {
@@ -223,6 +302,10 @@
             
             .recommend-item {
                 width: 160px;
+            }
+            
+            .ads-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
         
@@ -247,8 +330,9 @@
             }
             
             .ad-container {
-                margin: 20px 10px;
-                padding: 15px;
+                margin: 10px;
+                padding: 12px;
+                min-height: 100px;
             }
             
             .ad-title {
@@ -260,8 +344,8 @@
             }
             
             .ad-link {
-                padding: 10px 22px;
-                font-size: 15px;
+                padding: 10px 18px;
+                font-size: 14px;
             }
             
             .recommend-items {
@@ -271,6 +355,12 @@
             .recommend-item {
                 width: 140px;
                 padding: 12px;
+            }
+            
+            .ads-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 15px;
             }
         }
         
@@ -294,8 +384,9 @@
             }
             
             .ad-container {
-                margin: 15px 8px;
-                padding: 12px;
+                margin: 8px;
+                padding: 10px;
+                min-height: 90px;
             }
             
             .ad-title {
@@ -308,8 +399,8 @@
             }
             
             .ad-link {
-                padding: 10px 20px;
-                font-size: 14px;
+                padding: 8px 16px;
+                font-size: 13px;
                 min-width: 120px; /* 确保按钮足够宽 */
             }
             
@@ -337,8 +428,8 @@
             }
             
             .ad-container {
-                margin: 15px 10px;
-                padding: 15px;
+                margin: 10px;
+                padding: 12px;
             }
         }
     </style>
@@ -379,195 +470,224 @@
             当前显示：<span id="filter-category">全部资源</span>（共 <span id="filter-count">36</span> 个）
         </div>
         
+        <!-- 推荐区域 -->
+        <div class="recommend-section">
+            <h2 class="section-title">🔥 本周推荐</h2>
+            <div class="recommend-items">
+                <div class="recommend-item">
+                    <div class="recommend-item-title">nhentai</div>
+                    <div class="recommend-item-desc">海量漫画资源，更新及时，画质清晰</div>
+                    <a href="https://nhentai.net/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item">
+                    <div class="recommend-item-title">shotalove</div>
+                    <div class="recommend-item-desc">精品漫画分享平台，社区活跃</div>
+                    <a href="https://shotalove.fun/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item">
+                    <div class="recommend-item-title">chin2</div>
+                    <div class="recommend-item-desc">优质漫画资源站，分类清晰</div>
+                    <a href="https://www.chin2.net/" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+                <div class="recommend-item">
+                    <div class="recommend-item-title">仓鼠xixi</div>
+                    <div class="recommend-item-desc">AI绘画分享，创意无限</div>
+                    <a href="https://space.bilibili.com/520978838" target="_blank" class="recommend-item-link">访问</a>
+                </div>
+            </div>
+        </div>
+        
         <!-- ============================================ -->
         <!-- 本地化广告区域 - 完全自定义内容 -->
         <!-- ============================================ -->
         
-        <!-- 横幅广告 1-1 - 漫画分类 -->
-        <div class="ad-container ad-comic" data-category="comic">
-            <div class="ad-title">🌟 nhentai - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://nhentai.net/" 
-               target="_blank" 
-               class="ad-link">
-                点击查看
-            </a>
-        </div>
-        
-        <!-- 横幅广告 1-2 - 漫画分类 -->
-        <div class="ad-container ad-comic" data-category="comic">
-            <div class="ad-title">🌟 shotalove - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://shotalove.fun/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+        <div class="ads-grid">
+            <!-- 横幅广告 1-1 - 漫画分类 -->
+            <div class="ad-container ad-comic" data-category="comic">
+                <div class="ad-title">🌟 nhentai - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://nhentai.net/" 
+                   target="_blank" 
+                   class="ad-link">
+                    点击查看
+                </a>
+            </div>
+            
+            <!-- 横幅广告 1-2 - 漫画分类 -->
+            <div class="ad-container ad-game" data-category="comic">
+                <div class="ad-title">🌟 shotalove - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://shotalove.fun/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 1-3 - 漫画分类 -->
-        <div class="ad-container ad-comic" data-category="comic">
-            <div class="ad-title">🌟 chin2 - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://www.chin2.net/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
-        
-        <!-- 横幅广告 2-1 - 程序分类 -->
-        <div class="ad-container ad-app" data-category="app">
-            <div class="ad-title">🌟 彩e - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://github.com/Ehviewer-Overhauled/Ehviewer/releases/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+            <!-- 横幅广告 1-3 - 漫画分类 -->
+            <div class="ad-container ad-other" data-category="comic">
+                <div class="ad-title">🌟 chin2 - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://www.chin2.net/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
+            
+            <!-- 横幅广告 2-1 - 程序分类 -->
+            <div class="ad-container ad-other" data-category="app">
+                <div class="ad-title">🌟 彩e - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://github.com/Ehviewer-Overhauled/Ehviewer/releases/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 2-2 - 程序分类 -->
-        <div class="ad-container ad-app" data-category="app">
-            <div class="ad-title">🌟 绿e - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+            <!-- 横幅广告 2-2 - 程序分类 -->
+            <div class="ad-container ad-other" data-category="app">
+                <div class="ad-title">🌟 绿e - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 2-3 - 程序分类 -->
-        <div class="ad-container ad-app" data-category="app">
-            <div class="ad-title">🌟 白e - 漫画资源</div>
-            <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
-            <a href="https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
-        
-       <!-- 横幅广告 3-1 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 谷歌搜图</div>
-            <div class="ad-content">部分（推特/漫画/本子/图片）</div>
-            <a href="https://www.google.com/imghp" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+            <!-- 横幅广告 2-3 - 程序分类 -->
+            <div class="ad-container ad-other" data-category="app">
+                <div class="ad-title">🌟 白e - 漫画资源</div>
+                <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
+                <a href="https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
+            
+           <!-- 横幅广告 3-1 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 谷歌搜图</div>
+                <div class="ad-content">部分（推特/漫画/本子/图片）</div>
+                <a href="https://www.google.com/imghp" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 3-2 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 yandex搜图</div>
-            <div class="ad-content">部分（推特/漫画/本子/图片）</div>
-            <a href="https://yandex.com/images/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+            <!-- 横幅广告 3-2 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 yandex搜图</div>
+                <div class="ad-content">部分（推特/漫画/本子/图片）</div>
+                <a href="https://yandex.com/images/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-3 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 trace搜图</div>
-            <div class="ad-content">表/里动漫识图</div>
-            <a href="https://trace.moe/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-3 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 trace搜图</div>
+                <div class="ad-content">表/里动漫识图</div>
+                <a href="https://trace.moe/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-4 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 SauceNAO搜图</div>
-            <div class="ad-content">p站</div>
-            <a href="https://saucenao.com/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-4 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 SauceNAO搜图</div>
+                <div class="ad-content">p站</div>
+                <a href="https://saucenao.com/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-5 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 搜图bot搜图</div>
-            <div class="ad-content">本子</div>
-            <a href="https://soutubot.moe/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-5 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 搜图bot搜图</div>
+                <div class="ad-content">本子</div>
+                <a href="https://soutubot.moe/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-6 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 二次元画像詳細検索</div>
-            <div class="ad-content">推特上有关二次元动态/p站</div>
-            <a href="https://ascii2d.net/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-6 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 二次元画像詳細検索</div>
+                <div class="ad-content">推特上有关二次元动态/p站</div>
+                <a href="https://ascii2d.net/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-7 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 iqdb识图</div>
-            <div class="ad-content">p站</div>
-            <a href="http://www.iqdb.org/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-7 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 iqdb识图</div>
+                <div class="ad-content">p站</div>
+                <a href="http://www.iqdb.org/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-         <!-- 横幅广告 3-8 - 识图分类 -->
-        <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 tineye识图</div>
-            <div class="ad-content">部分p站图/其他图片</div>
-            <a href="https://tineye.com/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
-        
-        <!-- 横幅广告 4-1 - 其他分类 -->
-        <div class="ad-container ad-other" data-category="other">
-            <div class="ad-title">🌟 仓鼠xixi</div>
-            <div class="ad-content">ai绘画分享</div>
-            <a href="https://space.bilibili.com/520978838?spm_id_from=333.337.0.0/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+             <!-- 横幅广告 3-8 - 识图分类 -->
+            <div class="ad-container ad-other" data-category="find">
+                <div class="ad-title">🌟 tineye识图</div>
+                <div class="ad-content">部分p站图/其他图片</div>
+                <a href="https://tineye.com/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
+            
+            <!-- 横幅广告 4-1 - 其他分类 -->
+            <div class="ad-container ad-other" data-category="other">
+                <div class="ad-title">🌟 仓鼠xixi</div>
+                <div class="ad-content">ai绘画分享</div>
+                <a href="https://space.bilibili.com/520978838?spm_id_from=333.337.0.0/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 4-2 - 其他分类 -->
-        <div class="ad-container ad-other" data-category="other">
-            <div class="ad-title">🌟 鸿渚</div>
-            <div class="ad-content">地理视频课</div>
-            <a href="https://space.bilibili.com/3493109964999279?spm_id_from=333.337.0.0/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
-        </div>
+            <!-- 横幅广告 4-2 - 其他分类 -->
+            <div class="ad-container ad-other" data-category="other">
+                <div class="ad-title">🌟 鸿渚</div>
+                <div class="ad-content">地理视频课</div>
+                <a href="https://space.bilibili.com/3493109964999279?spm_id_from=333.337.0.0/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
 
-        <!-- 横幅广告 4-3 - 其他分类 -->
-        <div class="ad-container ad-other" data-category="other">
-            <div class="ad-title">🌟 中秋快乐！</div>
-            <div class="ad-content">鸿渚祝大家中秋快乐！</div>
-            <a href="https://watchfleeting.github.io/starsea-card/" 
-                target="_blank"
-                class="ad-link">
-                点击查看
-            </a>
+            <!-- 横幅广告 4-3 - 其他分类 -->
+            <div class="ad-container ad-other" data-category="other">
+                <div class="ad-title">🌟 中秋快乐！</div>
+                <div class="ad-content">鸿渚祝大家中秋快乐！</div>
+                <a href="https://watchfleeting.github.io/starsea-card/" 
+                    target="_blank"
+                    class="ad-link">
+                    点击查看
+                </a>
+            </div>
         </div>
         
        <!-- 页脚 -->
@@ -630,12 +750,15 @@
                     }
                     
                     updateFilterInfo(categoryName, visibleCount);
+                    
+                    // 平滑滚动到广告区域顶部
+                    document.querySelector('.ads-grid').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 });
             });
         });
     </script>
 </body>
 </html>
-
-
-
