@@ -554,12 +554,12 @@
         <div class="container">
             <div class="nav-container">
                 <div class="categories">
-                    <button class="category-btn active">全部</button>
-                    <button class="category-btn">漫画资源</button>
-                    <button class="category-btn">程序资源</button>
-                    <button class="category-btn">游戏资源</button>
-                    <button class="category-btn">识图资源</button>
-                    <button class="category-btn">其他资源</button>
+                    <button class="category-btn active" data-category="全部">全部</button>
+                    <button class="category-btn" data-category="漫画资源">漫画资源</button>
+                    <button class="category-btn" data-category="程序资源">程序资源</button>
+                    <button class="category-btn" data-category="游戏资源">游戏资源</button>
+                    <button class="category-btn" data-category="识图资源">识图资源</button>
+                    <button class="category-btn" data-category="其他资源">其他资源</button>
                 </div>
                 <div class="view-options">
                     <button class="view-btn active"><i class="fas fa-th"></i></button>
@@ -578,12 +578,12 @@
             </button>
         </div>
         <div class="mobile-categories">
-            <button class="mobile-category-btn active">全部</button>
-            <button class="mobile-category-btn">漫画资源</button>
-            <button class="mobile-category-btn">程序资源</button>
-            <button class="mobile-category-btn">游戏资源</button>
-            <button class="mobile-category-btn">识图资源</button>
-            <button class="mobile-category-btn">其他资源</button>
+            <button class="mobile-category-btn active" data-category="全部">全部</button>
+            <button class="mobile-category-btn" data-category="漫画资源">漫画资源</button>
+            <button class="mobile-category-btn" data-category="程序资源">程序资源</button>
+            <button class="mobile-category-btn" data-category="游戏资源">游戏资源</button>
+            <button class="mobile-category-btn" data-category="识图资源">识图资源</button>
+            <button class="mobile-category-btn" data-category="其他资源">其他资源</button>
         </div>
     </div>
     
@@ -603,7 +603,7 @@
             
             <div class="resources-grid">
                 <!-- 资源卡片1 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="漫画资源">
                     <div class="card-header" style="background-color: #ff6b6b;">
                         <span class="card-category">漫画资源</span>
                     </div>
@@ -621,7 +621,7 @@
                 </div>
                 
                 <!-- 资源卡片2 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="漫画资源">
                     <div class="card-header" style="background-color: #4ecdc4;">
                         <span class="card-category">漫画资源</span>
                     </div>
@@ -639,7 +639,7 @@
                 </div>
                 
                 <!-- 资源卡片3 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="漫画资源">
                     <div class="card-header" style="background-color: #45b7d1;">
                         <span class="card-category">漫画资源</span>
                     </div>
@@ -657,9 +657,9 @@
                 </div>
                 
                 <!-- 资源卡片4 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="程序资源">
                     <div class="card-header" style="background-color: #96ceb4;">
-                        <span class="card-category">漫画资源</span>
+                        <span class="card-category">程序资源</span>
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">freeCodeCamp</h3>
@@ -675,9 +675,9 @@
                 </div>
                 
                 <!-- 资源卡片5 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="程序资源">
                     <div class="card-header" style="background-color: #feca57;">
-                        <span class="card-category">图标字体</span>
+                        <span class="card-category">程序资源</span>
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">Font Awesome</h3>
@@ -693,13 +693,49 @@
                 </div>
                 
                 <!-- 资源卡片6 -->
-                <div class="resource-card">
+                <div class="resource-card" data-category="程序资源">
                     <div class="card-header" style="background-color: #ff9ff3;">
-                        <span class="card-category">UI框架</span>
+                        <span class="card-category">程序资源</span>
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">Bootstrap</h3>
                         <p class="card-description">最流行的前端开源工具包，具有Sass变量和mixin，响应式网格系统等。</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">访问网站</a>
+                        <div class="card-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源卡片7 -->
+                <div class="resource-card" data-category="游戏资源">
+                    <div class="card-header" style="background-color: #a29bfe;">
+                        <span class="card-category">游戏资源</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Steam</h3>
+                        <p class="card-description">全球最大的数字游戏发行平台，提供海量游戏资源和社区功能。</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">访问网站</a>
+                        <div class="card-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源卡片8 -->
+                <div class="resource-card" data-category="识图资源">
+                    <div class="card-header" style="background-color: #fd79a8;">
+                        <span class="card-category">识图资源</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Google Lens</h3>
+                        <p class="card-description">谷歌的图像识别技术，可以识别物体、文字、地标等。</p>
                     </div>
                     <div class="card-footer">
                         <a href="#" class="card-link">访问网站</a>
@@ -792,7 +828,46 @@
     </footer>
 
     <script>
-      
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单功能
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+            });
+            
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+            });
+            
+            // 分类筛选功能
+            const categoryBtns = document.querySelectorAll('.category-btn, .mobile-category-btn');
+            const resourceCards = document.querySelectorAll('.resource-card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新按钮的active状态
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 筛选资源卡片
+                    resourceCards.forEach(card => {
+                        if (category === '全部' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // 关闭移动端菜单
+                    mobileMenu.classList.remove('active');
+                });
+            });
+            
             // 收藏和书签按钮
             const actionBtns = document.querySelectorAll('.action-btn');
             actionBtns.forEach(btn => {
@@ -812,9 +887,8 @@
             const searchInput = document.querySelector('.search-bar input');
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
-                const cards = document.querySelectorAll('.resource-card');
                 
-                cards.forEach(card => {
+                resourceCards.forEach(card => {
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const description = card.querySelector('.card-description').textContent.toLowerCase();
                     
