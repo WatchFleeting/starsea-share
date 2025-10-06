@@ -188,12 +188,12 @@
             border: 2px dashed #ff6b6b;
         }
         
-        .ad-game {
+        .ad-app {
             background: linear-gradient(45deg, var(--game-bg), #c2e9fb);
             border: 2px dashed #4facfe;
         }
         
-        .ad-other {
+        .ad-find {
             background: linear-gradient(45deg, var(--other-bg), #a1c4fd);
             border: 2px dashed #84fab0;
         }
@@ -246,6 +246,26 @@
         
         /* 隐藏类 */
         .hidden {
+            display: none;
+        }
+
+        /* 资源统计 */
+        .resource-stats {
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* 搜索结果提示 */
+        .filter-info {
+            padding: 10px 20px;
+            text-align: center;
+            background: #e8f4fd;
+            color: #2c3e50;
+            font-size: 14px;
             display: none;
         }
         
@@ -403,6 +423,11 @@
             </p>
         </div>
         
+        <!-- 资源统计 -->
+        <div class="resource-stats">
+            当前收录资源：<span id="resource-count">36</span> 个
+        </div>
+        
         <!-- 分类导航 -->
         <div class="category-nav">
             <button class="category-btn active" data-category="all">全部资源</button>
@@ -412,26 +437,31 @@
             <button class="category-btn" data-category="other">其他资源</button>
         </div>
         
-        <!-- 推荐区域 - 修复后 -->
+        <!-- 筛选结果提示 -->
+        <div class="filter-info" id="filter-info">
+            当前显示：<span id="filter-category">全部资源</span>（共 <span id="filter-count">36</span> 个）
+        </div>
+        
+        <!-- 推荐区域 -->
         <div class="recommend-section">
             <h2 class="section-title">🔥 本周推荐</h2>
             <div class="recommend-items">
-                <div class="recommend-item" onclick="window.open('https://nhentai.net/', '_blank')">
+                <div class="recommend-item">
                     <div class="recommend-item-title">nhentai</div>
                     <div class="recommend-item-desc">海量漫画资源，更新及时，画质清晰</div>
                     <a href="https://nhentai.net/" target="_blank" class="recommend-item-link">访问</a>
                 </div>
-                <div class="recommend-item" onclick="window.open('https://shotalove.fun/', '_blank')">
+                <div class="recommend-item">
                     <div class="recommend-item-title">shotalove</div>
                     <div class="recommend-item-desc">精品漫画分享平台，社区活跃</div>
                     <a href="https://shotalove.fun/" target="_blank" class="recommend-item-link">访问</a>
                 </div>
-                <div class="recommend-item" onclick="window.open('https://www.chin2.net/', '_blank')">
+                <div class="recommend-item">
                     <div class="recommend-item-title">chin2</div>
                     <div class="recommend-item-desc">优质漫画资源站，分类清晰</div>
                     <a href="https://www.chin2.net/" target="_blank" class="recommend-item-link">访问</a>
                 </div>
-                <div class="recommend-item" onclick="window.open('https://space.bilibili.com/520978838', '_blank')">
+                <div class="recommend-item">
                     <div class="recommend-item-title">仓鼠xixi</div>
                     <div class="recommend-item-desc">AI绘画分享，创意无限</div>
                     <a href="https://space.bilibili.com/520978838" target="_blank" class="recommend-item-link">访问</a>
@@ -476,9 +506,8 @@
             </a>
         </div>
         
-
         <!-- 横幅广告 2-1 - 程序分类 -->
-        <div class="ad-container ad-other" data-category="capp">
+        <div class="ad-container ad-other" data-category="app">
             <div class="ad-title">🌟 彩e - 漫画资源</div>
             <div class="ad-content">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</div>
             <a href="https://github.com/Ehviewer-Overhauled/Ehviewer/releases/" 
@@ -510,7 +539,6 @@
             </a>
         </div>
         
-
        <!-- 横幅广告 3-1 - 识图分类 -->
         <div class="ad-container ad-other" data-category="find">
             <div class="ad-title">🌟 谷歌搜图</div>
@@ -535,7 +563,7 @@
 
          <!-- 横幅广告 3-3 - 识图分类 -->
         <div class="ad-container ad-other" data-category="find">
-            <div class="ad-title">🌟 trace搜图(</div>
+            <div class="ad-title">🌟 trace搜图</div>
             <div class="ad-content">表/里动漫识图</div>
             <a href="https://trace.moe/" 
                 target="_blank"
@@ -599,7 +627,6 @@
             </a>
         </div>
         
-
         <!-- 横幅广告 4-1 - 其他分类 -->
         <div class="ad-container ad-other" data-category="other">
             <div class="ad-title">🌟 仓鼠xixi</div>
@@ -633,7 +660,6 @@
             </a>
         </div>
         
-        
        <!-- 页脚 -->
         <div class="footer">
             <p>© 2025 个人文件分享 | 免责声明：本网站仅提供资源索引，不存储任何实际文件</p>
@@ -642,6 +668,64 @@
     
     <script>
         // 分类筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const adContainers = document.querySelectorAll('.ad-container');
+            const filterInfo = document.getElementById('filter-info');
+            const filterCategory = document.getElementById('filter-category');
+            const filterCount = document.getElementById('filter-count');
+            const resourceCount = document.getElementById('resource-count');
+            
+            // 初始化资源总数
+            resourceCount.textContent = adContainers.length;
+            
+            // 更新筛选信息显示
+            function updateFilterInfo(category, count) {
+                filterInfo.style.display = 'block';
+                filterCategory.textContent = category;
+                filterCount.textContent = count;
+            }
+            
+            // 初始显示全部资源
+            updateFilterInfo('全部资源', adContainers.length);
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    let visibleCount = 0;
+                    
+                    // 显示/隐藏广告容器
+                    adContainers.forEach(container => {
+                        if (category === 'all' || container.getAttribute('data-category') === category) {
+                            container.classList.remove('hidden');
+                            visibleCount++;
+                        } else {
+                            container.classList.add('hidden');
+                        }
+                    });
+                    
+                    // 更新筛选信息
+                    let categoryName = '';
+                    switch(category) {
+                        case 'all': categoryName = '全部资源'; break;
+                        case 'comic': categoryName = '漫画资源'; break;
+                        case 'app': categoryName = '程序资源'; break;
+                        case 'find': categoryName = '识图资源'; break;
+                        case 'other': categoryName = '其他资源'; break;
+                    }
+                    
+                    updateFilterInfo(categoryName, visibleCount);
+                });
+            });
+        });
+    </script>
+</body>
+</html>        // 分类筛选功能
         document.addEventListener('DOMContentLoaded', function() {
             const categoryBtns = document.querySelectorAll('.category-btn');
             const adContainers = document.querySelectorAll('.ad-container');
@@ -669,11 +753,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
 
