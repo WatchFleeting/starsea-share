@@ -877,29 +877,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="resource-card" data-category="其他资源">
-                    <div class="card-header" style="background-color: #f72585;">
-                        <span class="card-category">其他资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 中秋快乐！</h3>
-                        <p class="card-description">鸿渚祝大家中秋快乐！</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://watchfleeting.github.io/starsea-wall/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 加载动画 -->
-            <div class="loader">
-                <div class="loader-spinner"></div>
-                <p>正在加载更多资源...</p>
             </div>
         </div>
     </main>
@@ -975,16 +952,6 @@
                         card.style.display = 'none';
                     }
                 });
-            });
-            
-            // 滚动加载更多功能
-            window.addEventListener('scroll', function() {
-                const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-                
-                if (scrollTop + clientHeight >= scrollHeight - 100) {
-                    const loader = document.querySelector('.loader');
-                    loader.style.display = 'block';
-                }
             });
         });
     </script>
