@@ -582,6 +582,7 @@
             
             .search-bar {
                 width: 100%;
+                max-width: 500px;
             }
             
             .nav-container {
@@ -591,6 +592,7 @@
             
             .resources-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
             }
             
             .mobile-menu-btn {
@@ -601,7 +603,7 @@
                 display: none;
             }
             
-            /* 移动端列表视图优化 */
+            /* 移动端列表视图 */
             .list-view .resource-card {
                 flex-direction: column;
                 height: auto;
@@ -633,11 +635,50 @@
             .list-view .card-link {
                 font-size: 0.9rem;
             }
+            
+            /* 移动端 */
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .card-title {
+                font-size: 1.1rem;
+            }
+            
+            .card-description {
+                font-size: 0.95rem;
+            }
+            
+            .card-link {
+                padding: 10px 15px;
+                font-size: 0.95rem;
+            }
+            
+            .action-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .mobile-category-btn {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+            
+            .sort-options select {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+            
+            .view-btn {
+                width: 44px;
+                height: 44px;
+            }
         }
         
         @media (max-width: 576px) {
             .resources-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
             .friends-grid {
@@ -648,6 +689,67 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+            }
+            
+            .card-header {
+                height: 140px;
+            }
+            
+            .card-body {
+                padding: 15px;
+            }
+            
+            .card-footer {
+                padding: 12px 15px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            /* 移动端体验 */
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo i {
+                font-size: 1.8rem;
+            }
+            
+            .mobile-menu {
+                padding: 15px;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            /* 移动端搜索框 */
+            .search-bar input {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            
+            .search-bar button {
+                padding: 0 18px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .card-header {
+                height: 120px;
+            }
+            
+            .card-header i {
+                font-size: 2.5rem;
+            }
+            
+            .card-category {
+                font-size: 0.75rem;
+                padding: 4px 10px;
             }
         }
         
@@ -1064,7 +1166,7 @@
                     resourcesContainer.appendChild(card);
                 });
                 
-                // 添加点赞和收藏功能
+                // 点赞和收藏功能
                 document.querySelectorAll('.like-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         this.classList.toggle('liked');
@@ -1100,10 +1202,20 @@
             
             mobileMenuBtn.addEventListener('click', function() {
                 mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
             });
             
             mobileMenuClose.addEventListener('click', function() {
                 mobileMenu.classList.remove('active');
+                document.body.style.overflow = ''; // 恢复滚动
+            });
+            
+            // 点击菜单外部关闭菜单
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             });
             
             // 分类筛选功能
@@ -1129,6 +1241,7 @@
                     
                     // 关闭移动端菜单
                     mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
                 });
             });
             
@@ -1182,7 +1295,7 @@
                 let sortedResources = [...resourcesData];
                 
                 if (sortBy === 'time') {
-                    // 模拟按时间排序（这里使用ID作为时间代理）
+                    // 模拟按时间排序
                     sortedResources.sort((a, b) => b.id - a.id);
                 } else if (sortBy === 'name') {
                     sortedResources.sort((a, b) => a.title.localeCompare(b.title));
