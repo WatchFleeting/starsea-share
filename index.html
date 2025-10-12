@@ -62,6 +62,13 @@
         
         .logo i {
             font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .search-bar {
@@ -71,6 +78,11 @@
             overflow: hidden;
             width: 400px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .search-bar:focus-within {
+            box-shadow: 0 2px 15px rgba(67, 97, 238, 0.3);
         }
         
         .search-bar input {
@@ -101,6 +113,11 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: rotate(90deg);
         }
         
         /* 导航样式 */
@@ -142,6 +159,7 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            transform: translateY(-2px);
         }
         
         .view-options {
@@ -183,6 +201,34 @@
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .sort-options select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--gray-color);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sort-options select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
         }
         
         .resources-grid {
@@ -191,12 +237,19 @@
             gap: 25px;
         }
         
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
         .resource-card {
             background: white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
+            position: relative;
         }
         
         .resource-card:hover {
@@ -209,6 +262,28 @@
             background-size: cover;
             background-position: center;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .card-header i {
+            font-size: 3rem;
+            color: white;
+            z-index: 2;
+            position: relative;
         }
         
         .card-category {
@@ -220,6 +295,7 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
+            z-index: 3;
         }
         
         .card-body {
@@ -230,6 +306,9 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .card-description {
@@ -256,10 +335,14 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .card-link:hover {
             color: var(--secondary-color);
+            transform: translateX(3px);
         }
         
         .card-actions {
@@ -273,10 +356,52 @@
             color: var(--gray-color);
             cursor: pointer;
             transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .action-btn:hover {
             color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .action-btn.liked {
+            color: var(--danger-color);
+        }
+        
+        .action-btn.bookmarked {
+            color: var(--success-color);
+        }
+        
+        /* 列表视图样式 */
+        .list-view .resource-card {
+            display: flex;
+            height: 150px;
+        }
+        
+        .list-view .card-header {
+            width: 150px;
+            height: 100%;
+            flex-shrink: 0;
+        }
+        
+        .list-view .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .list-view .card-footer {
+            width: 200px;
+            flex-shrink: 0;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
         }
         
         /* 友链区域 */
@@ -430,6 +555,11 @@
             font-size: 1.5rem;
             color: var(--dark-color);
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-close:hover {
+            transform: rotate(90deg);
         }
         
         .mobile-categories {
@@ -487,6 +617,21 @@
             .categories {
                 display: none;
             }
+            
+            .list-view .resource-card {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .list-view .card-header {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .list-view .card-footer {
+                width: 100%;
+                flex-direction: row;
+            }
         }
         
         @media (max-width: 576px) {
@@ -527,6 +672,57 @@
                 transform: rotate(360deg);
             }
         }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* 空状态提示 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-color);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        /* 卡片颜色方案 */
+        .card-comic { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .card-program { background: linear-gradient(135deg, #4361ee, #4895ef); }
+        .card-game { background: linear-gradient(135deg, #06d6a0, #4ecdc4); }
+        .card-image-search { background: linear-gradient(135deg, #7209b7, #9d4edd); }
+        .card-other { background: linear-gradient(135deg, #f72585, #fd79a8); }
     </style>
 </head>
 <body>
@@ -562,8 +758,8 @@
                     <button class="category-btn" data-category="其他资源">其他资源</button>
                 </div>
                 <div class="view-options">
-                    <button class="view-btn active"><i class="fas fa-th"></i></button>
-                    <button class="view-btn"><i class="fas fa-list"></i></button>
+                    <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                    <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
                 </div>
             </div>
         </div>
@@ -593,361 +789,62 @@
             <div class="section-header">
                 <h2 class="section-title">热门资源</h2>
                 <div class="sort-options">
-                    <select>
-                        <option>按热度排序</option>
-                        <option>按时间排序</option>
-                        <option>按名称排序</option>
+                    <select id="sort-select">
+                        <option value="default">按热度排序</option>
+                        <option value="time">按时间排序</option>
+                        <option value="name">按名称排序</option>
                     </select>
                 </div>
             </div>
             
-            <div class="resources-grid">
-                <!-- 漫话资源卡片 -->
-                <div class="resource-card" data-category="漫画资源">
-                    <div class="card-header" style="background-color: #ff6b6b;">
-                        <span class="card-category">漫画资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 nhentai</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本。</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://nhentai.net/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="漫画资源">
-                    <div class="card-header" style="background-color: #4ecdc4;">
-                        <span class="card-category">漫画资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 shotalove</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本。</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://shotalove.fun/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="漫画资源">
-                    <div class="card-header" style="background-color: #45b7d1;">
-                        <span class="card-category">漫画资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 chin2</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本。</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://www.chin2.net/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 程序资源分类卡片 -->
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4361ee;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 彩e - 漫画资源</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://github.com/Ehviewer-Overhauled/Ehviewer/releases/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4895ef;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 绿e - 漫画资源</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4cc9f0;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 白e - 漫画资源</h3>
-                        <p class="card-description">收录海量优质漫画，更新及时，画质清晰，支持多语言版本</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4361ee;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 图片水印工具</h3>
-                        <p class="card-description">图片水印工具</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://github.com/WatchFleeting/starsea-tools/releases/tag/%E5%9B%BE%E7%89%87%E6%B0%B4%E5%8D%B0%E5%B7%A5%E5%85%B7" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4895ef;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 图片混淆工具</h3>
-                        <p class="card-description">图片混淆工具</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://github.com/WatchFleeting/starsea-tools/releases/tag/%E5%9B%BE%E7%89%87%E6%B7%B7%E6%B7%86%E5%B7%A5%E5%85%B7" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>      
-
-                <div class="resource-card" data-category="程序资源">
-                    <div class="card-header" style="background-color: #4cc9f0;">
-                        <span class="card-category">程序资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 文件加解密工具</h3>
-                        <p class="card-description">文件加解密工具</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://github.com/WatchFleeting/starsea-tools/releases/tag/%E6%96%87%E4%BB%B6%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%B7%A5%E5%85%B7" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 识图资源分类卡片 -->
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #4ecdc4;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 谷歌搜图</h3>
-                        <p class="card-description">部分（推特/漫画/本子/图片）</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://www.google.com/imghp" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #96ceb4;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 yandex搜图</h3>
-                        <p class="card-description">部分（推特/漫画/本子/图片）</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://yandex.com/images/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #06d6a0;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 trace搜图</h3>
-                        <p class="card-description">表/里动漫识图</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://trace.moe/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #1b9aaa;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 SauceNAO搜图</h3>
-                        <p class="card-description">p站</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://saucenao.com/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #06d6a0;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 搜图bot搜图</h3>
-                        <p class="card-description">本子</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://soutubot.moe/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #1b9aaa;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 二次元画像詳細検索</h3>
-                        <p class="card-description">推特上有关二次元动态/p站</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://ascii2d.net/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #4ecdc4;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 iqdb识图</h3>
-                        <p class="card-description">p站</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="http://www.iqdb.org/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="识图资源">
-                    <div class="card-header" style="background-color: #96ceb4;">
-                        <span class="card-category">识图资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 tineye识图</h3>
-                        <p class="card-description">部分p站图/其他图片</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://tineye.com/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 其他资源分类卡片 -->
-                <div class="resource-card" data-category="其他资源">
-                    <div class="card-header" style="background-color: #a29bfe;">
-                        <span class="card-category">其他资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 仓鼠xixi</h3>
-                        <p class="card-description">ai绘画分享</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://space.bilibili.com/520978838?spm_id_from=333.337.0.0/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="resource-card" data-category="其他资源">
-                    <div class="card-header" style="background-color: #fd79a8;">
-                        <span class="card-category">其他资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 鸿渚</h3>
-                        <p class="card-description">地理视频课</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://space.bilibili.com/3493109964999279?spm_id_from=333.337.0.0/" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="resource-card" data-category="其他资源">
-                    <div class="card-header" style="background-color: #a29bfe;">
-                        <span class="card-category">其他资源</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">🌟 图片混淆/解混淆</h3>
-                        <p class="card-description">在线图片混淆，在线图片解混淆，免费在线图片加密解密</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://tool.hadsky.com/enimg" class="card-link" target="_blank">访问网站</a>
-                        <div class="card-actions">
-                            <button class="action-btn"><i class="far fa-heart"></i></button>
-                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                </div>
+            <div class="resources-grid" id="resources-container">
+                <!-- 资源卡片将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的资源</h3>
+                <p>尝试调整搜索关键词或选择其他分类</p>
             </div>
         </div>
     </main>
+    
+    <!-- 友链区域 -->
+    <div class="container">
+        <div class="friends-section">
+            <h2 class="section-title">友情链接</h2>
+            <div class="friends-grid">
+                <a href="#" class="friend-card">
+                    <div class="friend-logo">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="friend-name">技术博客</div>
+                    <div class="friend-desc">分享技术心得与经验</div>
+                </a>
+                <a href="#" class="friend-card">
+                    <div class="friend-logo">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="friend-name">开源项目</div>
+                    <div class="friend-desc">优质开源项目推荐</div>
+                </a>
+                <a href="#" class="friend-card">
+                    <div class="friend-logo">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="friend-name">设计资源</div>
+                    <div class="friend-desc">UI/UX设计资源分享</div>
+                </a>
+                <a href="#" class="friend-card">
+                    <div class="friend-logo">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="friend-name">游戏社区</div>
+                    <div class="friend-desc">游戏攻略与交流</div>
+                </a>
+            </div>
+        </div>
+    </div>
     
     <!-- 页脚 -->
     <footer>
@@ -957,15 +854,299 @@
                     <h3>关于我们</h3>
                     <p>我们致力于收集和分享高质量的网页开发资源，帮助开发者提高效率，激发创意。</p>
                 </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">资源分类</a></li>
+                        <li><a href="#">热门资源</a></li>
+                        <li><a href="#">提交资源</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-envelope"></i> 邮箱</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-weibo"></i> 微博</a></li>
+                        <li><a href="#"><i class="fab fa-bilibili"></i> B站</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 分享页 | 本网站仅供学习交流使用</p>
+                <p>&copy; 2025 鸿渚资源分享 | 本网站仅供学习交流使用</p>
             </div>
         </div>
     </footer>
 
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
+        // 资源数据
+        const resourcesData = [
+            {
+                id: 1,
+                title: "nhentai",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                category: "漫画资源",
+                url: "https://nhentai.net/",
+                icon: "fas fa-book",
+                colorClass: "card-comic"
+            },
+            {
+                id: 2,
+                title: "shotalove",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                category: "漫画资源",
+                url: "https://shotalove.fun/",
+                icon: "fas fa-heart",
+                colorClass: "card-comic"
+            },
+            {
+                id: 3,
+                title: "chin2",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                category: "漫画资源",
+                url: "https://www.chin2.net/",
+                icon: "fas fa-book-open",
+                colorClass: "card-comic"
+            },
+            {
+                id: 4,
+                title: "彩e - 漫画资源",
+                description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。",
+                category: "程序资源",
+                url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
+                icon: "fas fa-paint-brush",
+                colorClass: "card-program"
+            },
+            {
+                id: 5,
+                title: "绿e - 漫画资源",
+                description: "Ehviewer绿版，优化版本，提供更好的阅读体验。",
+                category: "程序资源",
+                url: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases",
+                icon: "fas fa-leaf",
+                colorClass: "card-program"
+            },
+            {
+                id: 6,
+                title: "白e - 漫画资源",
+                description: "Ehviewer白版，简洁界面，专注于核心阅读功能。",
+                category: "程序资源",
+                url: "https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public",
+                icon: "fas fa-snowflake",
+                colorClass: "card-program"
+            },
+            {
+                id: 7,
+                title: "图片水印工具",
+                description: "功能强大的图片水印添加工具，支持自定义水印位置和样式。",
+                category: "程序资源",
+                url: "https://github.com/WatchFleeting/starsea-tools/releases/tag/%E5%9B%BE%E7%89%87%E6%B0%B4%E5%8D%B0%E5%B7%A5%E5%85%B7",
+                icon: "fas fa-water",
+                colorClass: "card-program"
+            },
+            {
+                id: 8,
+                title: "图片混淆工具",
+                description: "保护图片隐私的混淆工具，防止图片被轻易识别。",
+                category: "程序资源",
+                url: "https://github.com/WatchFleeting/starsea-tools/releases/tag/%E5%9B%BE%E7%89%87%E6%B7%B7%E6%B7%86%E5%B7%A5%E5%85%B7",
+                icon: "fas fa-eye-slash",
+                colorClass: "card-program"
+            },
+            {
+                id: 9,
+                title: "文件加解密工具",
+                description: "简单易用的文件加密解密工具，保护您的文件安全。",
+                category: "程序资源",
+                url: "https://github.com/WatchFleeting/starsea-tools/releases/tag/%E6%96%87%E4%BB%B6%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%B7%A5%E5%85%B7",
+                icon: "fas fa-lock",
+                colorClass: "card-program"
+            },
+            {
+                id: 10,
+                title: "谷歌搜图",
+                description: "部分（推特/漫画/本子/图片）",
+                category: "识图资源",
+                url: "https://www.google.com/imghp",
+                icon: "fab fa-google",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 11,
+                title: "yandex搜图",
+                description: "部分（推特/漫画/本子/图片）",
+                category: "识图资源",
+                url: "https://yandex.com/images/",
+                icon: "fas fa-search",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 12,
+                title: "trace搜图",
+                description: "表/里动漫识图",
+                category: "识图资源",
+                url: "https://trace.moe/",
+                icon: "fas fa-film",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 13,
+                title: "SauceNAO搜图",
+                description: "p站",
+                category: "识图资源",
+                url: "https://saucenao.com/",
+                icon: "fas fa-images",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 14,
+                title: "搜图bot搜图",
+                description: "本子",
+                category: "识图资源",
+                url: "https://soutubot.moe/",
+                icon: "fas fa-robot",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 15,
+                title: "二次元画像詳細検索",
+                description: "推特上有关二次元动态/p站",
+                category: "识图资源",
+                url: "https://ascii2d.net/",
+                icon: "fas fa-search-plus",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 16,
+                title: "iqdb识图",
+                description: "p站",
+                category: "识图资源",
+                url: "http://www.iqdb.org/",
+                icon: "fas fa-database",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 17,
+                title: "tineye识图",
+                description: "部分p站图/其他图片",
+                category: "识图资源",
+                url: "https://tineye.com/",
+                icon: "fas fa-eye",
+                colorClass: "card-image-search"
+            },
+            {
+                id: 18,
+                title: "仓鼠xixi",
+                description: "ai绘画分享",
+                category: "其他资源",
+                url: "https://space.bilibili.com/520978838?spm_id_from=333.337.0.0/",
+                icon: "fas fa-palette",
+                colorClass: "card-other"
+            },
+            {
+                id: 19,
+                title: "鸿渚",
+                description: "地理视频课",
+                category: "其他资源",
+                url: "https://space.bilibili.com/3493109964999279?spm_id_from=333.337.0.0/",
+                icon: "fas fa-globe-asia",
+                colorClass: "card-other"
+            },
+            {
+                id: 20,
+                title: "图片混淆/解混淆",
+                description: "在线图片混淆，在线图片解混淆，免费在线图片加密解密",
+                category: "其他资源",
+                url: "https://tool.hadsky.com/enimg",
+                icon: "fas fa-unlock-alt",
+                colorClass: "card-other"
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
+            const resourcesContainer = document.getElementById('resources-container');
+            const emptyState = document.getElementById('empty-state');
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // 渲染资源卡片
+            function renderResources(resources) {
+                resourcesContainer.innerHTML = '';
+                
+                if (resources.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+                
+                resources.forEach(resource => {
+                    const card = document.createElement('div');
+                    card.className = 'resource-card';
+                    card.setAttribute('data-category', resource.category);
+                    card.setAttribute('data-id', resource.id);
+                    
+                    card.innerHTML = `
+                        <div class="card-header ${resource.colorClass}">
+                            <span class="card-category">${resource.category}</span>
+                            <i class="${resource.icon}"></i>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title"><i class="fas fa-star"></i> ${resource.title}</h3>
+                            <p class="card-description">${resource.description}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="${resource.url}" class="card-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> 访问网站
+                            </a>
+                            <div class="card-actions">
+                                <button class="action-btn like-btn" data-id="${resource.id}">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="action-btn bookmark-btn" data-id="${resource.id}">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    resourcesContainer.appendChild(card);
+                });
+                
+                // 添加点赞和收藏功能
+                document.querySelectorAll('.like-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.classList.toggle('liked');
+                        const icon = this.querySelector('i');
+                        if (this.classList.contains('liked')) {
+                            icon.className = 'fas fa-heart';
+                        } else {
+                            icon.className = 'far fa-heart';
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.classList.toggle('bookmarked');
+                        const icon = this.querySelector('i');
+                        if (this.classList.contains('bookmarked')) {
+                            icon.className = 'fas fa-bookmark';
+                        } else {
+                            icon.className = 'far fa-bookmark';
+                        }
+                    });
+                });
+            }
+            
+            // 初始化渲染
+            renderResources(resourcesData);
+            
             // 移动端菜单功能
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mobileMenu = document.querySelector('.mobile-menu');
@@ -981,7 +1162,6 @@
             
             // 分类筛选功能
             const categoryBtns = document.querySelectorAll('.category-btn, .mobile-category-btn');
-            const resourceCards = document.querySelectorAll('.resource-card');
             
             categoryBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -992,13 +1172,14 @@
                     this.classList.add('active');
                     
                     // 筛选资源卡片
-                    resourceCards.forEach(card => {
-                        if (category === '全部' || card.getAttribute('data-category') === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    let filteredResources;
+                    if (category === '全部') {
+                        filteredResources = resourcesData;
+                    } else {
+                        filteredResources = resourcesData.filter(resource => resource.category === category);
+                    }
+                    
+                    renderResources(filteredResources);
                     
                     // 关闭移动端菜单
                     mobileMenu.classList.remove('active');
@@ -1010,15 +1191,78 @@
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
                 
-                resourceCards.forEach(card => {
-                    const title = card.querySelector('.card-title').textContent.toLowerCase();
-                    const description = card.querySelector('.card-description').textContent.toLowerCase();
-                    
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                        card.style.display = 'block';
+                if (searchTerm === '') {
+                    const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+                    if (activeCategory === '全部') {
+                        renderResources(resourcesData);
                     } else {
-                        card.style.display = 'none';
+                        const filteredResources = resourcesData.filter(resource => resource.category === activeCategory);
+                        renderResources(filteredResources);
                     }
+                    return;
+                }
+                
+                const filteredResources = resourcesData.filter(resource => 
+                    resource.title.toLowerCase().includes(searchTerm) || 
+                    resource.description.toLowerCase().includes(searchTerm)
+                );
+                
+                renderResources(filteredResources);
+            });
+            
+            // 视图切换功能
+            const viewBtns = document.querySelectorAll('.view-btn');
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const view = this.getAttribute('data-view');
+                    
+                    // 更新按钮的active状态
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 切换视图
+                    if (view === 'list') {
+                        resourcesContainer.classList.add('list-view');
+                    } else {
+                        resourcesContainer.classList.remove('list-view');
+                    }
+                });
+            });
+            
+            // 排序功能
+            const sortSelect = document.getElementById('sort-select');
+            sortSelect.addEventListener('change', function() {
+                const sortBy = this.value;
+                let sortedResources = [...resourcesData];
+                
+                if (sortBy === 'time') {
+                    // 模拟按时间排序（这里使用ID作为时间代理）
+                    sortedResources.sort((a, b) => b.id - a.id);
+                } else if (sortBy === 'name') {
+                    sortedResources.sort((a, b) => a.title.localeCompare(b.title));
+                }
+                
+                const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+                if (activeCategory !== '全部') {
+                    sortedResources = sortedResources.filter(resource => resource.category === activeCategory);
+                }
+                
+                renderResources(sortedResources);
+            });
+            
+            // 回到顶部功能
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             });
         });
