@@ -380,13 +380,15 @@
         /* 列表视图样式 */
         .list-view .resource-card {
             display: flex;
-            height: 150px;
+            height: 180px;
+            transition: all 0.3s ease;
         }
         
         .list-view .card-header {
-            width: 150px;
+            width: 180px;
             height: 100%;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
         
         .list-view .card-body {
@@ -394,72 +396,53 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding: 20px 25px;
         }
         
         .list-view .card-footer {
-            width: 200px;
+            width: 180px;
             flex-shrink: 0;
             flex-direction: column;
             justify-content: center;
-            gap: 10px;
-        }
-        
-        /* 友链区域 */
-        .friends-section {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            margin-top: 3rem;
-            box-shadow: var(--card-shadow);
-        }
-        
-        .friends-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .friend-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            gap: 15px;
             padding: 20px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            transition: var(--transition);
-            text-decoration: none;
-            color: var(--dark-color);
+            transition: all 0.3s ease;
         }
         
-        .friend-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            background: white;
+        .list-view .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
         }
         
-        .friend-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        .list-view .card-description {
+            -webkit-line-clamp: 2;
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        
+        .list-view .card-link {
+            font-size: 1rem;
+            padding: 8px 15px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .list-view .card-link:hover {
             background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            transform: translateY(-2px);
         }
         
-        .friend-name {
-            font-weight: 600;
-            margin-bottom: 5px;
+        .list-view .card-actions {
+            flex-direction: column;
+            gap: 8px;
         }
         
-        .friend-desc {
-            font-size: 0.8rem;
-            color: #666;
-            text-align: center;
+        .list-view .action-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
         }
         
         /* 页脚样式 */
@@ -618,6 +601,7 @@
                 display: none;
             }
             
+            /* 移动端列表视图优化 */
             .list-view .resource-card {
                 flex-direction: column;
                 height: auto;
@@ -631,6 +615,23 @@
             .list-view .card-footer {
                 width: 100%;
                 flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .list-view .card-actions {
+                flex-direction: row;
+            }
+            
+            .list-view .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .list-view .card-description {
+                font-size: 0.9rem;
+            }
+            
+            .list-view .card-link {
+                font-size: 0.9rem;
             }
         }
         
