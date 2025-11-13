@@ -164,134 +164,6 @@
         nav {
             background: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-             
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            z-index: 1;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .logo i {
-            font-size: 2rem;
-            animation: pulse 2s infinite;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .search-bar {
-            display: flex;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            overflow: hidden;
-            width: 400px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .search-bar:focus-within {
-            box-shadow: 0 4px 20px rgba(67, 97, 238, 0.4);
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-        }
-        
-        .search-bar input {
-            flex: 1;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
-            outline: none;
-            background: transparent;
-            color: white;
-        }
-        
-        .search-bar input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .search-bar button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 0 20px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .search-bar button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .mobile-menu-btn:hover {
-            transform: rotate(90deg);
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* 导航样式 */
-        nav {
-            background: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -310,6 +182,21 @@
             flex-wrap: wrap;
             overflow-x: auto;
             padding-bottom: 5px;
+            scrollbar-width: thin;
+        }
+        
+        .categories::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .categories::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .categories::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
         }
         
         .category-btn {
@@ -379,7 +266,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
-        /* 主要内容区 */
+        /* 主要内容区优化 */
         main {
             padding: 2.5rem 0;
         }
@@ -446,6 +333,7 @@
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             position: relative;
+            will-change: transform;
         }
         
         .resource-card:hover {
@@ -660,7 +548,7 @@
             font-size: 1rem;
         }
         
-        /* 页脚样式 */
+        /* 页脚样式优化 */
         footer {
             background: linear-gradient(135deg, var(--dark-color), #1a1a2e);
             color: white;
@@ -722,7 +610,7 @@
             font-size: 0.9rem;
         }
         
-        /* 移动端菜单 */
+        /* 移动端菜单优化 */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -796,7 +684,7 @@
             box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
         }
         
-        /* 响应式设计 */
+        /* 响应式设计优化 */
         @media (max-width: 992px) {
             .search-bar {
                 width: 300px;
@@ -978,7 +866,7 @@
             }
         }
         
-        /* 加载动画 */
+        /* 加载动画优化 */
         .loader {
             display: none;
             text-align: center;
@@ -1001,7 +889,7 @@
             }
         }
         
-        /* 回到顶部按钮 */
+        /* 回到顶部按钮优化 */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -1034,7 +922,7 @@
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
         }
         
-        /* 空状态提示 */
+        /* 空状态提示优化 */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -1086,22 +974,97 @@
         .resource-card:nth-child(8) { animation-delay: 0.8s; }
         .resource-card:nth-child(9) { animation-delay: 0.9s; }
         .resource-card:nth-child(10) { animation-delay: 1s; }
+        
+        /* 新增功能样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: var(--danger-color);
+        }
+        
+        .notification.warning {
+            background: var(--warning-color);
+            color: var(--dark-color);
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 101;
+            transition: width 0.3s ease;
+        }
+        
+        /* 无障碍优化 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* 焦点可见性优化 */
+        button:focus-visible,
+        a:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
     <!-- 头部 -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-cube"></i>
+                    <i class="fas fa-cube" aria-hidden="true"></i>
                     <span>鸿渚の资源分享</span>
                 </div>
                 <div class="search-bar">
-                    <input type="text" placeholder="搜索资源...">
-                    <button><i class="fas fa-search"></i></button>
+                    <input type="text" placeholder="搜索资源..." aria-label="搜索资源">
+                    <button aria-label="搜索"><i class="fas fa-search"></i></button>
                 </div>
-                <button class="mobile-menu-btn">
+                <button class="mobile-menu-btn" aria-label="打开菜单">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -1113,36 +1076,36 @@
         <div class="container">
             <div class="nav-container">
                 <div class="categories">
-                    <button class="category-btn active" data-category="全部">全部</button>
-                    <button class="category-btn" data-category="漫画资源">漫画资源</button>
-                    <button class="category-btn" data-category="程序资源">程序资源</button>
-                    <button class="category-btn" data-category="识图资源">识图资源</button>
-                    <button class="category-btn" data-category="优质UP">优质UP</button>
-                    <button class="category-btn" data-category="其他资源">其他资源</button>
+                    <button class="category-btn active" data-category="全部" aria-pressed="true">全部</button>
+                    <button class="category-btn" data-category="漫画资源" aria-pressed="false">漫画资源</button>
+                    <button class="category-btn" data-category="程序资源" aria-pressed="false">程序资源</button>
+                    <button class="category-btn" data-category="识图资源" aria-pressed="false">识图资源</button>
+                    <button class="category-btn" data-category="优质UP" aria-pressed="false">优质UP</button>
+                    <button class="category-btn" data-category="其他资源" aria-pressed="false">其他资源</button>
                 </div>
                 <div class="view-options">
-                    <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
-                    <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                    <button class="view-btn active" data-view="grid" aria-label="网格视图"><i class="fas fa-th"></i></button>
+                    <button class="view-btn" data-view="list" aria-label="列表视图"><i class="fas fa-list"></i></button>
                 </div>
             </div>
         </div>
     </nav>
     
     <!-- 移动端菜单 -->
-    <div class="mobile-menu">
+    <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
             <h2>分类</h2>
-            <button class="mobile-menu-close">
+            <button class="mobile-menu-close" aria-label="关闭菜单">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <div class="mobile-categories">
-            <button class="mobile-category-btn active" data-category="全部">全部</button>
-            <button class="mobile-category-btn" data-category="漫画资源">漫画资源</button>
-            <button class="mobile-category-btn" data-category="程序资源">程序资源</button>
-            <button class="mobile-category-btn" data-category="识图资源">识图资源</button>
-            <button class="mobile-category-btn" data-category="优质UP">优质UP</button>
-            <button class="mobile-category-btn" data-category="其他资源">其他资源</button>
+            <button class="mobile-category-btn active" data-category="全部" aria-pressed="true">全部</button>
+            <button class="mobile-category-btn" data-category="漫画资源" aria-pressed="false">漫画资源</button>
+            <button class="mobile-category-btn" data-category="程序资源" aria-pressed="false">程序资源</button>
+            <button class="mobile-category-btn" data-category="识图资源" aria-pressed="false">识图资源</button>
+            <button class="mobile-category-btn" data-category="优质UP" aria-pressed="false">优质UP</button>
+            <button class="mobile-category-btn" data-category="其他资源" aria-pressed="false">其他资源</button>
         </div>
     </div>
     
@@ -1152,7 +1115,8 @@
             <div class="section-header">
                 <h2 class="section-title">热门资源</h2>
                 <div class="sort-options">
-                    <select id="sort-select">
+                    <label for="sort-select" class="sr-only">排序方式</label>
+                    <select id="sort-select" aria-label="排序方式">
                         <option value="default">按热度排序</option>
                         <option value="time">按时间排序</option>
                         <option value="name">按名称排序</option>
@@ -1165,9 +1129,14 @@
             </div>
             
             <div class="empty-state" id="empty-state" style="display: none;">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search" aria-hidden="true"></i>
                 <h3>没有找到匹配的资源</h3>
                 <p>尝试调整搜索关键词或选择其他分类</p>
+            </div>
+            
+            <div class="loader" id="loader">
+                <div class="loader-spinner"></div>
+                <p>正在加载资源...</p>
             </div>
         </div>
     </main>
@@ -1180,6 +1149,12 @@
                     <h3>关于我们</h3>
                     <p>我们致力于收集和分享高质量的网页开发资源，帮助开发者提高效率，激发创意。</p>
                 </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:lzc737507@outlook.com">邮箱联系</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="copyright">
                 <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用</p>
@@ -1188,9 +1163,15 @@
     </footer>
 
     <!-- 回到顶部按钮 -->
-    <button class="back-to-top" id="backToTop">
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- 通知组件 -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">操作成功</span>
+    </div>
 
     <script>
         // 资源数据
@@ -1426,6 +1407,30 @@
             const resourcesContainer = document.getElementById('resources-container');
             const emptyState = document.getElementById('empty-state');
             const backToTopBtn = document.getElementById('backToTop');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const notification = document.getElementById('notification');
+            const scrollProgress = document.getElementById('scrollProgress');
+            const loader = document.getElementById('loader');
+            
+            // 用户偏好存储
+            let userPreferences = {
+                likedItems: JSON.parse(localStorage.getItem('likedItems')) || [],
+                bookmarkedItems: JSON.parse(localStorage.getItem('bookmarkedItems')) || [],
+                viewMode: localStorage.getItem('viewMode') || 'grid',
+                activeCategory: localStorage.getItem('activeCategory') || '全部'
+            };
+            
+            // 显示通知
+            function showNotification(message, type = 'success') {
+                const notificationText = document.getElementById('notification-text');
+                notificationText.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
             
             // 渲染资源卡片
             function renderResources(resources) {
@@ -1439,6 +1444,9 @@
                 emptyState.style.display = 'none';
                 
                 resources.forEach(resource => {
+                    const isLiked = userPreferences.likedItems.includes(resource.id);
+                    const isBookmarked = userPreferences.bookmarkedItems.includes(resource.id);
+                    
                     const card = document.createElement('div');
                     card.className = 'resource-card';
                     card.setAttribute('data-category', resource.category);
@@ -1447,22 +1455,22 @@
                     card.innerHTML = `
                         <div class="card-header ${resource.colorClass}">
                             <span class="card-category">${resource.category}</span>
-                            <i class="${resource.icon}"></i>
+                            <i class="${resource.icon}" aria-hidden="true"></i>
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title"><i class="fas fa-star"></i> ${resource.title}</h3>
+                            <h3 class="card-title"><i class="fas fa-star" aria-hidden="true"></i> ${resource.title}</h3>
                             <p class="card-description">${resource.description}</p>
                         </div>
                         <div class="card-footer">
-                            <a href="${resource.url}" class="card-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> 访问网站
+                            <a href="${resource.url}" class="card-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i> 访问网站
                             </a>
                             <div class="card-actions">
-                                <button class="action-btn like-btn" data-id="${resource.id}">
-                                    <i class="far fa-heart"></i>
+                                <button class="action-btn like-btn ${isLiked ? 'liked' : ''}" data-id="${resource.id}" aria-label="${isLiked ? '取消喜欢' : '喜欢'}">
+                                    <i class="${isLiked ? 'fas' : 'far'} fa-heart"></i>
                                 </button>
-                                <button class="action-btn bookmark-btn" data-id="${resource.id}">
-                                    <i class="far fa-bookmark"></i>
+                                <button class="action-btn bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-id="${resource.id}" aria-label="${isBookmarked ? '取消收藏' : '收藏'}">
+                                    <i class="${isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>
                                 </button>
                             </div>
                         </div>
@@ -1470,49 +1478,112 @@
                     
                     resourcesContainer.appendChild(card);
                 });
-                
-                // 点赞和收藏功能
-                document.querySelectorAll('.like-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        this.classList.toggle('liked');
-                        const icon = this.querySelector('i');
-                        if (this.classList.contains('liked')) {
-                            icon.className = 'fas fa-heart';
-                        } else {
-                            icon.className = 'far fa-heart';
-                        }
-                    });
-                });
-                
-                document.querySelectorAll('.bookmark-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        this.classList.toggle('bookmarked');
-                        const icon = this.querySelector('i');
-                        if (this.classList.contains('bookmarked')) {
-                            icon.className = 'fas fa-bookmark';
-                        } else {
-                            icon.className = 'far fa-bookmark';
-                        }
-                    });
-                });
             }
             
             // 初始化渲染
             renderResources(resourcesData);
             
+            // 应用用户偏好
+            function applyUserPreferences() {
+                // 应用视图模式
+                const viewBtns = document.querySelectorAll('.view-btn');
+                viewBtns.forEach(btn => {
+                    if (btn.getAttribute('data-view') === userPreferences.viewMode) {
+                        btn.classList.add('active');
+                        if (userPreferences.viewMode === 'list') {
+                            resourcesContainer.classList.add('list-view');
+                        }
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // 应用活动分类
+                const categoryBtns = document.querySelectorAll('.category-btn, .mobile-category-btn');
+                categoryBtns.forEach(btn => {
+                    if (btn.getAttribute('data-category') === userPreferences.activeCategory) {
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-pressed', 'true');
+                    } else {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    }
+                });
+                
+                // 筛选资源
+                let filteredResources;
+                if (userPreferences.activeCategory === '全部') {
+                    filteredResources = resourcesData;
+                } else {
+                    filteredResources = resourcesData.filter(resource => resource.category === userPreferences.activeCategory);
+                }
+                
+                renderResources(filteredResources);
+            }
+            
+            // 初始化应用用户偏好
+            applyUserPreferences();
+            
+            // 事件委托处理点赞和收藏
+            resourcesContainer.addEventListener('click', function(e) {
+                const target = e.target.closest('.like-btn, .bookmark-btn');
+                if (!target) return;
+                
+                const resourceId = parseInt(target.getAttribute('data-id'));
+                
+                if (target.classList.contains('like-btn')) {
+                    const isLiked = target.classList.contains('liked');
+                    
+                    if (isLiked) {
+                        target.classList.remove('liked');
+                        userPreferences.likedItems = userPreferences.likedItems.filter(id => id !== resourceId);
+                        showNotification('已取消喜欢', 'warning');
+                    } else {
+                        target.classList.add('liked');
+                        userPreferences.likedItems.push(resourceId);
+                        showNotification('已添加到喜欢', 'success');
+                    }
+                    
+                    const icon = target.querySelector('i');
+                    icon.className = target.classList.contains('liked') ? 'fas fa-heart' : 'far fa-heart';
+                    target.setAttribute('aria-label', target.classList.contains('liked') ? '取消喜欢' : '喜欢');
+                    
+                    localStorage.setItem('likedItems', JSON.stringify(userPreferences.likedItems));
+                }
+                
+                if (target.classList.contains('bookmark-btn')) {
+                    const isBookmarked = target.classList.contains('bookmarked');
+                    
+                    if (isBookmarked) {
+                        target.classList.remove('bookmarked');
+                        userPreferences.bookmarkedItems = userPreferences.bookmarkedItems.filter(id => id !== resourceId);
+                        showNotification('已取消收藏', 'warning');
+                    } else {
+                        target.classList.add('bookmarked');
+                        userPreferences.bookmarkedItems.push(resourceId);
+                        showNotification('已添加到收藏', 'success');
+                    }
+                    
+                    const icon = target.querySelector('i');
+                    icon.className = target.classList.contains('bookmarked') ? 'fas fa-bookmark' : 'far fa-bookmark';
+                    target.setAttribute('aria-label', target.classList.contains('bookmarked') ? '取消收藏' : '收藏');
+                    
+                    localStorage.setItem('bookmarkedItems', JSON.stringify(userPreferences.bookmarkedItems));
+                }
+            });
+            
             // 移动端菜单功能
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
             const mobileMenuClose = document.querySelector('.mobile-menu-close');
             
             mobileMenuBtn.addEventListener('click', function() {
                 mobileMenu.classList.add('active');
-                document.body.style.overflow = 'hidden'; // 防止背景滚动
+                document.body.style.overflow = 'hidden';
             });
             
             mobileMenuClose.addEventListener('click', function() {
                 mobileMenu.classList.remove('active');
-                document.body.style.overflow = ''; // 恢复滚动
+                document.body.style.overflow = '';
             });
             
             // 点击菜单外部关闭菜单
@@ -1529,10 +1600,16 @@
             categoryBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.getAttribute('data-category');
+                    userPreferences.activeCategory = category;
+                    localStorage.setItem('activeCategory', category);
                     
                     // 更新按钮的active状态
-                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    categoryBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                     this.classList.add('active');
+                    this.setAttribute('aria-pressed', 'true');
                     
                     // 筛选资源卡片
                     let filteredResources;
@@ -1552,26 +1629,38 @@
             
             // 搜索功能
             const searchInput = document.querySelector('.search-bar input');
+            let searchTimeout;
+            
             searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
+                clearTimeout(searchTimeout);
                 
-                if (searchTerm === '') {
-                    const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
-                    if (activeCategory === '全部') {
-                        renderResources(resourcesData);
+                // 显示加载状态
+                loader.style.display = 'block';
+                
+                searchTimeout = setTimeout(() => {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    
+                    if (searchTerm === '') {
+                        const activeCategory = userPreferences.activeCategory;
+                        if (activeCategory === '全部') {
+                            renderResources(resourcesData);
+                        } else {
+                            const filteredResources = resourcesData.filter(resource => resource.category === activeCategory);
+                            renderResources(filteredResources);
+                        }
                     } else {
-                        const filteredResources = resourcesData.filter(resource => resource.category === activeCategory);
+                        const filteredResources = resourcesData.filter(resource => 
+                            resource.title.toLowerCase().includes(searchTerm) || 
+                            resource.description.toLowerCase().includes(searchTerm) ||
+                            resource.category.toLowerCase().includes(searchTerm)
+                        );
+                        
                         renderResources(filteredResources);
                     }
-                    return;
-                }
-                
-                const filteredResources = resourcesData.filter(resource => 
-                    resource.title.toLowerCase().includes(searchTerm) || 
-                    resource.description.toLowerCase().includes(searchTerm)
-                );
-                
-                renderResources(filteredResources);
+                    
+                    // 隐藏加载状态
+                    loader.style.display = 'none';
+                }, 300); // 延迟300ms执行搜索，减少频繁搜索
             });
             
             // 视图切换功能
@@ -1579,6 +1668,8 @@
             viewBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const view = this.getAttribute('data-view');
+                    userPreferences.viewMode = view;
+                    localStorage.setItem('viewMode', view);
                     
                     // 更新按钮的active状态
                     viewBtns.forEach(b => b.classList.remove('active'));
@@ -1606,7 +1697,7 @@
                     sortedResources.sort((a, b) => a.title.localeCompare(b.title));
                 }
                 
-                const activeCategory = document.querySelector('.category-btn.active').getAttribute('data-category');
+                const activeCategory = userPreferences.activeCategory;
                 if (activeCategory !== '全部') {
                     sortedResources = sortedResources.filter(resource => resource.category === activeCategory);
                 }
@@ -1621,6 +1712,13 @@
                 } else {
                     backToTopBtn.classList.remove('visible');
                 }
+                
+                // 更新滚动进度条
+                const winHeight = window.innerHeight;
+                const docHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.pageYOffset;
+                const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+                scrollProgress.style.width = scrollPercent + '%';
             });
             
             backToTopBtn.addEventListener('click', function() {
@@ -1628,6 +1726,20 @@
                     top: 0,
                     behavior: 'smooth'
                 });
+            });
+            
+            // 键盘导航支持
+            document.addEventListener('keydown', function(e) {
+                // ESC键关闭移动菜单
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // 页面加载完成后的动画
+            window.addEventListener('load', function() {
+                document.body.classList.add('loaded');
             });
         });
     </script>
