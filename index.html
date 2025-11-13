@@ -179,7 +179,7 @@
         .categories {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             overflow-x: auto;
             padding-bottom: 5px;
             scrollbar-width: thin;
@@ -685,6 +685,13 @@
         }
         
         /* 响应式设计优化 */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 100%;
+                padding: 0 20px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .search-bar {
                 width: 300px;
