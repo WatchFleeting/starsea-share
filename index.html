@@ -9,8 +9,9 @@
     <title>鸿渚の资源分享</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== CSS优化 ===== */
+        /* ===== CSS变量定义 ===== */
         :root {
+            /* 白天模式颜色变量 */
             --primary-color: #4361ee;
             --secondary-color: #3a0ca3;
             --accent-color: #4cc9f0;
@@ -24,13 +25,60 @@
             --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --border-radius: 12px;
+            
+            /* 终端样式颜色 */
             --terminal-bg: #0d1117;
             --terminal-green: #7ee787;
             --terminal-blue: #79c0ff;
             --terminal-yellow: #ffa657;
             --terminal-red: #ff7b72;
+            
+            /* 白天模式背景和文字颜色 */
+            --bg-color: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+            --text-color: #212529;
+            --card-bg: white;
+            --nav-bg: white;
+            --footer-bg: #212529;
+            --footer-text: white;
+            --input-bg: white;
+            --input-border: #e2e8f0;
+            --search-bg: rgba(255, 255, 255, 0.15);
+            --search-hover-bg: rgba(255, 255, 255, 0.25);
+            --stats-bg: white;
+            --category-bg: white;
+            --category-border: #e2e8f0;
+            --view-toggle-bg: #f1f5f9;
+            --border-color: #e2e8f0;
+            --scrollbar-track: #f1f1f1;
+            --scrollbar-thumb: #c1c1c1;
         }
         
+        /* 夜晚模式变量覆盖 */
+        body.dark-theme {
+            --bg-color: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --text-color: #e2e8f0;
+            --card-bg: #1e293b;
+            --nav-bg: #1e293b;
+            --footer-bg: #0f172a;
+            --footer-text: #cbd5e1;
+            --input-bg: #334155;
+            --input-border: #475569;
+            --search-bg: rgba(255, 255, 255, 0.1);
+            --search-hover-bg: rgba(255, 255, 255, 0.2);
+            --stats-bg: #1e293b;
+            --category-bg: #1e293b;
+            --category-border: #475569;
+            --view-toggle-bg: #334155;
+            --border-color: #475569;
+            --scrollbar-track: #334155;
+            --scrollbar-thumb: #64748b;
+            
+            /* 卡片阴影调整 */
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+        
+        /* ===== 基础样式 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -43,13 +91,14 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
-            color: var(--dark-color);
+            background: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         /* 允许特定区域复制 */
@@ -72,7 +121,7 @@
             padding: 0 20px;
         }
         
-        /* ===== 头部优化 ===== */
+        /* ===== 头部样式 ===== */
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -115,7 +164,7 @@
         
         .search-bar {
             display: flex;
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--search-bg);
             border-radius: 25px;
             overflow: hidden;
             transition: var(--transition);
@@ -123,7 +172,7 @@
         }
         
         .search-bar:focus-within {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--search-hover-bg);
             border-color: rgba(255, 255, 255, 0.3);
         }
         
@@ -201,14 +250,15 @@
             font-size: 1.2rem;
         }
         
-        /* ===== 导航优化 ===== */
+        /* ===== 导航样式 ===== */
         nav {
-            background: white;
+            background: var(--nav-bg);
             padding: 1rem 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             position: sticky;
             top: 74px;
             z-index: 999;
+            transition: background-color 0.3s ease;
         }
         
         .nav-content {
@@ -239,13 +289,14 @@
         
         .category-btn {
             padding: 8px 16px;
-            border: 1px solid #e2e8f0;
-            background: white;
+            border: 1px solid var(--category-border);
+            background: var(--category-bg);
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
             white-space: nowrap;
             transition: var(--transition);
+            color: var(--text-color);
         }
         
         .category-btn:hover {
@@ -267,17 +318,18 @@
         
         .sort-select {
             padding: 8px 16px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--input-border);
             border-radius: 8px;
-            background: white;
+            background: var(--input-bg);
             cursor: pointer;
             font-size: 0.9rem;
+            color: var(--text-color);
         }
         
         .view-toggle {
             display: flex;
             gap: 5px;
-            background: #f1f5f9;
+            background: var(--view-toggle-bg);
             padding: 4px;
             border-radius: 8px;
         }
@@ -288,17 +340,17 @@
             background: transparent;
             border-radius: 6px;
             cursor: pointer;
-            color: #64748b;
+            color: var(--gray-color);
             transition: var(--transition);
         }
         
         .view-btn.active {
-            background: white;
+            background: var(--card-bg);
             color: var(--primary-color);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
         
-        /* ===== 主要内容优化 ===== */
+        /* ===== 主要内容样式 ===== */
         main {
             padding: 2rem 0 4rem;
         }
@@ -308,9 +360,10 @@
             gap: 20px;
             margin-bottom: 2rem;
             padding: 15px;
-            background: white;
+            background: var(--stats-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
         }
         
         .stat-item {
@@ -334,7 +387,7 @@
             margin-bottom: 2rem;
         }
         
-        /* ===== 网格视图优化 ===== */
+        /* ===== 网格视图样式 ===== */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -342,7 +395,7 @@
         }
         
         .resource-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--card-shadow);
@@ -351,6 +404,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--border-color);
         }
         
         .resource-card:hover {
@@ -369,6 +423,7 @@
             font-weight: 600;
             z-index: 2;
             backdrop-filter: blur(10px);
+            color: var(--dark-color);
         }
         
         .card-image {
@@ -408,7 +463,7 @@
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--dark-color);
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -419,7 +474,7 @@
         }
         
         .card-description {
-            color: #64748b;
+            color: var(--gray-color);
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
@@ -432,7 +487,7 @@
             align-items: center;
             margin-top: auto;
             padding-top: 15px;
-            border-top: 1px solid #f1f5f9;
+            border-top: 1px solid var(--border-color);
         }
         
         .card-actions {
@@ -444,8 +499,8 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid #e2e8f0;
-            background: white;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -484,7 +539,53 @@
             transform: translateY(-2px);
         }
         
-        /* ===== 文档显示模态框 ===== */
+        /* ===== 列表视图样式 - 修复版 ===== */
+        .list-view .resources-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .list-view .resource-card {
+            flex-direction: row;
+            align-items: stretch; /* 改为stretch使内容撑满高度 */
+            height: auto;
+            min-height: 120px; /* 设置最小高度 */
+        }
+        
+        .list-view .card-image {
+            width: 120px;
+            height: auto; /* 改为auto以适应父容器高度 */
+            flex-shrink: 0;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+        
+        .list-view .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 内容在垂直方向均匀分布 */
+        }
+        
+        .list-view .card-description {
+            margin-bottom: 15px;
+            -webkit-line-clamp: 2; /* 限制描述显示行数 */
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .list-view .card-meta {
+            padding: 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 15px;
+            padding-top: 15px;
+            min-width: auto;
+            width: 100%;
+        }
+        
+        /* ===== 文档显示模态框样式 ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -508,7 +609,7 @@
         }
         
         .modal {
-            background: white;
+            background: var(--card-bg);
             border-radius: var(--border-radius);
             width: 90%;
             max-width: 800px;
@@ -519,6 +620,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transform: translateY(20px);
             transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         
         .modal-overlay.active .modal {
@@ -571,8 +673,8 @@
         
         .document-tabs {
             display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e2e8f0;
+            background: var(--view-toggle-bg);
+            border-bottom: 1px solid var(--border-color);
         }
         
         .document-tab {
@@ -581,14 +683,14 @@
             border: none;
             cursor: pointer;
             font-size: 0.95rem;
-            color: #64748b;
+            color: var(--gray-color);
             transition: var(--transition);
             position: relative;
         }
         
         .document-tab.active {
             color: var(--primary-color);
-            background: white;
+            background: var(--card-bg);
         }
         
         .document-tab.active::after {
@@ -605,7 +707,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 24px;
-            background: white;
+            background: var(--card-bg);
         }
         
         .document-iframe {
@@ -617,6 +719,7 @@
         .document-text {
             line-height: 1.8;
             font-size: 1rem;
+            color: var(--text-color);
         }
         
         .document-text h2 {
@@ -644,7 +747,7 @@
         }
         
         .document-text code {
-            background: #f1f5f9;
+            background: var(--view-toggle-bg);
             padding: 2px 6px;
             border-radius: 4px;
             font-family: 'Courier New', monospace;
@@ -652,7 +755,7 @@
         }
         
         .document-text pre {
-            background: #1a202c;
+            background: var(--terminal-bg);
             color: white;
             padding: 15px;
             border-radius: 8px;
@@ -756,45 +859,9 @@
             50% { opacity: 0; }
         }
         
-        /* ===== 列表视图优化 ===== */
-        .list-view .resources-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .list-view .resource-card {
-            flex-direction: row;
-            align-items: center;
-            height: auto;
-            padding: 0;
-        }
-        
-        .list-view .card-image {
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
-        }
-        
-        .list-view .card-content {
-            padding: 20px;
-            flex: 1;
-        }
-        
-        .list-view .card-meta {
-            padding: 20px;
-            border-top: none;
-            border-left: 1px solid #f1f5f9;
-            min-width: 200px;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-        }
-        
-        /* ===== 骨架屏 ===== */
+        /* ===== 骨架屏加载效果 ===== */
         .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background: linear-gradient(90deg, var(--view-toggle-bg) 25%, var(--border-color) 50%, var(--view-toggle-bg) 75%);
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
             border-radius: 4px;
@@ -805,12 +872,13 @@
             100% { background-position: -200% 0; }
         }
         
-        /* ===== 页脚优化 ===== */
+        /* ===== 页脚样式 ===== */
         footer {
-            background: var(--dark-color);
-            color: white;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             padding: 3rem 0 2rem;
             margin-top: 4rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .footer-content {
@@ -825,6 +893,7 @@
             margin-bottom: 1.2rem;
             position: relative;
             padding-bottom: 10px;
+            color: var(--footer-text);
         }
         
         .footer-section h3::after {
@@ -846,7 +915,7 @@
         }
         
         .footer-links a {
-            color: #94a3b8;
+            color: var(--gray-color);
             text-decoration: none;
             transition: var(--transition);
             display: flex;
@@ -863,11 +932,11 @@
             text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
+            color: var(--gray-color);
             font-size: 0.9rem;
         }
         
-        /* ===== 移动端优化 ===== */
+        /* ===== 移动端响应式设计 ===== */
         @media (max-width: 1024px) {
             .container {
                 padding: 0 16px;
@@ -909,15 +978,27 @@
                 padding-bottom: 10px;
             }
             
+            /* 移动端列表视图优化 */
             .list-view .resource-card {
                 flex-direction: column;
+                min-height: auto;
+            }
+            
+            .list-view .card-image {
+                width: 100%;
+                height: 140px;
+                border-radius: var(--border-radius) var(--border-radius) 0 0;
+            }
+            
+            .list-view .card-content {
+                padding: 15px;
             }
             
             .list-view .card-meta {
                 width: 100%;
                 border-left: none;
-                border-top: 1px solid #f1f5f9;
-                padding: 15px 20px;
+                border-top: 1px solid var(--border-color);
+                padding: 15px 0 0;
                 flex-direction: row;
                 justify-content: space-between;
                 min-width: auto;
@@ -963,6 +1044,12 @@
                 padding: 15px;
                 font-size: 0.85rem;
             }
+            
+            .stats-bar {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
         
         /* ===== 工具类 ===== */
@@ -996,7 +1083,7 @@
             margin: 2rem 0;
         }
         
-        /* ===== 动画优化 ===== */
+        /* ===== 动画效果 ===== */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -1014,7 +1101,7 @@
             opacity: 0;
         }
         
-        /* ===== 新增组件 ===== */
+        /* ===== 分页组件 ===== */
         .pagination {
             display: flex;
             justify-content: center;
@@ -1025,11 +1112,12 @@
         
         .page-btn {
             padding: 8px 16px;
-            border: 1px solid #e2e8f0;
-            background: white;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text-color);
         }
         
         .page-btn:hover {
@@ -1048,22 +1136,23 @@
             cursor: not-allowed;
         }
         
+        /* ===== 空状态提示 ===== */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            color: #64748b;
+            color: var(--gray-color);
         }
         
         .empty-state i {
             font-size: 3rem;
-            color: #cbd5e1;
+            color: var(--border-color);
             margin-bottom: 1rem;
         }
         
         .empty-state h3 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
-            color: #475569;
+            color: var(--text-color);
         }
         
         /* ===== 终端样式提示消息 ===== */
@@ -1124,6 +1213,7 @@
         .terminal-toast.warning .terminal-toast-title { color: var(--terminal-yellow); }
         .terminal-toast.info .terminal-toast-title { color: var(--terminal-blue); }
         
+        /* ===== 回到顶部按钮 ===== */
         .back-to-top {
             position: fixed;
             bottom: 20px;
@@ -1216,10 +1306,43 @@
         .copy-warning button:hover {
             background: var(--secondary-color);
         }
+        
+        /* ===== 滚动条样式 ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        
+        /* ===== 夜晚模式滚动条优化 ===== */
+        body.dark-theme ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        
+        body.dark-theme ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+        }
+        
+        body.dark-theme ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
     </style>
 </head>
 <body>
-    <!-- 头部 -->
+    <!-- 头部区域 -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -1258,7 +1381,7 @@
         </div>
     </header>
     
-    <!-- 导航 -->
+    <!-- 导航区域 -->
     <nav>
         <div class="container">
             <div class="nav-content">
@@ -1293,7 +1416,7 @@
         </div>
     </nav>
     
-    <!-- 主要内容 -->
+    <!-- 主要内容区域 -->
     <main>
         <div class="container">
             <!-- 统计信息 -->
@@ -1322,7 +1445,7 @@
                     <!-- 资源卡片将通过JS动态生成 -->
                 </div>
                 
-                <!-- 空状态 -->
+                <!-- 空状态提示 -->
                 <div class="empty-state hidden" id="empty-state">
                     <i class="fas fa-search"></i>
                     <h3>没有找到匹配的资源</h3>
@@ -1330,7 +1453,7 @@
                 </div>
             </div>
             
-            <!-- 分页 -->
+            <!-- 分页组件 -->
             <div class="pagination hidden" id="pagination">
                 <button class="page-btn" id="prev-page" disabled>上一页</button>
                 <div id="page-numbers"></div>
@@ -1354,7 +1477,7 @@
         </div>
     </main>
     
-    <!-- 页脚 -->
+    <!-- 页脚区域 -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -1395,7 +1518,7 @@
         </div>
     </footer>
     
-    <!-- 回到顶部 -->
+    <!-- 回到顶部按钮 -->
     <button class="back-to-top" id="back-to-top" aria-label="回到顶部">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1451,7 +1574,7 @@
     </div>
 
     <script>
-        // 资源数据
+        // ===== 资源数据 =====
         const resourcesData = [
             {
                 id: 1,
@@ -1699,7 +1822,7 @@
             }
         ];
 
-        // 更新日志数据
+        // ===== 更新日志数据 =====
         const updateLogs = [
             { date: "2025-01-15", version: "v2.5.0", type: "feature", content: "新增文档显示功能，支持在线查看资源文档" },
             { date: "2025-01-10", version: "v2.4.0", type: "feature", content: "添加终端样式更新日志，优化界面显示" },
@@ -1715,7 +1838,7 @@
             { date: "2024-11-15", version: "v1.0.0", type: "major", content: "初始版本发布，包含基础资源展示功能" }
         ];
 
-        // 文档内容
+        // ===== 文档内容数据 =====
         const documentContent = {
             guide: {
                 title: "使用指南",
@@ -1966,33 +2089,33 @@ fetch('/api/resources?category=漫画资源')
             }
         };
 
-        // 应用配置
+        // ===== 应用配置常量 =====
         const config = {
-            itemsPerPage: 12,
-            defaultView: 'grid',
-            defaultCategory: 'all',
-            storageKeys: {
+            itemsPerPage: 12,           // 每页显示资源数量
+            defaultView: 'grid',        // 默认视图模式
+            defaultCategory: 'all',     // 默认分类
+            storageKeys: {              // 本地存储键名
                 favorites: 'resource_favorites',
                 viewMode: 'resource_view_mode',
                 theme: 'resource_theme'
             }
         };
 
-        // 应用状态
+        // ===== 应用状态对象 =====
         const state = {
-            currentPage: 1,
-            currentCategory: config.defaultCategory,
-            currentView: config.defaultView,
-            searchQuery: '',
-            favorites: new Set(),
-            filteredResources: [],
-            totalPages: 1,
-            isLoading: false,
-            currentDocument: null,
-            documentTab: 'guide'
+            currentPage: 1,             // 当前页码
+            currentCategory: config.defaultCategory, // 当前分类
+            currentView: config.defaultView,         // 当前视图模式
+            searchQuery: '',            // 搜索关键词
+            favorites: new Set(),       // 收藏的资源ID集合
+            filteredResources: [],      // 过滤后的资源列表
+            totalPages: 1,              // 总页数
+            isLoading: false,           // 加载状态
+            currentDocument: null,      // 当前查看的文档资源
+            documentTab: 'guide'        // 当前文档标签页
         };
 
-        // DOM 元素
+        // ===== DOM元素引用 =====
         const elements = {
             resourcesGrid: document.getElementById('resources-grid'),
             searchInput: document.getElementById('search-input'),
@@ -2025,26 +2148,26 @@ fetch('/api/resources?category=漫画资源')
             copyWarningClose: document.getElementById('copy-warning-close')
         };
 
-        // 初始化应用
+        // ===== 应用初始化函数 =====
         function initApp() {
-            loadUserPreferences();
-            renderStatistics();
-            renderTerminalLogs();
-            setupEventListeners();
-            setupCopyProtection();
-            filterAndRenderResources();
+            loadUserPreferences();     // 加载用户偏好设置
+            renderStatistics();        // 渲染统计信息
+            renderTerminalLogs();      // 渲染终端日志
+            setupEventListeners();     // 设置事件监听器
+            setupCopyProtection();     // 设置防复制保护
+            filterAndRenderResources(); // 初始渲染资源
         }
 
-        // 加载用户偏好
+        // ===== 加载用户偏好设置 =====
         function loadUserPreferences() {
-            // 加载主题
+            // 加载主题设置
             const savedTheme = localStorage.getItem(config.storageKeys.theme);
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-theme');
                 updateThemeIcon('dark');
             }
 
-            // 加载收藏
+            // 加载收藏列表
             const savedFavorites = localStorage.getItem(config.storageKeys.favorites);
             if (savedFavorites) {
                 try {
@@ -2052,7 +2175,7 @@ fetch('/api/resources?category=漫画资源')
                     state.favorites = new Set(favoritesArray);
                     updateFavoritesCount();
                 } catch (e) {
-                    console.error('Error loading favorites:', e);
+                    console.error('加载收藏列表时出错:', e);
                     state.favorites = new Set();
                 }
             }
@@ -2065,7 +2188,7 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 渲染统计信息
+        // ===== 渲染统计信息 =====
         function renderStatistics() {
             // 总资源数
             elements.stats.totalCount.textContent = resourcesData.length;
@@ -2077,12 +2200,12 @@ fetch('/api/resources?category=漫画资源')
             const categories = new Set(resourcesData.map(r => r.category));
             elements.stats.categoryCount.textContent = categories.size;
             
-            // 最近更新（显示最近添加的资源数）
+            // 最近更新数（显示最近添加的资源数）
             const recentCount = resourcesData.filter(r => r.id > 20).length;
             elements.stats.updatedCount.textContent = recentCount;
         }
 
-        // 渲染终端日志
+        // ===== 渲染终端日志 =====
         function renderTerminalLogs() {
             let terminalHTML = '';
             
@@ -2123,11 +2246,12 @@ fetch('/api/resources?category=漫画资源')
                 </div>
             `;
             
-            // 添加更新日志
+            // 添加更新日志条目
             updateLogs.forEach(log => {
                 let typeClass = '';
                 let typeText = '';
                 
+                // 根据更新类型设置样式
                 switch(log.type) {
                     case 'feature':
                         typeClass = 'info';
@@ -2157,7 +2281,7 @@ fetch('/api/resources?category=漫画资源')
                 `;
             });
             
-            // 添加最后一行
+            // 添加最后一行（闪烁光标）
             terminalHTML += `
                 <div class="terminal-line">
                     <span class="terminal-prompt">$</span>
@@ -2168,17 +2292,17 @@ fetch('/api/resources?category=漫画资源')
             
             elements.terminalContent.innerHTML = terminalHTML;
             
-            // 自动滚动到底部
+            // 自动滚动到底部（模拟终端输出效果）
             setTimeout(() => {
                 elements.terminalContent.scrollTop = elements.terminalContent.scrollHeight;
             }, 100);
         }
 
-        // 更新收藏数量
+        // ===== 更新收藏数量显示 =====
         function updateFavoritesCount() {
             elements.stats.favoritesStat.textContent = state.favorites.size;
             
-            // 如果有收藏按钮，更新其显示
+            // 更新收藏按钮上的徽章
             const favoritesBtn = document.getElementById('favorites-btn');
             if (favoritesBtn) {
                 const badge = favoritesBtn.querySelector('.badge') || document.createElement('span');
@@ -2203,7 +2327,7 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 设置事件监听器
+        // ===== 设置事件监听器 =====
         function setupEventListeners() {
             // 搜索功能
             elements.searchInput.addEventListener('input', debounce(handleSearch, 300));
@@ -2223,7 +2347,7 @@ fetch('/api/resources?category=漫画资源')
                 }
             });
 
-            // 排序
+            // 排序功能
             elements.sortSelect.addEventListener('change', () => {
                 filterAndRenderResources();
             });
@@ -2241,7 +2365,7 @@ fetch('/api/resources?category=漫画资源')
                 }
             });
 
-            // 分页
+            // 分页控制
             elements.prevPage.addEventListener('click', () => {
                 if (state.currentPage > 1) {
                     state.currentPage--;
@@ -2256,28 +2380,27 @@ fetch('/api/resources?category=漫画资源')
                 }
             });
 
-            // 回到顶部
+            // 回到顶部按钮
             elements.backToTop.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // 滚动事件
+            // 滚动事件监听（显示/隐藏回到顶部按钮）
             window.addEventListener('scroll', () => {
-                // 显示/隐藏回到顶部按钮
-                if (window.scrollY > 300) {
+                if (window.pageYOffset > 300) {
                     elements.backToTop.classList.add('visible');
                 } else {
                     elements.backToTop.classList.remove('visible');
                 }
             });
 
-            // 主题切换
+            // 主题切换按钮
             const themeToggle = document.getElementById('theme-toggle');
             if (themeToggle) {
                 themeToggle.addEventListener('click', toggleTheme);
             }
 
-            // 收藏页面
+            // 收藏按钮
             const favoritesBtn = document.getElementById('favorites-btn');
             if (favoritesBtn) {
                 favoritesBtn.addEventListener('click', () => {
@@ -2295,7 +2418,7 @@ fetch('/api/resources?category=漫画资源')
                 });
             }
 
-            // 文档显示
+            // 使用文档按钮
             const showDocsBtn = document.getElementById('show-docs-btn');
             if (showDocsBtn) {
                 showDocsBtn.addEventListener('click', (e) => {
@@ -2322,7 +2445,7 @@ fetch('/api/resources?category=漫画资源')
                 });
             }
 
-            // 文档模态框关闭
+            // 文档模态框关闭按钮
             elements.documentClose.addEventListener('click', closeDocumentModal);
             elements.documentModal.addEventListener('click', (e) => {
                 if (e.target === elements.documentModal) {
@@ -2330,7 +2453,7 @@ fetch('/api/resources?category=漫画资源')
                 }
             });
 
-            // 文档标签切换
+            // 文档标签页切换
             document.querySelectorAll('.document-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const tabName = tab.dataset.tab;
@@ -2338,7 +2461,7 @@ fetch('/api/resources?category=漫画资源')
                 });
             });
 
-            // 关闭提示
+            // 关闭提示消息
             elements.toastClose.addEventListener('click', () => {
                 elements.terminalToast.classList.remove('show');
             });
@@ -2348,7 +2471,7 @@ fetch('/api/resources?category=漫画资源')
                 elements.copyWarning.classList.remove('show');
             });
 
-            // 键盘快捷键
+            // 键盘快捷键支持
             document.addEventListener('keydown', (e) => {
                 // Ctrl/Cmd + F 聚焦搜索框
                 if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
@@ -2367,7 +2490,7 @@ fetch('/api/resources?category=漫画资源')
                     }
                 }
                 
-                // Ctrl/Cmd + D 显示文档
+                // Ctrl/Cmd + D 打开文档
                 if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
                     e.preventDefault();
                     openDocumentModal('guide');
@@ -2375,11 +2498,10 @@ fetch('/api/resources?category=漫画资源')
             });
         }
 
-        // 设置防复制保护
+        // ===== 设置防复制保护 =====
         function setupCopyProtection() {
-            // 阻止右键菜单
+            // 阻止右键菜单（除了允许复制的区域）
             document.addEventListener('contextmenu', (e) => {
-                // 允许特定区域右键
                 if (e.target.closest('.allow-select') || 
                     e.target.tagName === 'INPUT' || 
                     e.target.tagName === 'TEXTAREA') {
@@ -2391,11 +2513,9 @@ fetch('/api/resources?category=漫画资源')
                 return false;
             });
             
-            // 阻止复制快捷键
+            // 阻止复制快捷键（Ctrl+C / Cmd+C）
             document.addEventListener('keydown', (e) => {
-                // 检查是否按下复制快捷键 (Ctrl+C 或 Cmd+C)
                 if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
-                    // 允许特定区域复制
                     const selection = window.getSelection();
                     if (!selection.toString().trim() || 
                         selection.anchorNode.closest('.allow-select') ||
@@ -2419,24 +2539,24 @@ fetch('/api/resources?category=漫画资源')
             });
         }
 
-        // 显示复制警告
+        // ===== 显示复制警告 =====
         function showCopyWarning() {
             elements.copyWarning.classList.add('show');
             
-            // 3秒后自动隐藏
+            // 3秒后自动隐藏警告
             setTimeout(() => {
                 elements.copyWarning.classList.remove('show');
             }, 3000);
         }
 
-        // 搜索处理
+        // ===== 搜索处理函数 =====
         function handleSearch() {
             state.searchQuery = elements.searchInput.value.trim().toLowerCase();
             state.currentPage = 1;
             filterAndRenderResources();
         }
 
-        // 过滤资源
+        // ===== 过滤资源函数 =====
         function filterResources() {
             let filtered = [...resourcesData];
 
@@ -2447,7 +2567,7 @@ fetch('/api/resources?category=漫画资源')
                 );
             }
 
-            // 按搜索词筛选
+            // 按搜索关键词筛选
             if (state.searchQuery) {
                 filtered = filtered.filter(resource => 
                     resource.title.toLowerCase().includes(state.searchQuery) ||
@@ -2465,7 +2585,7 @@ fetch('/api/resources?category=漫画资源')
                     case 'category':
                         return a.category.localeCompare(b.category);
                     default:
-                        return b.visits - a.visits; // 默认按访问量排序
+                        return b.visits - a.visits; // 默认按访问量降序排序
                 }
             });
 
@@ -2473,16 +2593,16 @@ fetch('/api/resources?category=漫画资源')
             state.totalPages = Math.ceil(filtered.length / config.itemsPerPage);
         }
 
-        // 渲染资源
+        // ===== 渲染资源卡片 =====
         function renderResources() {
             const startIndex = (state.currentPage - 1) * config.itemsPerPage;
             const endIndex = startIndex + config.itemsPerPage;
             const pageResources = state.filteredResources.slice(startIndex, endIndex);
 
-            // 清空容器
+            // 清空资源容器
             elements.resourcesGrid.innerHTML = '';
 
-            // 显示空状态
+            // 显示空状态提示（如果没有资源）
             if (pageResources.length === 0) {
                 elements.emptyState.classList.remove('hidden');
                 elements.pagination.classList.add('hidden');
@@ -2497,11 +2617,11 @@ fetch('/api/resources?category=漫画资源')
                 elements.resourcesGrid.appendChild(card);
             });
 
-            // 更新分页
+            // 更新分页组件
             updatePagination();
         }
 
-        // 创建资源卡片
+        // ===== 创建单个资源卡片 =====
         function createResourceCard(resource, index) {
             const isFavorite = state.favorites.has(resource.id);
             const hasDoc = !!resource.docUrl;
@@ -2509,8 +2629,9 @@ fetch('/api/resources?category=漫画资源')
             card.className = `resource-card`;
             card.style.setProperty('--index', index);
             
-            // 根据视图模式选择模板
+            // 根据当前视图模式选择模板
             if (state.currentView === 'grid') {
+                // 网格视图模板
                 card.innerHTML = `
                     <div class="card-image ${resource.colorClass}">
                         <i class="${resource.icon}"></i>
@@ -2554,7 +2675,7 @@ fetch('/api/resources?category=漫画资源')
                     </div>
                 `;
             } else {
-                // 列表视图
+                // 列表视图模板
                 card.innerHTML = `
                     <div class="card-image ${resource.colorClass}">
                         <i class="${resource.icon}"></i>
@@ -2566,34 +2687,34 @@ fetch('/api/resources?category=漫画资源')
                             ${resource.title}
                         </h3>
                         <p class="card-description allow-select">${resource.description}</p>
-                    </div>
-                    <div class="card-meta">
-                        <a href="${resource.url}" 
-                           class="card-link" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           onclick="trackVisit(${resource.id})">
-                            <i class="fas fa-external-link-alt"></i>
-                            访问
-                        </a>
-                        <div class="card-actions">
-                            ${hasDoc ? `
-                            <button class="action-btn" 
-                                    onclick="showResourceDoc(${resource.id})"
-                                    aria-label="查看文档">
-                                <i class="fas fa-book"></i>
-                            </button>
-                            ` : ''}
-                            <button class="action-btn ${isFavorite ? 'active' : ''}" 
-                                    onclick="toggleFavorite(${resource.id})"
-                                    aria-label="${isFavorite ? '取消收藏' : '收藏'}">
-                                <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-                            </button>
-                            <button class="action-btn" 
-                                    onclick="shareResource(${resource.id})"
-                                    aria-label="分享">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
+                        <div class="card-meta">
+                            <a href="${resource.url}" 
+                               class="card-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               onclick="trackVisit(${resource.id})">
+                                <i class="fas fa-external-link-alt"></i>
+                                访问
+                            </a>
+                            <div class="card-actions">
+                                ${hasDoc ? `
+                                <button class="action-btn" 
+                                        onclick="showResourceDoc(${resource.id})"
+                                        aria-label="查看文档">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                                ` : ''}
+                                <button class="action-btn ${isFavorite ? 'active' : ''}" 
+                                        onclick="toggleFavorite(${resource.id})"
+                                        aria-label="${isFavorite ? '取消收藏' : '收藏'}">
+                                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                                </button>
+                                <button class="action-btn" 
+                                        onclick="shareResource(${resource.id})"
+                                        aria-label="分享">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -2602,7 +2723,7 @@ fetch('/api/resources?category=漫画资源')
             return card;
         }
 
-        // 更新分页
+        // ===== 更新分页组件 =====
         function updatePagination() {
             if (state.totalPages <= 1) {
                 elements.pagination.classList.add('hidden');
@@ -2637,41 +2758,41 @@ fetch('/api/resources?category=漫画资源')
             elements.pageNumbers.innerHTML = pageHTML;
         }
 
-        // 跳转到指定页
+        // ===== 跳转到指定页面 =====
         function goToPage(page) {
             state.currentPage = page;
             filterAndRenderResources();
             window.scrollTo({ top: elements.resourcesGrid.offsetTop - 100, behavior: 'smooth' });
         }
 
-        // 过滤并渲染资源
+        // ===== 过滤并渲染资源（组合函数） =====
         function filterAndRenderResources() {
             filterResources();
             renderResources();
         }
 
-        // 更新活动分类
+        // ===== 更新活动分类按钮状态 =====
         function updateActiveCategory(category) {
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.category === category);
             });
         }
 
-        // 更新视图模式
+        // ===== 更新视图模式 =====
         function updateViewMode(view) {
-            // 更新按钮状态
+            // 更新视图按钮状态
             document.querySelectorAll('.view-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
             });
 
-            // 更新容器类名
+            // 更新资源网格容器的类名
             elements.resourcesGrid.classList.toggle('list-view', view === 'list');
             
-            // 保存偏好
+            // 保存视图偏好到本地存储
             localStorage.setItem(config.storageKeys.viewMode, view);
         }
 
-        // 切换收藏
+        // ===== 切换收藏状态 =====
         function toggleFavorite(id) {
             if (state.favorites.has(id)) {
                 state.favorites.delete(id);
@@ -2681,19 +2802,20 @@ fetch('/api/resources?category=漫画资源')
                 showTerminalToast('添加收藏', '已添加到收藏列表', 'success');
             }
 
-            // 保存到本地存储
+            // 保存收藏列表到本地存储
             localStorage.setItem(config.storageKeys.favorites, JSON.stringify([...state.favorites]));
             
-            // 更新UI
+            // 更新UI显示
             updateFavoritesCount();
             filterAndRenderResources();
         }
 
-        // 分享资源
+        // ===== 分享资源 =====
         function shareResource(id) {
             const resource = resourcesData.find(r => r.id === id);
             if (!resource) return;
 
+            // 如果浏览器支持Web Share API，使用系统分享
             if (navigator.share) {
                 navigator.share({
                     title: resource.title,
@@ -2701,7 +2823,7 @@ fetch('/api/resources?category=漫画资源')
                     url: resource.url
                 }).catch(console.error);
             } else {
-                // 回退方案：复制到剪贴板
+                // 回退方案：复制链接到剪贴板
                 const text = `${resource.title}\n${resource.description}\n${resource.url}`;
                 navigator.clipboard.writeText(text)
                     .then(() => showTerminalToast('分享成功', '链接已复制到剪贴板', 'success'))
@@ -2709,7 +2831,7 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 显示资源文档
+        // ===== 显示资源文档 =====
         function showResourceDoc(id) {
             const resource = resourcesData.find(r => r.id === id);
             if (!resource || !resource.docUrl) return;
@@ -2717,27 +2839,27 @@ fetch('/api/resources?category=漫画资源')
             state.currentDocument = resource;
             elements.documentTitle.textContent = `${resource.title} - 文档`;
             
-            // 显示外部文档
+            // 显示外部文档（通过iframe）
             elements.documentContent.innerHTML = `
                 <div style="height: 600px;">
                     <iframe src="${resource.docUrl}" class="document-iframe" frameborder="0"></iframe>
                 </div>
-                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <div style="margin-top: 20px; padding: 15px; background: var(--view-toggle-bg); border-radius: 8px;">
                     <p><strong>提示：</strong>正在加载外部文档。如果无法显示，请<a href="${resource.docUrl}" target="_blank">点击这里直接访问</a>。</p>
                 </div>
             `;
             
-            // 激活外部文档标签
+            // 激活外部文档标签页
             document.querySelectorAll('.document-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === 'external');
             });
             
-            // 显示模态框
+            // 显示文档模态框
             elements.documentModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // 打开文档模态框
+        // ===== 打开文档模态框 =====
         function openDocumentModal(tabName = 'guide') {
             state.currentDocument = null;
             elements.documentTitle.textContent = documentContent[tabName].title;
@@ -2746,22 +2868,22 @@ fetch('/api/resources?category=漫画资源')
             document.body.style.overflow = 'hidden';
         }
 
-        // 关闭文档模态框
+        // ===== 关闭文档模态框 =====
         function closeDocumentModal() {
             elements.documentModal.classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        // 切换文档标签
+        // ===== 切换文档标签页 =====
         function switchDocumentTab(tabName) {
             state.documentTab = tabName;
             
-            // 更新标签激活状态
+            // 更新标签页激活状态
             document.querySelectorAll('.document-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === tabName);
             });
             
-            // 更新内容
+            // 更新文档内容
             if (tabName === 'external' && state.currentDocument) {
                 // 外部文档模式
                 const resource = state.currentDocument;
@@ -2769,7 +2891,7 @@ fetch('/api/resources?category=漫画资源')
                     <div style="height: 600px;">
                         <iframe src="${resource.docUrl}" class="document-iframe" frameborder="0"></iframe>
                     </div>
-                    <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="margin-top: 20px; padding: 15px; background: var(--view-toggle-bg); border-radius: 8px;">
                         <p><strong>提示：</strong>正在加载外部文档。如果无法显示，请<a href="${resource.docUrl}" target="_blank">点击这里直接访问</a>。</p>
                     </div>
                 `;
@@ -2783,7 +2905,7 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 追踪访问
+        // ===== 追踪资源访问 =====
         function trackVisit(id) {
             const resource = resourcesData.find(r => r.id === id);
             if (resource) {
@@ -2792,14 +2914,14 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 切换主题
+        // ===== 切换主题（白天/夜晚模式） =====
         function toggleTheme() {
             const isDark = document.body.classList.toggle('dark-theme');
             updateThemeIcon(isDark ? 'dark' : 'light');
             localStorage.setItem(config.storageKeys.theme, isDark ? 'dark' : 'light');
         }
 
-        // 更新主题图标
+        // ===== 更新主题图标 =====
         function updateThemeIcon(theme) {
             const icon = document.querySelector('#theme-toggle i');
             if (icon) {
@@ -2807,13 +2929,13 @@ fetch('/api/resources?category=漫画资源')
             }
         }
 
-        // 显示终端样式提示消息
+        // ===== 显示终端样式提示消息 =====
         function showTerminalToast(title, message, type = 'info') {
             // 更新标题和内容
             elements.toastTitle.textContent = title;
             elements.toastContent.textContent = message;
             
-            // 更新类型样式
+            // 根据类型设置样式
             elements.terminalToast.className = `terminal-toast ${type}`;
             
             // 显示toast
@@ -2825,7 +2947,7 @@ fetch('/api/resources?category=漫画资源')
             }, 3000);
         }
 
-        // 防抖函数
+        // ===== 防抖函数（用于搜索优化） =====
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -2838,14 +2960,14 @@ fetch('/api/resources?category=漫画资源')
             };
         }
 
-        // 导出到全局，供HTML中的onclick使用
+        // ===== 全局函数导出（供HTML中的onclick使用） =====
         window.toggleFavorite = toggleFavorite;
         window.shareResource = shareResource;
         window.trackVisit = trackVisit;
         window.goToPage = goToPage;
         window.showResourceDoc = showResourceDoc;
 
-        // 初始化应用
+        // ===== 应用初始化 =====
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
