@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="鸿渚の资源分享 - 提供高质量的漫画、程序、识图等资源分享">
-    <meta name="keywords" content="漫画资源,程序资源,识图资源,资源分享">
+    <meta name="keywords" content="漫画资源,程序资源,识图资源,资源分享,鸿渚">
     <meta name="author" content="鸿渚">
     <title>鸿渚の资源分享</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,12 +24,21 @@
             --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --border-radius: 12px;
+            --terminal-bg: #0d1117;
+            --terminal-green: #7ee787;
+            --terminal-blue: #79c0ff;
+            --terminal-yellow: #ffa657;
+            --terminal-red: #ff7b72;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none; /* 防复制 */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
@@ -41,6 +50,20 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 允许特定区域复制 */
+        .allow-select,
+        .document-content,
+        .terminal-content,
+        .resource-description,
+        .card-description,
+        input,
+        textarea {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
         }
         
         .container {
@@ -154,6 +177,7 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
         
         .pref-btn:hover {
@@ -460,6 +484,278 @@
             transform: translateY(-2px);
         }
         
+        /* ===== 文档显示模态框 ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 0;
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .document-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .document-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #64748b;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .document-tab.active {
+            color: var(--primary-color);
+            background: white;
+        }
+        
+        .document-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+        
+        .document-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: white;
+        }
+        
+        .document-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .document-text {
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        
+        .document-text h2 {
+            margin: 20px 0 10px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+        
+        .document-text h3 {
+            margin: 15px 0 8px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .document-text p {
+            margin-bottom: 15px;
+        }
+        
+        .document-text ul, .document-text ol {
+            margin: 10px 0 15px 20px;
+        }
+        
+        .document-text li {
+            margin-bottom: 5px;
+        }
+        
+        .document-text code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .document-text pre {
+            background: #1a202c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        /* ===== 终端样式更新日志 ===== */
+        .terminal-container {
+            background: var(--terminal-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin: 3rem 0;
+            border: 1px solid #30363d;
+        }
+        
+        .terminal-header {
+            background: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27ca3f; }
+        
+        .terminal-title {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .terminal-content {
+            padding: 20px;
+            font-family: 'Courier New', 'Cascadia Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #c9d1d9;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .terminal-line {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .terminal-prompt {
+            color: var(--terminal-green);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .terminal-command {
+            color: var(--terminal-blue);
+            flex-shrink: 0;
+        }
+        
+        .terminal-output {
+            color: #c9d1d9;
+            flex: 1;
+        }
+        
+        .terminal-output.error { color: var(--terminal-red); }
+        .terminal-output.success { color: var(--terminal-green); }
+        .terminal-output.warning { color: var(--terminal-yellow); }
+        .terminal-output.info { color: var(--terminal-blue); }
+        
+        .terminal-blink {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: var(--terminal-green);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
         /* ===== 列表视图优化 ===== */
         .list-view .resources-grid {
             display: flex;
@@ -631,6 +927,22 @@
                 flex-wrap: wrap;
                 justify-content: space-between;
             }
+            
+            .modal {
+                width: 95%;
+                height: 85vh;
+            }
+            
+            .document-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            
+            .document-tab {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
         }
         
         @media (max-width: 480px) {
@@ -645,6 +957,11 @@
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+            
+            .terminal-content {
+                padding: 15px;
+                font-size: 0.85rem;
             }
         }
         
@@ -749,37 +1066,63 @@
             color: #475569;
         }
         
-        .toast {
+        /* ===== 终端样式提示消息 ===== */
+        .terminal-toast {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            padding: 12px 24px;
-            background: var(--success-color);
-            color: white;
+            background: var(--terminal-bg);
+            color: #c9d1d9;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+            max-width: 400px;
+            font-family: 'Courier New', monospace;
         }
         
-        .toast.show {
+        .terminal-toast.show {
             transform: translateY(0);
             opacity: 1;
         }
         
-        .toast.error {
-            background: var(--danger-color);
+        .terminal-toast-header {
+            background: #161b22;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #30363d;
         }
         
-        .toast.warning {
-            background: var(--warning-color);
-            color: var(--dark-color);
+        .terminal-toast-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
         }
+        
+        .terminal-toast-close {
+            background: transparent;
+            border: none;
+            color: #8b949e;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .terminal-toast-content {
+            padding: 16px;
+            line-height: 1.6;
+        }
+        
+        .terminal-toast.success .terminal-toast-title { color: var(--terminal-green); }
+        .terminal-toast.error .terminal-toast-title { color: var(--terminal-red); }
+        .terminal-toast.warning .terminal-toast-title { color: var(--terminal-yellow); }
+        .terminal-toast.info .terminal-toast-title { color: var(--terminal-blue); }
         
         .back-to-top {
             position: fixed;
@@ -811,6 +1154,68 @@
             background: var(--secondary-color);
             transform: translateY(-2px);
         }
+        
+        /* ===== 卡片颜色方案 ===== */
+        .card-comic { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .card-program { background: linear-gradient(135deg, #4361ee, #4895ef); }
+        .card-image-search { background: linear-gradient(135deg, #7209b7, #9d4edd); }
+        .card-up { background: linear-gradient(135deg, #06d6a0, #4ecdc4); }
+        .card-other { background: linear-gradient(135deg, #f72585, #fd79a8); }
+        
+        /* ===== 防复制警告 ===== */
+        .copy-warning {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            z-index: 3000;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            backdrop-filter: blur(10px);
+            border: 1px solid #30363d;
+            max-width: 400px;
+        }
+        
+        .copy-warning.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .copy-warning i {
+            font-size: 2.5rem;
+            color: var(--warning-color);
+            margin-bottom: 15px;
+        }
+        
+        .copy-warning h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .copy-warning p {
+            color: #adb5bd;
+            margin-bottom: 15px;
+        }
+        
+        .copy-warning button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-warning button:hover {
+            background: var(--secondary-color);
+        }
     </style>
 </head>
 <body>
@@ -840,6 +1245,9 @@
                         <button class="pref-btn" id="favorites-btn" aria-label="查看收藏">
                             <i class="fas fa-heart"></i>
                             <span id="favorites-count" class="sr-only"></span>
+                        </button>
+                        <button class="pref-btn" id="update-log-btn" aria-label="查看更新日志">
+                            <i class="fas fa-terminal"></i>
                         </button>
                     </div>
                     <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="打开菜单">
@@ -928,6 +1336,21 @@
                 <div id="page-numbers"></div>
                 <button class="page-btn" id="next-page">下一页</button>
             </div>
+            
+            <!-- 终端样式更新日志 -->
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                    </div>
+                    <div class="terminal-title">更新日志 - v2.5.0</div>
+                </div>
+                <div class="terminal-content allow-select" id="terminal-content">
+                    <!-- 终端内容将通过JS动态生成 -->
+                </div>
+            </div>
         </div>
     </main>
     
@@ -944,9 +1367,9 @@
                     <h3>快速链接</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-star"></i> 热门资源</a></li>
-                        <li><a href="#"><i class="fas fa-heart"></i> 我的收藏</a></li>
+                        <li><a href="#" id="show-docs-btn"><i class="fas fa-book"></i> 使用文档</a></li>
                         <li><a href="#"><i class="fas fa-history"></i> 最近更新</a></li>
-                        <li><a href="#"><i class="fas fa-share-alt"></i> 分享资源</a></li>
+                        <li><a href="#" id="report-issue-btn"><i class="fas fa-bug"></i> 反馈问题</a></li>
                     </ul>
                 </div>
                 
@@ -955,8 +1378,8 @@
                     <ul class="footer-links">
                         <li><a href="mailto:lzc737507@outlook.com"><i class="fas fa-envelope"></i> 邮箱联系</a></li>
                         <li><a href="#"><i class="fas fa-question-circle"></i> 常见问题</a></li>
-                        <li><a href="#"><i class="fas fa-exclamation-triangle"></i> 反馈问题</a></li>
-                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.1.0</a></li>
+                        <li><a href="#" id="api-docs-btn"><i class="fas fa-code"></i> API文档</a></li>
+                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.5.0</a></li>
                     </ul>
                 </div>
                 
@@ -967,7 +1390,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用</p>
+                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用 | 最后更新: 2025-01-15</p>
             </div>
         </div>
     </footer>
@@ -977,23 +1400,54 @@
         <i class="fas fa-arrow-up"></i>
     </button>
     
-    <!-- 提示消息 -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-message">操作成功</span>
-    </div>
-    
-    <!-- 移动端菜单 -->
-    <div class="mobile-menu hidden" id="mobile-menu">
-        <div class="mobile-menu-header">
-            <h3>导航菜单</h3>
-            <button class="mobile-menu-close" id="mobile-menu-close" aria-label="关闭菜单">
+    <!-- 终端样式提示消息 -->
+    <div class="terminal-toast" id="terminal-toast">
+        <div class="terminal-toast-header">
+            <div class="terminal-toast-title">
+                <i class="fas fa-info-circle"></i>
+                <span id="toast-title">提示</span>
+            </div>
+            <button class="terminal-toast-close" id="toast-close">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="mobile-categories" id="mobile-categories">
-            <!-- 移动端分类按钮将通过JS生成 -->
+        <div class="terminal-toast-content" id="toast-content">
+            操作成功
         </div>
+    </div>
+    
+    <!-- 文档显示模态框 -->
+    <div class="modal-overlay" id="document-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-book"></i>
+                    <span id="document-title">使用文档</span>
+                </div>
+                <button class="modal-close" id="document-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="document-tabs">
+                    <button class="document-tab active" data-tab="guide">使用指南</button>
+                    <button class="document-tab" data-tab="api">API文档</button>
+                    <button class="document-tab" data-tab="faq">常见问题</button>
+                    <button class="document-tab" data-tab="external">外部文档</button>
+                </div>
+                <div class="document-content allow-select" id="document-content">
+                    <!-- 文档内容将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 防复制警告 -->
+    <div class="copy-warning" id="copy-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>内容保护提示</h3>
+        <p>本网站内容受保护，禁止未经授权的复制。如需引用，请联系管理员获取授权。</p>
+        <button id="copy-warning-close">我知道了</button>
     </div>
 
     <script>
@@ -1007,7 +1461,8 @@
                 url: "https://nhentai.net/",
                 icon: "fas fa-book",
                 colorClass: "card-comic",
-                visits: 12500
+                visits: 12500,
+                docUrl: "https://nhentai.net/info/"
             },
             {
                 id: 2,
@@ -1037,7 +1492,8 @@
                 url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
                 icon: "fas fa-paint-brush",
                 colorClass: "card-program",
-                visits: 15400
+                visits: 15400,
+                docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/wiki"
             },
             {
                 id: 5,
@@ -1087,7 +1543,8 @@
                 url: "https://trace.moe/",
                 icon: "fas fa-film",
                 colorClass: "card-image-search",
-                visits: 9800
+                visits: 9800,
+                docUrl: "https://soruly.github.io/trace.moe/"
             },
             {
                 id: 13,
@@ -1237,9 +1694,277 @@
                 url: "https://watchfleeting.github.io/starsea-game/",
                 icon: "fas fa-unlock-alt",
                 colorClass: "card-other",
-                visits: 2900
+                visits: 2900,
+                docUrl: "https://github.com/watchfleeting/starsea-game"
             }
         ];
+
+        // 更新日志数据
+        const updateLogs = [
+            { date: "2025-01-15", version: "v2.5.0", type: "feature", content: "新增文档显示功能，支持在线查看资源文档" },
+            { date: "2025-01-10", version: "v2.4.0", type: "feature", content: "添加终端样式更新日志，优化界面显示" },
+            { date: "2025-01-05", version: "v2.3.0", type: "security", content: "增强防复制功能，添加复制警告提示" },
+            { date: "2024-12-28", version: "v2.2.0", type: "feature", content: "新增收藏功能，支持本地存储收藏列表" },
+            { date: "2024-12-20", version: "v2.1.0", type: "feature", content: "添加分页功能，优化大量资源加载性能" },
+            { date: "2024-12-15", version: "v2.0.0", type: "major", content: "全面重构界面，采用现代化设计语言" },
+            { date: "2024-12-10", version: "v1.5.0", type: "feature", content: "新增搜索功能，支持按分类筛选" },
+            { date: "2024-12-05", version: "v1.4.0", type: "improvement", content: "优化移动端适配，提升响应式体验" },
+            { date: "2024-11-30", version: "v1.3.0", type: "feature", content: "添加资源统计信息面板" },
+            { date: "2024-11-25", version: "v1.2.0", type: "feature", content: "新增网格/列表视图切换功能" },
+            { date: "2024-11-20", version: "v1.1.0", type: "feature", content: "添加主题切换功能，支持深色模式" },
+            { date: "2024-11-15", version: "v1.0.0", type: "major", content: "初始版本发布，包含基础资源展示功能" }
+        ];
+
+        // 文档内容
+        const documentContent = {
+            guide: {
+                title: "使用指南",
+                content: `
+                    <h2>网站使用指南</h2>
+                    <p>欢迎使用鸿渚资源分享网站！本指南将帮助您快速了解和使用网站的各项功能。</p>
+                    
+                    <h3>1. 资源浏览</h3>
+                    <p>网站资源按分类组织，您可以通过以下方式浏览：</p>
+                    <ul>
+                        <li><strong>分类筛选</strong>：点击导航栏的分类按钮，筛选特定类型的资源</li>
+                        <li><strong>搜索功能</strong>：使用顶部搜索框，输入关键词查找特定资源</li>
+                        <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类或默认排序查看资源</li>
+                    </ul>
+                    
+                    <h3>2. 视图切换</h3>
+                    <p>网站支持两种资源展示视图：</p>
+                    <ul>
+                        <li><strong>网格视图</strong>：适合快速浏览，每行显示多个资源卡片</li>
+                        <li><strong>列表视图</strong>：适合详细查看，每行显示一个资源的详细信息</li>
+                    </ul>
+                    
+                    <h3>3. 资源操作</h3>
+                    <p>对每个资源，您可以执行以下操作：</p>
+                    <ul>
+                        <li><strong>访问网站</strong>：点击"访问网站"按钮，在新标签页打开资源链接</li>
+                        <li><strong>收藏资源</strong>：点击心形图标，将资源添加到收藏列表</li>
+                        <li><strong>查看文档</strong>：点击文档图标，查看资源的详细文档（如果可用）</li>
+                        <li><strong>分享资源</strong>：点击分享图标，复制资源链接或使用系统分享功能</li>
+                    </ul>
+                    
+                    <h3>4. 个人偏好</h3>
+                    <p>网站会记住您的以下偏好设置：</p>
+                    <ul>
+                        <li><strong>收藏列表</strong>：本地存储您收藏的资源</li>
+                        <li><strong>视图模式</strong>：记住您选择的视图（网格/列表）</li>
+                        <li><strong>主题设置</strong>：记住您选择的主题（浅色/深色）</li>
+                    </ul>
+                    
+                    <h3>5. 更新日志</h3>
+                    <p>网站底部提供了终端样式的更新日志，记录了所有版本更新内容。您可以在这里了解网站的最新功能和改进。</p>
+                    
+                    <h3>6. 注意事项</h3>
+                    <ul>
+                        <li>网站资源来自网络，仅供学习交流使用</li>
+                        <li>请遵守相关法律法规，合理使用资源</li>
+                        <li>如发现资源失效或有问题，请通过反馈功能报告</li>
+                    </ul>
+                    
+                    <p>如果您有任何问题或建议，请通过页面底部的联系方式与我们联系。</p>
+                `
+            },
+            api: {
+                title: "API文档",
+                content: `
+                    <h2>API文档</h2>
+                    <p>鸿渚资源分享网站提供简单的API接口，用于获取资源数据。</p>
+                    
+                    <h3>基础信息</h3>
+                    <ul>
+                        <li><strong>API地址</strong>: <code>/api/resources</code></li>
+                        <li><strong>请求方法</strong>: GET</li>
+                        <li><strong>返回格式</strong>: JSON</li>
+                    </ul>
+                    
+                    <h3>请求参数</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>参数名</th>
+                                <th>类型</th>
+                                <th>必填</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>category</code></td>
+                                <td>string</td>
+                                <td>否</td>
+                                <td>资源分类，如"漫画资源"、"程序资源"等</td>
+                            </tr>
+                            <tr>
+                                <td><code>search</code></td>
+                                <td>string</td>
+                                <td>否</td>
+                                <td>搜索关键词，将在标题和描述中搜索</td>
+                            </tr>
+                            <tr>
+                                <td><code>page</code></td>
+                                <td>number</td>
+                                <td>否</td>
+                                <td>页码，默认为1</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit</code></td>
+                                <td>number</td>
+                                <td>否</td>
+                                <td>每页数量，默认为12，最大50</td>
+                            </tr>
+                            <tr>
+                                <td><code>sort</code></td>
+                                <td>string</td>
+                                <td>否</td>
+                                <td>排序方式，可选: "default", "name", "category"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>响应示例</h3>
+                    <pre><code>{
+  "success": true,
+  "data": {
+    "resources": [
+      {
+        "id": 1,
+        "title": "nhentai",
+        "description": "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+        "category": "漫画资源",
+        "url": "https://nhentai.net/",
+        "icon": "fas fa-book",
+        "colorClass": "card-comic",
+        "visits": 12500
+      },
+      // 更多资源...
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 12,
+      "total": 27,
+      "pages": 3
+    }
+  }
+}</code></pre>
+                    
+                    <h3>错误响应</h3>
+                    <pre><code>{
+  "success": false,
+  "error": {
+    "code": "INVALID_PARAM",
+    "message": "参数错误",
+    "details": "page参数必须是数字"
+  }
+}</code></pre>
+                    
+                    <h3>使用示例</h3>
+                    <p>使用JavaScript获取资源数据：</p>
+                    <pre><code>// 获取所有漫画资源
+fetch('/api/resources?category=漫画资源')
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      console.log('获取到资源:', data.data.resources);
+    } else {
+      console.error('获取失败:', data.error.message);
+    }
+  });</code></pre>
+                    
+                    <h3>注意事项</h3>
+                    <ul>
+                        <li>API目前为只读，不支持修改操作</li>
+                        <li>请勿频繁请求，建议合理缓存数据</li>
+                        <li>API可能随版本更新而改变，请关注更新日志</li>
+                    </ul>
+                `
+            },
+            faq: {
+                title: "常见问题",
+                content: `
+                    <h2>常见问题 (FAQ)</h2>
+                    
+                    <h3>1. 网站资源来自哪里？</h3>
+                    <p>网站资源由管理员从互联网收集整理，均为公开可访问的资源。我们会定期检查资源有效性，但无法保证所有资源始终可用。</p>
+                    
+                    <h3>2. 如何提交新的资源？</h3>
+                    <p>目前网站暂未开放用户提交功能。如果您有优质资源推荐，可以通过页面底部的邮箱联系我们。</p>
+                    
+                    <h3>3. 为什么有些资源无法访问？</h3>
+                    <p>资源无法访问可能有以下原因：</p>
+                    <ul>
+                        <li>原网站已关闭或更改地址</li>
+                        <li>网络连接问题</li>
+                        <li>资源被墙（需要科学上网）</li>
+                        <li>临时性的服务器问题</li>
+                    </ul>
+                    <p>如果发现资源失效，请通过反馈功能报告，我们会及时更新或移除。</p>
+                    
+                    <h3>4. 如何收藏资源？</h3>
+                    <p>点击资源卡片上的心形图标即可收藏。收藏列表会保存在您的浏览器本地存储中，清理浏览器数据会导致收藏丢失。</p>
+                    
+                    <h3>5. 网站支持深色模式吗？</h3>
+                    <p>支持。点击右上角的月亮图标可以切换深色模式，您的偏好设置会被保存。</p>
+                    
+                    <h3>6. 为什么不能复制网站内容？</h3>
+                    <p>为了保护网站内容不被未经授权的复制，我们启用了防复制功能。但文档区域和终端区域允许复制，以便您获取有用信息。</p>
+                    
+                    <h3>7. 网站会收集用户数据吗？</h3>
+                    <p>我们仅收集必要的匿名使用数据（如资源访问次数），用于改进网站体验。所有数据都保存在您的浏览器本地，不会上传到服务器。</p>
+                    
+                    <h3>8. 如何联系管理员？</h3>
+                    <p>您可以通过以下方式联系我们：</p>
+                    <ul>
+                        <li>邮箱: lzc737507@outlook.com</li>
+                        <li>反馈功能: 点击页面底部的"反馈问题"链接</li>
+                    </ul>
+                    
+                    <h3>9. 网站有移动端应用吗？</h3>
+                    <p>目前只有网页版。网站已针对移动端进行优化，您可以将网站添加到手机主屏幕，获得类似应用的体验。</p>
+                    
+                    <h3>10. 如何查看更新日志？</h3>
+                    <p>页面底部的终端样式区域显示了完整的更新日志。您也可以点击右上角的终端图标快速滚动到更新日志。</p>
+                `
+            },
+            external: {
+                title: "外部文档",
+                content: `
+                    <h2>外部文档链接</h2>
+                    <p>以下是一些资源的外部文档链接，点击可直接访问：</p>
+                    
+                    <h3>漫画资源文档</h3>
+                    <ul>
+                        <li><a href="https://nhentai.net/info/" target="_blank">nhentai 官方文档</a> - nhentai网站使用说明和常见问题</li>
+                        <li><a href="https://github.com/Ehviewer-Overhauled/Ehviewer/wiki" target="_blank">Ehviewer Wiki</a> - Ehviewer安装和使用指南</li>
+                    </ul>
+                    
+                    <h3>识图资源文档</h3>
+                    <ul>
+                        <li><a href="https://soruly.github.io/trace.moe/" target="_blank">trace.moe API文档</a> - 动漫识图API使用说明</li>
+                        <li><a href="https://saucenao.com/user.php?page=search-api" target="_blank">SauceNAO API文档</a> - SauceNAO搜索API文档</li>
+                    </ul>
+                    
+                    <h3>开发资源文档</h3>
+                    <ul>
+                        <li><a href="https://github.com/watchfleeting/starsea-game" target="_blank">小男孩冒险成长 源码</a> - 游戏源码和开发文档</li>
+                        <li><a href="https://developer.mozilla.org/zh-CN/" target="_blank">MDN Web Docs</a> - Web开发技术文档</li>
+                        <li><a href="https://devdocs.io/" target="_blank">DevDocs</a> - 多种编程语言和框架的文档</li>
+                    </ul>
+                    
+                    <h3>其他有用文档</h3>
+                    <ul>
+                        <li><a href="https://docs.github.com/zh" target="_blank">GitHub 文档</a> - GitHub使用指南</li>
+                        <li><a href="https://markdown.com.cn/" target="_blank">Markdown 指南</a> - Markdown语法教程</li>
+                        <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a> - Web开发教程</li>
+                    </ul>
+                    
+                    <p>注意：外部链接可能会变更或失效，如果发现链接问题，请通过反馈功能告诉我们。</p>
+                `
+            }
+        };
 
         // 应用配置
         const config = {
@@ -1262,7 +1987,9 @@
             favorites: new Set(),
             filteredResources: [],
             totalPages: 1,
-            isLoading: false
+            isLoading: false,
+            currentDocument: null,
+            documentTab: 'guide'
         };
 
         // DOM 元素
@@ -1274,7 +2001,10 @@
             sortSelect: document.getElementById('sort-select'),
             viewToggle: document.querySelector('.view-toggle'),
             backToTop: document.getElementById('back-to-top'),
-            toast: document.getElementById('toast'),
+            terminalToast: document.getElementById('terminal-toast'),
+            toastTitle: document.getElementById('toast-title'),
+            toastContent: document.getElementById('toast-content'),
+            toastClose: document.getElementById('toast-close'),
             emptyState: document.getElementById('empty-state'),
             pagination: document.getElementById('pagination'),
             prevPage: document.getElementById('prev-page'),
@@ -1285,14 +2015,23 @@
                 favoritesStat: document.getElementById('favorites-stat'),
                 categoryCount: document.getElementById('category-count'),
                 updatedCount: document.getElementById('updated-count')
-            }
+            },
+            terminalContent: document.getElementById('terminal-content'),
+            documentModal: document.getElementById('document-modal'),
+            documentTitle: document.getElementById('document-title'),
+            documentContent: document.getElementById('document-content'),
+            documentClose: document.getElementById('document-close'),
+            copyWarning: document.getElementById('copy-warning'),
+            copyWarningClose: document.getElementById('copy-warning-close')
         };
 
         // 初始化应用
         function initApp() {
             loadUserPreferences();
             renderStatistics();
+            renderTerminalLogs();
             setupEventListeners();
+            setupCopyProtection();
             filterAndRenderResources();
         }
 
@@ -1341,6 +2080,98 @@
             // 最近更新（显示最近添加的资源数）
             const recentCount = resourcesData.filter(r => r.id > 20).length;
             elements.stats.updatedCount.textContent = recentCount;
+        }
+
+        // 渲染终端日志
+        function renderTerminalLogs() {
+            let terminalHTML = '';
+            
+            // 添加欢迎信息
+            terminalHTML += `
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">welcome.sh</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">欢迎访问鸿渚资源分享网站!</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">当前版本: <span class="terminal-output info">v2.5.0</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">最后更新: <span class="terminal-output info">2025-01-15</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">系统状态: <span class="terminal-output success">● 运行正常</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">check-updates.sh</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">检查更新中...</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output success">✓ 已是最新版本</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">view-changelog.sh</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">显示更新日志:</span>
+                </div>
+            `;
+            
+            // 添加更新日志
+            updateLogs.forEach(log => {
+                let typeClass = '';
+                let typeText = '';
+                
+                switch(log.type) {
+                    case 'feature':
+                        typeClass = 'info';
+                        typeText = '[功能]';
+                        break;
+                    case 'improvement':
+                        typeClass = 'success';
+                        typeText = '[优化]';
+                        break;
+                    case 'security':
+                        typeClass = 'warning';
+                        typeText = '[安全]';
+                        break;
+                    case 'major':
+                        typeClass = 'error';
+                        typeText = '[重大]';
+                        break;
+                    default:
+                        typeClass = '';
+                        typeText = '[更新]';
+                }
+                
+                terminalHTML += `
+                    <div class="terminal-line">
+                        <span class="terminal-output ${typeClass}">${log.date} ${log.version} ${typeText} ${log.content}</span>
+                    </div>
+                `;
+            });
+            
+            // 添加最后一行
+            terminalHTML += `
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">_</span>
+                    <span class="terminal-blink"></span>
+                </div>
+            `;
+            
+            elements.terminalContent.innerHTML = terminalHTML;
+            
+            // 自动滚动到底部
+            setTimeout(() => {
+                elements.terminalContent.scrollTop = elements.terminalContent.scrollHeight;
+            }, 100);
         }
 
         // 更新收藏数量
@@ -1450,9 +2281,72 @@
             const favoritesBtn = document.getElementById('favorites-btn');
             if (favoritesBtn) {
                 favoritesBtn.addEventListener('click', () => {
-                    showToast('收藏功能开发中...', 'info');
+                    showTerminalToast('收藏功能', '您收藏的资源列表将在未来版本中提供完整查看功能', 'info');
                 });
             }
+
+            // 更新日志按钮
+            const updateLogBtn = document.getElementById('update-log-btn');
+            if (updateLogBtn) {
+                updateLogBtn.addEventListener('click', () => {
+                    const terminalSection = document.querySelector('.terminal-container');
+                    terminalSection.scrollIntoView({ behavior: 'smooth' });
+                    showTerminalToast('更新日志', '已滚动到更新日志区域', 'success');
+                });
+            }
+
+            // 文档显示
+            const showDocsBtn = document.getElementById('show-docs-btn');
+            if (showDocsBtn) {
+                showDocsBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openDocumentModal('guide');
+                });
+            }
+
+            // API文档按钮
+            const apiDocsBtn = document.getElementById('api-docs-btn');
+            if (apiDocsBtn) {
+                apiDocsBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openDocumentModal('api');
+                });
+            }
+
+            // 反馈问题按钮
+            const reportIssueBtn = document.getElementById('report-issue-btn');
+            if (reportIssueBtn) {
+                reportIssueBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showTerminalToast('反馈问题', '请通过邮箱 lzc737507@outlook.com 联系我们', 'info');
+                });
+            }
+
+            // 文档模态框关闭
+            elements.documentClose.addEventListener('click', closeDocumentModal);
+            elements.documentModal.addEventListener('click', (e) => {
+                if (e.target === elements.documentModal) {
+                    closeDocumentModal();
+                }
+            });
+
+            // 文档标签切换
+            document.querySelectorAll('.document-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    switchDocumentTab(tabName);
+                });
+            });
+
+            // 关闭提示
+            elements.toastClose.addEventListener('click', () => {
+                elements.terminalToast.classList.remove('show');
+            });
+
+            // 关闭复制警告
+            elements.copyWarningClose.addEventListener('click', () => {
+                elements.copyWarning.classList.remove('show');
+            });
 
             // 键盘快捷键
             document.addEventListener('keydown', (e) => {
@@ -1462,13 +2356,77 @@
                     elements.searchInput.focus();
                 }
                 
-                // ESC 清空搜索
+                // ESC 清空搜索或关闭模态框
                 if (e.key === 'Escape') {
-                    elements.searchInput.value = '';
-                    state.searchQuery = '';
-                    filterAndRenderResources();
+                    if (elements.documentModal.classList.contains('active')) {
+                        closeDocumentModal();
+                    } else {
+                        elements.searchInput.value = '';
+                        state.searchQuery = '';
+                        filterAndRenderResources();
+                    }
+                }
+                
+                // Ctrl/Cmd + D 显示文档
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    openDocumentModal('guide');
                 }
             });
+        }
+
+        // 设置防复制保护
+        function setupCopyProtection() {
+            // 阻止右键菜单
+            document.addEventListener('contextmenu', (e) => {
+                // 允许特定区域右键
+                if (e.target.closest('.allow-select') || 
+                    e.target.tagName === 'INPUT' || 
+                    e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+                
+                e.preventDefault();
+                showCopyWarning();
+                return false;
+            });
+            
+            // 阻止复制快捷键
+            document.addEventListener('keydown', (e) => {
+                // 检查是否按下复制快捷键 (Ctrl+C 或 Cmd+C)
+                if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                    // 允许特定区域复制
+                    const selection = window.getSelection();
+                    if (!selection.toString().trim() || 
+                        selection.anchorNode.closest('.allow-select') ||
+                        selection.anchorNode.closest('input') ||
+                        selection.anchorNode.closest('textarea')) {
+                        return;
+                    }
+                    
+                    e.preventDefault();
+                    showCopyWarning();
+                    return false;
+                }
+            });
+            
+            // 阻止拖拽选择
+            document.addEventListener('dragstart', (e) => {
+                if (!e.target.closest('.allow-select')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        // 显示复制警告
+        function showCopyWarning() {
+            elements.copyWarning.classList.add('show');
+            
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                elements.copyWarning.classList.remove('show');
+            }, 3000);
         }
 
         // 搜索处理
@@ -1546,6 +2504,7 @@
         // 创建资源卡片
         function createResourceCard(resource, index) {
             const isFavorite = state.favorites.has(resource.id);
+            const hasDoc = !!resource.docUrl;
             const card = document.createElement('div');
             card.className = `resource-card`;
             card.style.setProperty('--index', index);
@@ -1562,7 +2521,7 @@
                             <i class="fas fa-star"></i>
                             ${resource.title}
                         </h3>
-                        <p class="card-description">${resource.description}</p>
+                        <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
                             <a href="${resource.url}" 
                                class="card-link" 
@@ -1573,6 +2532,13 @@
                                 访问网站
                             </a>
                             <div class="card-actions">
+                                ${hasDoc ? `
+                                <button class="action-btn" 
+                                        onclick="showResourceDoc(${resource.id})"
+                                        aria-label="查看文档">
+                                    <i class="fas fa-book"></i>
+                                </button>
+                                ` : ''}
                                 <button class="action-btn ${isFavorite ? 'active' : ''}" 
                                         onclick="toggleFavorite(${resource.id})"
                                         aria-label="${isFavorite ? '取消收藏' : '收藏'}">
@@ -1599,7 +2565,7 @@
                             <i class="fas fa-star"></i>
                             ${resource.title}
                         </h3>
-                        <p class="card-description">${resource.description}</p>
+                        <p class="card-description allow-select">${resource.description}</p>
                     </div>
                     <div class="card-meta">
                         <a href="${resource.url}" 
@@ -1611,6 +2577,13 @@
                             访问
                         </a>
                         <div class="card-actions">
+                            ${hasDoc ? `
+                            <button class="action-btn" 
+                                    onclick="showResourceDoc(${resource.id})"
+                                    aria-label="查看文档">
+                                <i class="fas fa-book"></i>
+                            </button>
+                            ` : ''}
                             <button class="action-btn ${isFavorite ? 'active' : ''}" 
                                     onclick="toggleFavorite(${resource.id})"
                                     aria-label="${isFavorite ? '取消收藏' : '收藏'}">
@@ -1702,10 +2675,10 @@
         function toggleFavorite(id) {
             if (state.favorites.has(id)) {
                 state.favorites.delete(id);
-                showToast('已取消收藏', 'warning');
+                showTerminalToast('取消收藏', '已从收藏列表中移除', 'warning');
             } else {
                 state.favorites.add(id);
-                showToast('已添加到收藏', 'success');
+                showTerminalToast('添加收藏', '已添加到收藏列表', 'success');
             }
 
             // 保存到本地存储
@@ -1731,8 +2704,82 @@
                 // 回退方案：复制到剪贴板
                 const text = `${resource.title}\n${resource.description}\n${resource.url}`;
                 navigator.clipboard.writeText(text)
-                    .then(() => showToast('链接已复制到剪贴板', 'success'))
-                    .catch(() => showToast('复制失败，请手动复制', 'error'));
+                    .then(() => showTerminalToast('分享成功', '链接已复制到剪贴板', 'success'))
+                    .catch(() => showTerminalToast('分享失败', '复制失败，请手动复制', 'error'));
+            }
+        }
+
+        // 显示资源文档
+        function showResourceDoc(id) {
+            const resource = resourcesData.find(r => r.id === id);
+            if (!resource || !resource.docUrl) return;
+            
+            state.currentDocument = resource;
+            elements.documentTitle.textContent = `${resource.title} - 文档`;
+            
+            // 显示外部文档
+            elements.documentContent.innerHTML = `
+                <div style="height: 600px;">
+                    <iframe src="${resource.docUrl}" class="document-iframe" frameborder="0"></iframe>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <p><strong>提示：</strong>正在加载外部文档。如果无法显示，请<a href="${resource.docUrl}" target="_blank">点击这里直接访问</a>。</p>
+                </div>
+            `;
+            
+            // 激活外部文档标签
+            document.querySelectorAll('.document-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === 'external');
+            });
+            
+            // 显示模态框
+            elements.documentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 打开文档模态框
+        function openDocumentModal(tabName = 'guide') {
+            state.currentDocument = null;
+            elements.documentTitle.textContent = documentContent[tabName].title;
+            switchDocumentTab(tabName);
+            elements.documentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭文档模态框
+        function closeDocumentModal() {
+            elements.documentModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 切换文档标签
+        function switchDocumentTab(tabName) {
+            state.documentTab = tabName;
+            
+            // 更新标签激活状态
+            document.querySelectorAll('.document-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+            
+            // 更新内容
+            if (tabName === 'external' && state.currentDocument) {
+                // 外部文档模式
+                const resource = state.currentDocument;
+                elements.documentContent.innerHTML = `
+                    <div style="height: 600px;">
+                        <iframe src="${resource.docUrl}" class="document-iframe" frameborder="0"></iframe>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <p><strong>提示：</strong>正在加载外部文档。如果无法显示，请<a href="${resource.docUrl}" target="_blank">点击这里直接访问</a>。</p>
+                    </div>
+                `;
+            } else {
+                // 内置文档模式
+                elements.documentContent.innerHTML = `
+                    <div class="document-text">
+                        ${documentContent[tabName].content}
+                    </div>
+                `;
             }
         }
 
@@ -1741,7 +2788,7 @@
             const resource = resourcesData.find(r => r.id === id);
             if (resource) {
                 resource.visits = (resource.visits || 0) + 1;
-                showToast(`正在访问: ${resource.title}`, 'info');
+                showTerminalToast('访问资源', `正在访问: ${resource.title}`, 'info');
             }
         }
 
@@ -1760,21 +2807,21 @@
             }
         }
 
-        // 显示提示消息
-        function showToast(message, type = 'success') {
-            const toast = elements.toast;
-            const messageEl = document.getElementById('toast-message');
+        // 显示终端样式提示消息
+        function showTerminalToast(title, message, type = 'info') {
+            // 更新标题和内容
+            elements.toastTitle.textContent = title;
+            elements.toastContent.textContent = message;
             
-            // 更新消息和类型
-            messageEl.textContent = message;
-            toast.className = `toast ${type}`;
+            // 更新类型样式
+            elements.terminalToast.className = `terminal-toast ${type}`;
             
             // 显示toast
-            toast.classList.add('show');
+            elements.terminalToast.classList.add('show');
             
-            // 3秒后隐藏
+            // 3秒后自动隐藏
             setTimeout(() => {
-                toast.classList.remove('show');
+                elements.terminalToast.classList.remove('show');
             }, 3000);
         }
 
@@ -1796,6 +2843,7 @@
         window.shareResource = shareResource;
         window.trackVisit = trackVisit;
         window.goToPage = goToPage;
+        window.showResourceDoc = showResourceDoc;
 
         // 初始化应用
         document.addEventListener('DOMContentLoaded', initApp);
