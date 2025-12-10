@@ -297,6 +297,9 @@
             white-space: nowrap;
             transition: var(--transition);
             color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
         .category-btn:hover {
@@ -1246,11 +1249,14 @@
         }
         
         /* ===== 卡片颜色方案 ===== */
+        .card-file { background: linear-gradient(135deg, #4361ee, #4895ef); }
+        .card-web { background: linear-gradient(135deg, #06d6a0, #4ecdc4); }
         .card-comic { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
-        .card-program { background: linear-gradient(135deg, #4361ee, #4895ef); }
-        .card-image-search { background: linear-gradient(135deg, #7209b7, #9d4edd); }
-        .card-up { background: linear-gradient(135deg, #06d6a0, #4ecdc4); }
-        .card-other { background: linear-gradient(135deg, #f72585, #fd79a8); }
+        .card-program { background: linear-gradient(135deg, #7209b7, #9d4edd); }
+        .card-image-search { background: linear-gradient(135deg, #ff9e00, #ffcc00); }
+        .card-up { background: linear-gradient(135deg, #8338ec, #3a86ff); }
+        .card-tool { background: linear-gradient(135deg, #00b4d8, #90e0ef); }
+        .card-learning { background: linear-gradient(135deg, #f72585, #fd79a8); }
         
         /* ===== 防复制警告 ===== */
         .copy-warning {
@@ -1388,11 +1394,14 @@
                 <div class="filter-section">
                     <div class="category-filter" id="category-filter">
                         <button class="category-btn active" data-category="all">全部资源</button>
-                        <button class="category-btn" data-category="漫画资源">漫画资源</button>
-                        <button class="category-btn" data-category="程序资源">程序资源</button>
-                        <button class="category-btn" data-category="识图资源">识图资源</button>
-                        <button class="category-btn" data-category="优质UP">优质UP主</button>
-                        <button class="category-btn" data-category="其他资源">其他资源</button>
+                        <button class="category-btn" data-category="file">
+                            <i class="fas fa-file-download"></i>
+                            文件分享
+                        </button>
+                        <button class="category-btn" data-category="web">
+                            <i class="fas fa-globe"></i>
+                            网页分享
+                        </button>
                     </div>
                 </div>
                 
@@ -1430,11 +1439,11 @@
                     <span class="stat-label">已收藏</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value" id="category-count">6</span>
+                    <span class="stat-value" id="category-count">2</span>
                     <span class="stat-label">分类数量</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value" id="updated-count">27</span>
+                    <span class="stat-value" id="updated-count">33</span>
                     <span class="stat-label">最近更新</span>
                 </div>
             </div>
@@ -1468,7 +1477,7 @@
                         <div class="terminal-dot yellow"></div>
                         <div class="terminal-dot green"></div>
                     </div>
-                    <div class="terminal-title">更新日志 - v2.5.0</div>
+                    <div class="terminal-title">更新日志 - v2.7.0</div>
                 </div>
                 <div class="terminal-content allow-select" id="terminal-content">
                     <!-- 终端内容将通过JS动态生成 -->
@@ -1483,7 +1492,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>关于本站</h3>
-                    <p>我们致力于收集和分享高质量的网络资源，涵盖漫画、程序、识图等多个领域，帮助用户发现优质内容。</p>
+                    <p>我们致力于收集和分享高质量的网络资源，按照文件分享和网页分享两大类整理，帮助用户发现优质内容。</p>
                 </div>
                 
                 <div class="footer-section">
@@ -1501,8 +1510,7 @@
                     <ul class="footer-links">
                         <li><a href="mailto:lzc737507@outlook.com"><i class="fas fa-envelope"></i> 邮箱联系</a></li>
                         <li><a href="#"><i class="fas fa-question-circle"></i> 常见问题</a></li>
-                        <li><a href="#" id="api-docs-btn"><i class="fas fa-code"></i> API文档</a></li>
-                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.5.0</a></li>
+                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.7.0</a></li>
                     </ul>
                 </div>
                 
@@ -1513,7 +1521,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用 | 最后更新: 2025-12-09</p>
+                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用 | 最后更新: 2025-12-11</p>
             </div>
         </div>
     </footer>
@@ -1554,7 +1562,6 @@
             <div class="modal-body">
                 <div class="document-tabs">
                     <button class="document-tab active" data-tab="guide">使用指南</button>
-                    <button class="document-tab" data-tab="api">API文档</button>
                     <button class="document-tab" data-tab="faq">常见问题</button>
                     <button class="document-tab" data-tab="external">外部文档</button>
                 </div>
@@ -1576,255 +1583,438 @@
     <script>
         // ===== 资源数据 =====
         const resourcesData = [
+            // ===== 文件分享类资源 =====
             {
                 id: 1,
-                title: "nhentai",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
-                category: "漫画资源",
+                title: "nhentai漫画下载",
+                description: "海量漫画资源下载，支持多种格式，更新及时，画质清晰。",
+                category: "file",
+                subCategory: "漫画下载",
                 url: "https://nhentai.net/",
-                icon: "fas fa-book",
-                colorClass: "card-comic",
+                icon: "fas fa-file-pdf",
+                colorClass: "card-file",
                 visits: 12500,
             },
             {
                 id: 2,
-                title: "shotalove",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
-                category: "漫画资源",
+                title: "shotalove漫画",
+                description: "优质漫画资源下载，分类清晰，支持批量下载。",
+                category: "file",
+                subCategory: "漫画下载",
                 url: "https://shotalove.fun/",
-                icon: "fas fa-heart",
-                colorClass: "card-comic",
+                icon: "fas fa-file-download",
+                colorClass: "card-file",
                 visits: 8900,
                 docUrl: "https://shotalove.fun/about/"
             },
             {
                 id: 3,
-                title: "chin2",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
-                category: "漫画资源",
+                title: "chin2漫画资源",
+                description: "漫画资源下载站点，提供多种下载格式选择。",
+                category: "file",
+                subCategory: "漫画下载",
                 url: "https://www.chin2.net/",
-                icon: "fas fa-book-open",
-                colorClass: "card-comic",
+                icon: "fas fa-file-archive",
+                colorClass: "card-file",
                 visits: 7600,
                 docUrl: "https://www.chin2.net/Team"
             },
             {
                 id: 4,
-                title: "彩e - 漫画资源",
-                description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。",
-                category: "程序资源",
+                title: "彩e漫画阅读器",
+                description: "Ehviewer彩版，功能强大的漫画阅读器安装包下载。",
+                category: "file",
+                subCategory: "程序下载",
                 url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
-                icon: "fas fa-paint-brush",
+                icon: "fas fa-download",
                 colorClass: "card-program",
                 visits: 15400,
                 docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/blob/1.8.x.x/docs/README/zh-cn.md"
             },
             {
                 id: 5,
-                title: "绿e - 漫画资源",
-                description: "Ehviewer绿版，优化版本，提供更好的阅读体验。",
-                category: "程序资源",
+                title: "绿e漫画阅读器",
+                description: "Ehviewer绿版，优化版本安装包下载。",
+                category: "file",
+                subCategory: "程序下载",
                 url: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases",
-                icon: "fas fa-leaf",
+                icon: "fas fa-file-download",
                 colorClass: "card-program",
                 visits: 9800,
                 docUrl: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/blob/BiLi_PC_Gamer/README.md"
             },
             {
                 id: 6,
-                title: "白e - 漫画资源",
-                description: "Ehviewer白版，简洁界面，专注于核心阅读功能。",
-                category: "程序资源",
+                title: "白e漫画阅读器",
+                description: "Ehviewer白版，简洁界面安装包下载。",
+                category: "file",
+                subCategory: "程序下载",
                 url: "https://gitee.com/nightmare97/EhViewer",
-                icon: "fas fa-snowflake",
+                icon: "fas fa-file-code",
                 colorClass: "card-program",
                 visits: 6700,
                 docUrl: "https://gitee.com/nightmare97/EhViewer/blob/test/README.md"
             },
             {
-                id: 10,
-                title: "谷歌搜图",
-                description: "强大的图片搜索引擎，支持以图搜图功能。",
-                category: "识图资源",
-                url: "https://www.google.com/imghp",
-                icon: "fab fa-google",
-                colorClass: "card-image-search",
+                id: 7,
+                title: "GitHub源码下载",
+                description: "全球最大的代码托管平台，开源项目源码下载。",
+                category: "file",
+                subCategory: "程序下载",
+                url: "https://github.com/",
+                icon: "fab fa-github",
+                colorClass: "card-file",
+                visits: 45000
+            },
+            {
+                id: 8,
+                title: "VSCode编辑器",
+                description: "微软开发的轻量级代码编辑器安装包下载。",
+                category: "file",
+                subCategory: "程序下载",
+                url: "https://code.visualstudio.com/",
+                icon: "fas fa-code",
+                colorClass: "card-program",
                 visits: 32000
             },
             {
+                id: 9,
+                title: "PDF工具集",
+                description: "在线PDF处理工具，支持转换、合并、分割等功能。",
+                category: "file",
+                subCategory: "工具下载",
+                url: "https://smallpdf.com/",
+                icon: "fas fa-file-pdf",
+                colorClass: "card-tool",
+                visits: 21000
+            },
+            {
+                id: 10,
+                title: "图片压缩工具",
+                description: "在线图片压缩工具，支持多种格式，保持画质。",
+                category: "file",
+                subCategory: "工具下载",
+                url: "https://tinypng.com/",
+                icon: "fas fa-compress-alt",
+                colorClass: "card-tool",
+                visits: 18500
+            },
+            {
                 id: 11,
-                title: "yandex搜图",
-                description: "俄罗斯的搜索引擎，识图功能强大。",
-                category: "识图资源",
-                url: "https://yandex.com/images/",
-                icon: "fas fa-search",
-                colorClass: "card-image-search",
-                visits: 14500
+                title: "字体下载",
+                description: "海量中英文字体下载，支持商业使用授权。",
+                category: "file",
+                subCategory: "资源下载",
+                url: "https://www.fontsquirrel.com/",
+                icon: "fas fa-font",
+                colorClass: "card-file",
+                visits: 9200
             },
             {
                 id: 12,
-                title: "trace搜图",
+                title: "图标素材库",
+                description: "高质量图标素材下载，支持多种格式和尺寸。",
+                category: "file",
+                subCategory: "资源下载",
+                url: "https://www.flaticon.com/",
+                icon: "fas fa-icons",
+                colorClass: "card-file",
+                visits: 15600
+            },
+            
+            // ===== 网页分享类资源 =====
+            {
+                id: 13,
+                title: "谷歌搜图",
+                description: "强大的图片搜索引擎，支持以图搜图功能。",
+                category: "web",
+                subCategory: "识图工具",
+                url: "https://www.google.com/imghp",
+                icon: "fab fa-google",
+                colorClass: "card-web",
+                visits: 32000
+            },
+            {
+                id: 14,
+                title: "yandex搜图",
+                description: "俄罗斯的搜索引擎，识图功能强大。",
+                category: "web",
+                subCategory: "识图工具",
+                url: "https://yandex.com/images/",
+                icon: "fas fa-search",
+                colorClass: "card-web",
+                visits: 14500
+            },
+            {
+                id: 15,
+                title: "trace动漫识图",
                 description: "动漫识图神器，可以识别动漫截图出处。",
-                category: "识图资源",
+                category: "web",
+                subCategory: "识图工具",
                 url: "https://trace.moe/",
                 icon: "fas fa-film",
                 colorClass: "card-image-search",
                 visits: 9800
             },
             {
-                id: 13,
+                id: 16,
                 title: "SauceNAO搜图",
                 description: "Pixiv图片搜索专家，精准识别P站作品。",
-                category: "识图资源",
+                category: "web",
+                subCategory: "识图工具",
                 url: "https://saucenao.com/",
                 icon: "fas fa-images",
                 colorClass: "card-image-search",
                 visits: 17600
             },
             {
-                id: 14,
-                title: "搜图bot搜图",
-                description: "专注于本子识图的机器人。",
-                category: "识图资源",
+                id: 17,
+                title: "搜图bot",
+                description: "专注于本子识图的机器人网页版。",
+                category: "web",
+                subCategory: "识图工具",
                 url: "https://soutubot.moe/",
                 icon: "fas fa-robot",
                 colorClass: "card-image-search",
                 visits: 5400
             },
             {
-                id: 15,
-                title: "二次元画像詳細検索",
+                id: 18,
+                title: "二次元画像検索",
                 description: "日本二次元图片详细搜索网站。",
-                category: "识图资源",
+                category: "web",
+                subCategory: "识图工具",
                 url: "https://ascii2d.net/",
                 icon: "fas fa-search-plus",
                 colorClass: "card-image-search",
                 visits: 8900
             },
             {
-                id: 16,
+                id: 19,
                 title: "iqdb识图",
                 description: "多图库搜索，支持多种动漫图库。",
-                category: "识图资源",
+                category: "web",
+                subCategory: "识图工具",
                 url: "http://www.iqdb.org/",
                 icon: "fas fa-database",
                 colorClass: "card-image-search",
                 visits: 7600
             },
             {
-                id: 17,
+                id: 20,
                 title: "tineye识图",
                 description: "反向图片搜索引擎，支持多种图片格式。",
-                category: "识图资源",
+                category: "web",
+                subCategory: "识图工具",
                 url: "https://tineye.com/",
                 icon: "fas fa-eye",
                 colorClass: "card-image-search",
                 visits: 6500
             },
             {
-                id: 18,
-                title: "仓鼠xixi",
-                description: "AI绘画作品分享，创意十足。",
-                category: "优质UP",
+                id: 21,
+                title: "仓鼠xixi作品",
+                description: "AI绘画作品分享网站，创意十足。",
+                category: "web",
+                subCategory: "创作分享",
                 url: "https://b23.tv/neGKc6G",
                 icon: "fas fa-palette",
                 colorClass: "card-up",
                 visits: 3200
             },
             {
-                id: 19,
-                title: "鸿渚",
-                description: "地理视频课程分享，知识性强。",
-                category: "优质UP",
+                id: 22,
+                title: "鸿渚地理课程",
+                description: "地理视频课程分享网站，知识性强。",
+                category: "web",
+                subCategory: "知识分享",
                 url: "https://b23.tv/0HsCFFT",
                 icon: "fas fa-globe-asia",
-                colorClass: "card-up",
+                colorClass: "card-web",
                 visits: 5400
             },
             {
-                id: 20,
-                title: "图片混淆/解混淆",
-                description: "在线图片加密解密工具，保护隐私。",
-                category: "其他资源",
+                id: 23,
+                title: "图片混淆工具",
+                description: "在线图片加密解密工具网站，保护隐私。",
+                category: "web",
+                subCategory: "在线工具",
                 url: "https://tool.hadsky.com/enimg",
                 icon: "fas fa-unlock-alt",
-                colorClass: "card-other",
+                colorClass: "card-tool",
                 visits: 2100
             },
             {
-                id: 21,
-                title: "集合体Aa",
-                description: "AI绘画技术分享与作品展示。",
-                category: "优质UP",
+                id: 24,
+                title: "集合体Aa创作",
+                description: "AI绘画技术分享与作品展示网站。",
+                category: "web",
+                subCategory: "创作分享",
                 url: "https://b23.tv/ve4uYzU",
                 icon: "fas fa-palette",
                 colorClass: "card-up",
                 visits: 2800
             },
             {
-                id: 22,
-                title: "风炎小正太",
-                description: "AI绘画创意分享社区。",
-                category: "优质UP",
+                id: 25,
+                title: "风炎小正太社区",
+                description: "AI绘画创意分享社区网站。",
+                category: "web",
+                subCategory: "创作分享",
                 url: "https://b23.tv/i7xD9ot",
                 icon: "fas fa-palette",
                 colorClass: "card-up",
                 visits: 1900
             },
             {
-                id: 23,
-                title: "拟杰ai",
-                description: "AI绘画技术教程与资源分享。",
-                category: "优质UP",
+                id: 26,
+                title: "拟杰ai教程",
+                description: "AI绘画技术教程与资源分享网站。",
+                category: "web",
+                subCategory: "知识分享",
                 url: "https://b23.tv/BCA8dg1",
                 icon: "fas fa-unlock-alt",
                 colorClass: "card-up",
                 visits: 3100
             },
             {
-                id: 24,
-                title: "杰惹杰OWO",
-                description: "创意内容分享，风格独特。",
-                category: "优质UP",
+                id: 27,
+                title: "杰惹杰OWO创作",
+                description: "创意内容分享网站，风格独特。",
+                category: "web",
+                subCategory: "创作分享",
                 url: "https://b23.tv/Ung9NvJ",
                 icon: "fas fa-palette",
                 colorClass: "card-up",
                 visits: 1700
             },
             {
-                id: 25,
+                id: 28,
                 title: "友链申请",
-                description: "网站友情链接申请通道。",
-                category: "其他资源",
+                description: "网站友情链接申请表单页面。",
+                category: "web",
+                subCategory: "在线工具",
                 url: "https://docs.qq.com/sheet/DWHpCVG9NRFBzSGRW",
-                icon: "fas fa-unlock-alt",
-                colorClass: "card-other",
+                icon: "fas fa-link",
+                colorClass: "card-web",
                 visits: 800
             },
             {
-                id: 26,
+                id: 29,
                 title: "趣味心理实验室",
-                description: "有趣的心理测试合集，探索内心世界。",
-                category: "其他资源",
+                description: "有趣的心理测试合集网站，探索内心世界。",
+                category: "web",
+                subCategory: "娱乐休闲",
                 url: "https://quiz.charlinserver.online/",
-                icon: "fas fa-unlock-alt",
-                colorClass: "card-other",
+                icon: "fas fa-brain",
+                colorClass: "card-learning",
                 visits: 4300
             },
             {
-                id: 27,
+                id: 30,
                 title: "小男孩冒险成长",
-                description: "鸿渚的自制网页小游戏，充满创意。",
-                category: "其他资源",
+                description: "鸿渚的自制网页小游戏网站，充满创意。",
+                category: "web",
+                subCategory: "娱乐休闲",
                 url: "https://watchfleeting.github.io/starsea-game/",
-                icon: "fas fa-unlock-alt",
-                colorClass: "card-other",
+                icon: "fas fa-gamepad",
+                colorClass: "card-web",
                 visits: 2900
+            },
+            {
+                id: 31,
+                title: "MDN Web Docs",
+                description: "Web开发技术文档网站，权威且详细。",
+                category: "web",
+                subCategory: "知识分享",
+                url: "https://developer.mozilla.org/",
+                icon: "fas fa-file-code",
+                colorClass: "card-learning",
+                visits: 18500
+            },
+            {
+                id: 32,
+                title: "Can I Use",
+                description: "查询浏览器支持情况的工具网站，Web开发必备。",
+                category: "web",
+                subCategory: "在线工具",
+                url: "https://caniuse.com/",
+                icon: "fas fa-check-circle",
+                colorClass: "card-tool",
+                visits: 9200
+            },
+            {
+                id: 33,
+                title: "JSON Formatter",
+                description: "JSON格式化工具网站，支持在线验证和美化。",
+                category: "web",
+                subCategory: "在线工具",
+                url: "https://jsonformatter.org/",
+                icon: "fas fa-brackets-curly",
+                colorClass: "card-tool",
+                visits: 7600
+            },
+            {
+                id: 34,
+                title: "CSS Gradient生成器",
+                description: "CSS渐变生成器网站，可视化创建渐变背景。",
+                category: "web",
+                subCategory: "在线工具",
+                url: "https://cssgradient.io/",
+                icon: "fas fa-palette",
+                colorClass: "card-tool",
+                visits: 5400
+            },
+            {
+                id: 35,
+                title: "正则表达式测试",
+                description: "在线正则表达式测试工具网站，支持多种语言。",
+                category: "web",
+                subCategory: "在线工具",
+                url: "https://regex101.com/",
+                icon: "fas fa-terminal",
+                colorClass: "card-tool",
+                visits: 6800
+            },
+            {
+                id: 36,
+                title: "W3Schools教程",
+                description: "Web开发教程网站，适合初学者学习。",
+                category: "web",
+                subCategory: "知识分享",
+                url: "https://www.w3schools.com/",
+                icon: "fas fa-graduation-cap",
+                colorClass: "card-learning",
+                visits: 24500
+            },
+            {
+                id: 37,
+                title: "Stack Overflow问答",
+                description: "程序员问答社区网站，解决各种编程问题。",
+                category: "web",
+                subCategory: "知识分享",
+                url: "https://stackoverflow.com/",
+                icon: "fas fa-question-circle",
+                colorClass: "card-learning",
+                visits: 38000
+            },
+            {
+                id: 38,
+                title: "Codepen创意",
+                description: "前端代码在线编辑和分享网站，创意十足。",
+                category: "web",
+                subCategory: "创作分享",
+                url: "https://codepen.io/",
+                icon: "fas fa-code",
+                colorClass: "card-web",
+                visits: 15600
             }
         ];
 
         // ===== 更新日志数据 =====
         const updateLogs = [
+            { date: "2025-12-11", version: "v2.7.0", type: "major", content: "重新分类为文件分享和网页分享两大类，优化资源组织结构" },
+            { date: "2025-12-10", version: "v2.6.0", type: "feature", content: "新增多个资源卡片，丰富资源内容" },
             { date: "2025-12-09", version: "v2.5.0", type: "feature", content: "新增文档显示功能，支持在线查看资源文档" },
             { date: "2025-11-25", version: "v2.4.0", type: "feature", content: "添加终端样式更新日志，优化界面显示" },
             { date: "2025-11-20", version: "v2.3.0", type: "security", content: "增强防复制功能，添加复制警告提示" },
@@ -1847,22 +2037,29 @@
                     <h2>网站使用指南</h2>
                     <p>欢迎使用鸿渚资源分享网站！本指南将帮助您快速了解和使用网站的各项功能。</p>
                     
-                    <h3>1. 资源浏览</h3>
-                    <p>网站资源按分类组织，您可以通过以下方式浏览：</p>
+                    <h3>1. 资源分类</h3>
+                    <p>网站资源按照两大类别组织：</p>
                     <ul>
-                        <li><strong>分类筛选</strong>：点击导航栏的分类按钮，筛选特定类型的资源</li>
+                        <li><strong>文件分享</strong>：提供各种文件下载资源，包括漫画、软件、工具等</li>
+                        <li><strong>网页分享</strong>：提供各类实用网站链接，包括工具网站、学习平台、社区等</li>
+                    </ul>
+                    
+                    <h3>2. 资源浏览</h3>
+                    <p>您可以通过以下方式浏览资源：</p>
+                    <ul>
+                        <li><strong>分类筛选</strong>：点击导航栏的分类按钮，筛选"文件分享"或"网页分享"资源</li>
                         <li><strong>搜索功能</strong>：使用顶部搜索框，输入关键词查找特定资源</li>
                         <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类或默认排序查看资源</li>
                     </ul>
                     
-                    <h3>2. 视图切换</h3>
+                    <h3>3. 视图切换</h3>
                     <p>网站支持两种资源展示视图：</p>
                     <ul>
                         <li><strong>网格视图</strong>：适合快速浏览，每行显示多个资源卡片</li>
                         <li><strong>列表视图</strong>：适合详细查看，每行显示一个资源的详细信息</li>
                     </ul>
                     
-                    <h3>3. 资源操作</h3>
+                    <h3>4. 资源操作</h3>
                     <p>对每个资源，您可以执行以下操作：</p>
                     <ul>
                         <li><strong>访问网站</strong>：点击"访问网站"按钮，在新标签页打开资源链接</li>
@@ -1871,7 +2068,7 @@
                         <li><strong>分享资源</strong>：点击分享图标，复制资源链接或使用系统分享功能</li>
                     </ul>
                     
-                    <h3>4. 个人偏好</h3>
+                    <h3>5. 个人偏好</h3>
                     <p>网站会记住您的以下偏好设置：</p>
                     <ul>
                         <li><strong>收藏列表</strong>：本地存储您收藏的资源</li>
@@ -1879,131 +2076,18 @@
                         <li><strong>主题设置</strong>：记住您选择的主题（浅色/深色）</li>
                     </ul>
                     
-                    <h3>5. 更新日志</h3>
+                    <h3>6. 更新日志</h3>
                     <p>网站底部提供了终端样式的更新日志，记录了所有版本更新内容。您可以在这里了解网站的最新功能和改进。</p>
                     
-                    <h3>6. 注意事项</h3>
+                    <h3>7. 注意事项</h3>
                     <ul>
                         <li>网站资源来自网络，仅供学习交流使用</li>
                         <li>请遵守相关法律法规，合理使用资源</li>
                         <li>如发现资源失效或有问题，请通过反馈功能报告</li>
+                        <li>文件分享类资源请注意下载安全</li>
                     </ul>
                     
                     <p>如果您有任何问题或建议，请通过页面底部的联系方式与我们联系。</p>
-                `
-            },
-            api: {
-                title: "API文档",
-                content: `
-                    <h2>API文档</h2>
-                    <p>鸿渚资源分享网站提供简单的API接口，用于获取资源数据。</p>
-                    
-                    <h3>基础信息</h3>
-                    <ul>
-                        <li><strong>API地址</strong>: <code>/api/resources</code></li>
-                        <li><strong>请求方法</strong>: GET</li>
-                        <li><strong>返回格式</strong>: JSON</li>
-                    </ul>
-                    
-                    <h3>请求参数</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>参数名</th>
-                                <th>类型</th>
-                                <th>必填</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>category</code></td>
-                                <td>string</td>
-                                <td>否</td>
-                                <td>资源分类，如"漫画资源"、"程序资源"等</td>
-                            </tr>
-                            <tr>
-                                <td><code>search</code></td>
-                                <td>string</td>
-                                <td>否</td>
-                                <td>搜索关键词，将在标题和描述中搜索</td>
-                            </tr>
-                            <tr>
-                                <td><code>page</code></td>
-                                <td>number</td>
-                                <td>否</td>
-                                <td>页码，默认为1</td>
-                            </tr>
-                            <tr>
-                                <td><code>limit</code></td>
-                                <td>number</td>
-                                <td>否</td>
-                                <td>每页数量，默认为12，最大50</td>
-                            </tr>
-                            <tr>
-                                <td><code>sort</code></td>
-                                <td>string</td>
-                                <td>否</td>
-                                <td>排序方式，可选: "default", "name", "category"</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <h3>响应示例</h3>
-                    <pre><code>{
-  "success": true,
-  "data": {
-    "resources": [
-      {
-        "id": 1,
-        "title": "nhentai",
-        "description": "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
-        "category": "漫画资源",
-        "url": "https://nhentai.net/",
-        "icon": "fas fa-book",
-        "colorClass": "card-comic",
-        "visits": 12500
-      },
-      // 更多资源...
-    ],
-    "pagination": {
-      "page": 1,
-      "limit": 12,
-      "total": 27,
-      "pages": 3
-    }
-  }
-}</code></pre>
-                    
-                    <h3>错误响应</h3>
-                    <pre><code>{
-  "success": false,
-  "error": {
-    "code": "INVALID_PARAM",
-    "message": "参数错误",
-    "details": "page参数必须是数字"
-  }
-}</code></pre>
-                    
-                    <h3>使用示例</h3>
-                    <p>使用JavaScript获取资源数据：</p>
-                    <pre><code>// 获取所有漫画资源
-fetch('/api/resources?category=漫画资源')
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      console.log('获取到资源:', data.data.resources);
-    } else {
-      console.error('获取失败:', data.error.message);
-    }
-  });</code></pre>
-                    
-                    <h3>注意事项</h3>
-                    <ul>
-                        <li>API目前为只读，不支持修改操作</li>
-                        <li>请勿频繁请求，建议合理缓存数据</li>
-                        <li>API可能随版本更新而改变，请关注更新日志</li>
-                    </ul>
                 `
             },
             faq: {
@@ -2011,8 +2095,9 @@ fetch('/api/resources?category=漫画资源')
                 content: `
                     <h2>常见问题 (FAQ)</h2>
                     
-                    <h3>1. 网站资源来自哪里？</h3>
-                    <p>网站资源由管理员从互联网收集整理，均为公开可访问的资源。我们会定期检查资源有效性，但无法保证所有资源始终可用。</p>
+                    <h3>1. 文件分享和网页分享有什么区别？</h3>
+                    <p><strong>文件分享</strong>：主要提供文件下载资源，如软件安装包、文档、图片素材等，用户需要下载到本地使用。</p>
+                    <p><strong>网页分享</strong>：主要提供网站链接资源，用户可以直接访问使用在线服务，无需下载。</p>
                     
                     <h3>2. 如何提交新的资源？</h3>
                     <p>目前网站暂未开放用户提交功能。如果您有优质资源推荐，可以通过页面底部的邮箱联系我们。</p>
@@ -2059,23 +2144,25 @@ fetch('/api/resources?category=漫画资源')
                     <h2>外部文档链接</h2>
                     <p>以下是一些资源的外部文档链接，点击可直接访问：</p>
                     
-                    <h3>漫画资源文档</h3>
+                    <h3>文件分享资源文档</h3>
                     <ul>
                         <li><a href="https://nhentai.net/info/" target="_blank">nhentai 官方文档</a> - nhentai网站使用说明和常见问题</li>
                         <li><a href="https://github.com/Ehviewer-Overhauled/Ehviewer/wiki" target="_blank">Ehviewer Wiki</a> - Ehviewer安装和使用指南</li>
+                        <li><a href="https://code.visualstudio.com/docs" target="_blank">VSCode 文档</a> - VSCode使用教程和API文档</li>
                     </ul>
                     
-                    <h3>识图资源文档</h3>
+                    <h3>网页分享资源文档</h3>
                     <ul>
                         <li><a href="https://soruly.github.io/trace.moe/" target="_blank">trace.moe API文档</a> - 动漫识图API使用说明</li>
                         <li><a href="https://saucenao.com/user.php?page=search-api" target="_blank">SauceNAO API文档</a> - SauceNAO搜索API文档</li>
+                        <li><a href="https://developer.mozilla.org/zh-CN/docs/Web" target="_blank">MDN Web文档</a> - Web开发技术文档大全</li>
                     </ul>
                     
                     <h3>开发资源文档</h3>
                     <ul>
                         <li><a href="https://github.com/watchfleeting/starsea-game" target="_blank">小男孩冒险成长 源码</a> - 游戏源码和开发文档</li>
-                        <li><a href="https://developer.mozilla.org/zh-CN/" target="_blank">MDN Web Docs</a> - Web开发技术文档</li>
                         <li><a href="https://devdocs.io/" target="_blank">DevDocs</a> - 多种编程语言和框架的文档</li>
+                        <li><a href="https://stackoverflow.com/help" target="_blank">Stack Overflow 帮助</a> - Stack Overflow使用指南</li>
                     </ul>
                     
                     <h3>其他有用文档</h3>
@@ -2083,6 +2170,7 @@ fetch('/api/resources?category=漫画资源')
                         <li><a href="https://docs.github.com/zh" target="_blank">GitHub 文档</a> - GitHub使用指南</li>
                         <li><a href="https://markdown.com.cn/" target="_blank">Markdown 指南</a> - Markdown语法教程</li>
                         <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a> - Web开发教程</li>
+                        <li><a href="https://codepen.io/help" target="_blank">Codepen 帮助</a> - Codepen使用指南</li>
                     </ul>
                     
                     <p>注意：外部链接可能会变更或失效，如果发现链接问题，请通过反馈功能告诉我们。</p>
@@ -2201,8 +2289,8 @@ fetch('/api/resources?category=漫画资源')
             const categories = new Set(resourcesData.map(r => r.category));
             elements.stats.categoryCount.textContent = categories.size;
             
-            // 最近更新数（显示最近添加的资源数）
-            const recentCount = resourcesData.filter(r => r.id > 20).length;
+            // 最近更新数
+            const recentCount = resourcesData.filter(r => r.id > 30).length;
             elements.stats.updatedCount.textContent = recentCount;
         }
 
@@ -2220,10 +2308,13 @@ fetch('/api/resources?category=漫画资源')
                     <span class="terminal-output">欢迎访问鸿渚资源分享网站!</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="terminal-output">当前版本: <span class="terminal-output info">v2.5.0</span></span>
+                    <span class="terminal-output">当前版本: <span class="terminal-output info">v2.7.0</span></span>
                 </div>
                 <div class="terminal-line">
-                    <span class="terminal-output">最后更新: <span class="terminal-output info">2025-12-09</span></span>
+                    <span class="terminal-output">最后更新: <span class="terminal-output info">2025-12-11</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">资源分类: <span class="terminal-output info">文件分享 / 网页分享</span></span>
                 </div>
                 <div class="terminal-line">
                     <span class="terminal-output">系统状态: <span class="terminal-output success">● 运行正常</span></span>
@@ -2428,15 +2519,6 @@ fetch('/api/resources?category=漫画资源')
                 });
             }
 
-            // API文档按钮
-            const apiDocsBtn = document.getElementById('api-docs-btn');
-            if (apiDocsBtn) {
-                apiDocsBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openDocumentModal('api');
-                });
-            }
-
             // 反馈问题按钮
             const reportIssueBtn = document.getElementById('report-issue-btn');
             if (reportIssueBtn) {
@@ -2573,7 +2655,8 @@ fetch('/api/resources?category=漫画资源')
                 filtered = filtered.filter(resource => 
                     resource.title.toLowerCase().includes(state.searchQuery) ||
                     resource.description.toLowerCase().includes(state.searchQuery) ||
-                    resource.category.toLowerCase().includes(state.searchQuery)
+                    resource.category.toLowerCase().includes(state.searchQuery) ||
+                    (resource.subCategory && resource.subCategory.toLowerCase().includes(state.searchQuery))
                 );
             }
 
@@ -2636,12 +2719,13 @@ fetch('/api/resources?category=漫画资源')
                 card.innerHTML = `
                     <div class="card-image ${resource.colorClass}">
                         <i class="${resource.icon}"></i>
-                        <div class="card-badge">${resource.category}</div>
+                        <div class="card-badge">${resource.category === 'file' ? '文件分享' : '网页分享'}</div>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">
                             <i class="fas fa-star"></i>
                             ${resource.title}
+                            ${resource.subCategory ? `<span style="font-size: 0.8rem; color: var(--gray-color); margin-left: auto;">${resource.subCategory}</span>` : ''}
                         </h3>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
@@ -2651,7 +2735,7 @@ fetch('/api/resources?category=漫画资源')
                                rel="noopener noreferrer"
                                onclick="trackVisit(${resource.id})">
                                 <i class="fas fa-external-link-alt"></i>
-                                访问网站
+                                ${resource.category === 'file' ? '下载资源' : '访问网站'}
                             </a>
                             <div class="card-actions">
                                 ${hasDoc ? `
@@ -2680,12 +2764,13 @@ fetch('/api/resources?category=漫画资源')
                 card.innerHTML = `
                     <div class="card-image ${resource.colorClass}">
                         <i class="${resource.icon}"></i>
-                        <div class="card-badge">${resource.category}</div>
+                        <div class="card-badge">${resource.category === 'file' ? '文件分享' : '网页分享'}</div>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">
                             <i class="fas fa-star"></i>
                             ${resource.title}
+                            ${resource.subCategory ? `<span style="font-size: 0.8rem; color: var(--gray-color); margin-left: auto;">${resource.subCategory}</span>` : ''}
                         </h3>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
@@ -2695,7 +2780,7 @@ fetch('/api/resources?category=漫画资源')
                                rel="noopener noreferrer"
                                onclick="trackVisit(${resource.id})">
                                 <i class="fas fa-external-link-alt"></i>
-                                访问
+                                ${resource.category === 'file' ? '下载' : '访问'}
                             </a>
                             <div class="card-actions">
                                 ${hasDoc ? `
@@ -2911,7 +2996,8 @@ fetch('/api/resources?category=漫画资源')
             const resource = resourcesData.find(r => r.id === id);
             if (resource) {
                 resource.visits = (resource.visits || 0) + 1;
-                showTerminalToast('访问资源', `正在访问: ${resource.title}`, 'info');
+                const actionText = resource.category === 'file' ? '下载' : '访问';
+                showTerminalToast(`${actionText}资源`, `正在${actionText}: ${resource.title}`, 'info');
             }
         }
 
