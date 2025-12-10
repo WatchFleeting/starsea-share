@@ -397,11 +397,12 @@
             margin-bottom: 2rem;
         }
         
-        /* ===== 网格视图样式 ===== */
+        /* ===== 网格视图样式优化 ===== */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 24px;
+            align-items: stretch;
         }
         
         .resource-card {
@@ -499,6 +500,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            min-height: 220px; /* 确保卡片内容区域有最小高度 */
         }
         
         .card-title {
@@ -519,8 +521,12 @@
             color: var(--gray-color);
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* 限制最多显示3行 */
+            -webkit-box-orient: vertical;
         }
         
         /* 卡片元信息样式 */
@@ -531,6 +537,7 @@
             margin-top: auto;
             padding-top: 15px;
             border-top: 1px solid var(--border-color);
+            min-height: 50px;
         }
         
         .card-category {
@@ -583,6 +590,8 @@
             font-size: 0.9rem;
             font-weight: 600;
             transition: var(--transition);
+            margin-top: 15px;
+            align-self: flex-start;
         }
         
         .card-link:hover {
@@ -590,7 +599,7 @@
             transform: translateY(-2px);
         }
         
-        /* ===== 列表视图样式 - 修复版 ===== */
+        /* ===== 列表视图样式 - 优化版 ===== */
         .list-view .resources-grid {
             display: flex;
             flex-direction: column;
@@ -599,24 +608,40 @@
         
         .list-view .resource-card {
             flex-direction: row;
-            align-items: stretch; /* 改为stretch使内容撑满高度 */
+            align-items: stretch;
             height: auto;
-            min-height: 120px; /* 设置最小高度 */
+            min-height: 140px;
         }
         
         .list-view .card-image {
-            width: 120px;
-            height: auto; /* 改为auto以适应父容器高度 */
+            width: 160px;
+            height: 140px;
             flex-shrink: 0;
             border-radius: var(--border-radius) 0 0 var(--border-radius);
         }
         
         .list-view .card-content {
-            padding: 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* 内容在垂直方向均匀分布 */
+            padding: 20px;
+            min-height: 140px;
+        }
+        
+        .list-view .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .list-view .card-title {
+            margin-bottom: 0;
+            flex: 1;
+        }
+        
+        .list-view .card-category {
+            margin-left: 15px;
         }
         
         .list-view .card-description {
@@ -625,6 +650,7 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex: 0;
         }
         
         .list-view .card-meta {
@@ -632,8 +658,12 @@
             border-top: 1px solid var(--border-color);
             margin-top: 15px;
             padding-top: 15px;
-            min-width: auto;
             width: 100%;
+        }
+        
+        .list-view .card-link {
+            margin-top: 0;
+            align-self: center;
         }
         
         /* ===== 文档显示模态框样式 ===== */
@@ -995,6 +1025,11 @@
             
             .resources-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .card-image {
+                height: 150px;
             }
         }
         
@@ -1043,16 +1078,32 @@
             
             .list-view .card-content {
                 padding: 15px;
+                min-height: auto;
+            }
+            
+            .list-view .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .list-view .card-category {
+                margin-left: 0;
+                margin-top: 5px;
             }
             
             .list-view .card-meta {
-                width: 100%;
-                border-left: none;
-                border-top: 1px solid var(--border-color);
-                padding: 15px 0 0;
-                flex-direction: row;
-                justify-content: space-between;
-                min-width: auto;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            
+            .list-view .card-actions {
+                justify-content: center;
+            }
+            
+            .list-view .card-link {
+                align-self: stretch;
+                text-align: center;
             }
             
             .stats-bar {
@@ -1075,15 +1126,25 @@
                 font-size: 0.9rem;
                 white-space: nowrap;
             }
+            
+            .resources-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 16px;
+            }
+            
+            .card-image {
+                height: 140px;
+            }
         }
         
         @media (max-width: 480px) {
             .resources-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
             
             .card-image {
-                height: 140px;
+                height: 130px;
             }
             
             .footer-content {
@@ -1100,6 +1161,10 @@
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+            }
+            
+            .card-content {
+                min-height: 200px;
             }
         }
         
@@ -2675,7 +2740,7 @@
             
             // 根据当前视图模式选择模板
             if (state.currentView === 'grid') {
-                // 网格视图模板
+                // 网格视图模板（优化版）
                 card.innerHTML = `
                     <div class="card-image">
                         <i class="${resource.icon}"></i>
@@ -2720,22 +2785,22 @@
                     </div>
                 `;
             } else {
-                // 列表视图模板
+                // 列表视图模板（优化版）
                 card.innerHTML = `
                     <div class="card-image">
                         <i class="${resource.icon}"></i>
                         <div class="card-type-badge">${typeText}</div>
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">
-                            <i class="fas fa-star"></i>
-                            ${resource.title}
-                        </h3>
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-star"></i>
+                                ${resource.title}
+                            </h3>
+                            <span class="card-category">${resource.category}</span>
+                        </div>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
-                            <div>
-                                <span class="card-category">${resource.category}</span>
-                            </div>
                             <div class="card-actions">
                                 ${hasDoc ? `
                                 <button class="action-btn" 
@@ -2761,7 +2826,7 @@
                                rel="noopener noreferrer"
                                onclick="trackVisit(${resource.id})">
                                 <i class="fas fa-external-link-alt"></i>
-                                访问
+                                访问网站
                             </a>
                         </div>
                     </div>
