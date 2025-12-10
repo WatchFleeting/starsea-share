@@ -51,6 +51,11 @@
             --border-color: #e2e8f0;
             --scrollbar-track: #f1f1f1;
             --scrollbar-thumb: #c1c1c1;
+            
+            /* 卡片类型颜色 */
+            --card-web: linear-gradient(135deg, #4361ee, #4895ef);
+            --card-file: linear-gradient(135deg, #06d6a0, #4ecdc4);
+            --card-software: linear-gradient(135deg, #7209b7, #9d4edd);
         }
         
         /* 夜晚模式变量覆盖 */
@@ -76,6 +81,11 @@
             /* 卡片阴影调整 */
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.35);
+            
+            /* 卡片类型颜色调整（夜晚模式） */
+            --card-web: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --card-file: linear-gradient(135deg, #06d6a0, #048a81);
+            --card-software: linear-gradient(135deg, #7209b7, #560bad);
         }
         
         /* ===== 基础样式 ===== */
@@ -412,7 +422,7 @@
             box-shadow: var(--card-shadow-hover);
         }
         
-        .card-badge {
+        .card-type-badge {
             position: absolute;
             top: 12px;
             left: 12px;
@@ -423,7 +433,26 @@
             font-weight: 600;
             z-index: 2;
             backdrop-filter: blur(10px);
-            color: var(--dark-color);
+            border: 2px solid transparent;
+        }
+        
+        /* 卡片类型徽章样式 */
+        .card-type-web .card-type-badge {
+            background: rgba(67, 97, 238, 0.15);
+            color: #4361ee;
+            border-color: #4361ee;
+        }
+        
+        .card-type-file .card-type-badge {
+            background: rgba(6, 214, 160, 0.15);
+            color: #06d6a0;
+            border-color: #06d6a0;
+        }
+        
+        .card-type-software .card-type-badge {
+            background: rgba(114, 9, 183, 0.15);
+            color: #7209b7;
+            border-color: #7209b7;
         }
         
         .card-image {
@@ -450,6 +479,19 @@
             font-size: 3rem;
             color: white;
             z-index: 1;
+        }
+        
+        /* 卡片类型背景 */
+        .card-type-web .card-image {
+            background: var(--card-web);
+        }
+        
+        .card-type-file .card-image {
+            background: var(--card-file);
+        }
+        
+        .card-type-software .card-image {
+            background: var(--card-software);
         }
         
         .card-content {
@@ -481,6 +523,7 @@
             flex: 1;
         }
         
+        /* 卡片元信息样式 */
         .card-meta {
             display: flex;
             justify-content: space-between;
@@ -488,6 +531,14 @@
             margin-top: auto;
             padding-top: 15px;
             border-top: 1px solid var(--border-color);
+        }
+        
+        .card-category {
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            background: var(--view-toggle-bg);
+            color: var(--gray-color);
         }
         
         .card-actions {
@@ -1245,16 +1296,6 @@
             transform: translateY(-2px);
         }
         
-        /* ===== 卡片颜色方案 ===== */
-        .card-comic { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
-        .card-program { background: linear-gradient(135deg, #4361ee, #4895ef); }
-        .card-image-search { background: linear-gradient(135deg, #7209b7, #9d4edd); }
-        .card-up { background: linear-gradient(135deg, #06d6a0, #4ecdc4); }
-        .card-other { background: linear-gradient(135deg, #f72585, #fd79a8); }
-        .card-game { background: linear-gradient(135deg, #ff9e00, #ffcc00); }
-        .card-tool { background: linear-gradient(135deg, #00b4d8, #90e0ef); }
-        .card-learning { background: linear-gradient(135deg, #8338ec, #3a86ff); }
-        
         /* ===== 防复制警告 ===== */
         .copy-warning {
             position: fixed;
@@ -1404,6 +1445,7 @@
                         <option value="default">按默认排序</option>
                         <option value="name">按名称排序</option>
                         <option value="category">按分类排序</option>
+                        <option value="type">按类型排序</option>
                     </select>
                     
                     <div class="view-toggle">
@@ -1433,8 +1475,8 @@
                     <span class="stat-label">已收藏</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value" id="category-count">6</span>
-                    <span class="stat-label">分类数量</span>
+                    <span class="stat-value" id="type-count">3</span>
+                    <span class="stat-label">类型数量</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-value" id="updated-count">27</span>
@@ -1582,9 +1624,9 @@
                 title: "nhentai",
                 description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
                 category: "漫画资源",
+                type: "web", // 网页推荐
                 url: "https://nhentai.net/",
                 icon: "fas fa-book",
-                colorClass: "card-comic",
                 visits: 12500,
             },
             {
@@ -1592,9 +1634,9 @@
                 title: "shotalove",
                 description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
                 category: "漫画资源",
+                type: "web", // 网页推荐
                 url: "https://shotalove.fun/",
                 icon: "fas fa-heart",
-                colorClass: "card-comic",
                 visits: 8900,
                 docUrl: "https://shotalove.fun/about/"
             },
@@ -1603,9 +1645,9 @@
                 title: "chin2",
                 description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
                 category: "漫画资源",
+                type: "web", // 网页推荐
                 url: "https://www.chin2.net/",
                 icon: "fas fa-book-open",
-                colorClass: "card-comic",
                 visits: 7600,
                 docUrl: "https://www.chin2.net/Team"
             },
@@ -1614,9 +1656,9 @@
                 title: "彩e - 漫画资源",
                 description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。",
                 category: "程序资源",
+                type: "software", // 软件推荐
                 url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
                 icon: "fas fa-paint-brush",
-                colorClass: "card-program",
                 visits: 15400,
                 docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/blob/1.8.x.x/docs/README/zh-cn.md"
             },
@@ -1625,9 +1667,9 @@
                 title: "绿e - 漫画资源",
                 description: "Ehviewer绿版，优化版本，提供更好的阅读体验。",
                 category: "程序资源",
+                type: "software", // 软件推荐
                 url: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases",
                 icon: "fas fa-leaf",
-                colorClass: "card-program",
                 visits: 9800,
                 docUrl: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/blob/BiLi_PC_Gamer/README.md"
             },
@@ -1636,9 +1678,9 @@
                 title: "白e - 漫画资源",
                 description: "Ehviewer白版，简洁界面，专注于核心阅读功能。",
                 category: "程序资源",
+                type: "software", // 软件推荐
                 url: "https://gitee.com/nightmare97/EhViewer",
                 icon: "fas fa-snowflake",
-                colorClass: "card-program",
                 visits: 6700,
                 docUrl: "https://gitee.com/nightmare97/EhViewer/blob/test/README.md"
             },
@@ -1647,9 +1689,9 @@
                 title: "GitHub",
                 description: "全球最大的代码托管平台，开源项目聚集地。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://github.com/",
                 icon: "fab fa-github",
-                colorClass: "card-other",
                 visits: 45000
             },
             {
@@ -1657,9 +1699,9 @@
                 title: "VSCode",
                 description: "微软开发的轻量级代码编辑器，功能强大，扩展丰富。",
                 category: "程序资源",
+                type: "software", // 软件推荐
                 url: "https://code.visualstudio.com/",
                 icon: "fas fa-code",
-                colorClass: "card-program",
                 visits: 32000
             },
             {
@@ -1667,9 +1709,9 @@
                 title: "Stack Overflow",
                 description: "程序员问答社区，解决各种编程问题。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://stackoverflow.com/",
                 icon: "fas fa-question-circle",
-                colorClass: "card-other",
                 visits: 38000
             },
             {
@@ -1677,9 +1719,9 @@
                 title: "谷歌搜图",
                 description: "强大的图片搜索引擎，支持以图搜图功能。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://www.google.com/imghp",
                 icon: "fab fa-google",
-                colorClass: "card-image-search",
                 visits: 32000
             },
             {
@@ -1687,9 +1729,9 @@
                 title: "yandex搜图",
                 description: "俄罗斯的搜索引擎，识图功能强大。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://yandex.com/images/",
                 icon: "fas fa-search",
-                colorClass: "card-image-search",
                 visits: 14500
             },
             {
@@ -1697,9 +1739,9 @@
                 title: "trace搜图",
                 description: "动漫识图神器，可以识别动漫截图出处。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://trace.moe/",
                 icon: "fas fa-film",
-                colorClass: "card-image-search",
                 visits: 9800
             },
             {
@@ -1707,9 +1749,9 @@
                 title: "SauceNAO搜图",
                 description: "Pixiv图片搜索专家，精准识别P站作品。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://saucenao.com/",
                 icon: "fas fa-images",
-                colorClass: "card-image-search",
                 visits: 17600
             },
             {
@@ -1717,9 +1759,9 @@
                 title: "搜图bot搜图",
                 description: "专注于本子识图的机器人。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://soutubot.moe/",
                 icon: "fas fa-robot",
-                colorClass: "card-image-search",
                 visits: 5400
             },
             {
@@ -1727,9 +1769,9 @@
                 title: "二次元画像詳細検索",
                 description: "日本二次元图片详细搜索网站。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://ascii2d.net/",
                 icon: "fas fa-search-plus",
-                colorClass: "card-image-search",
                 visits: 8900
             },
             {
@@ -1737,9 +1779,9 @@
                 title: "iqdb识图",
                 description: "多图库搜索，支持多种动漫图库。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "http://www.iqdb.org/",
                 icon: "fas fa-database",
-                colorClass: "card-image-search",
                 visits: 7600
             },
             {
@@ -1747,9 +1789,9 @@
                 title: "tineye识图",
                 description: "反向图片搜索引擎，支持多种图片格式。",
                 category: "识图资源",
+                type: "web", // 网页推荐
                 url: "https://tineye.com/",
                 icon: "fas fa-eye",
-                colorClass: "card-image-search",
                 visits: 6500
             },
             {
@@ -1757,9 +1799,9 @@
                 title: "仓鼠xixi",
                 description: "AI绘画作品分享，创意十足。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/neGKc6G",
                 icon: "fas fa-palette",
-                colorClass: "card-up",
                 visits: 3200
             },
             {
@@ -1767,9 +1809,9 @@
                 title: "鸿渚",
                 description: "地理视频课程分享，知识性强。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/0HsCFFT",
                 icon: "fas fa-globe-asia",
-                colorClass: "card-up",
                 visits: 5400
             },
             {
@@ -1777,9 +1819,9 @@
                 title: "图片混淆/解混淆",
                 description: "在线图片加密解密工具，保护隐私。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://tool.hadsky.com/enimg",
                 icon: "fas fa-unlock-alt",
-                colorClass: "card-tool",
                 visits: 2100
             },
             {
@@ -1787,9 +1829,9 @@
                 title: "集合体Aa",
                 description: "AI绘画技术分享与作品展示。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/ve4uYzU",
                 icon: "fas fa-palette",
-                colorClass: "card-up",
                 visits: 2800
             },
             {
@@ -1797,9 +1839,9 @@
                 title: "风炎小正太",
                 description: "AI绘画创意分享社区。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/i7xD9ot",
                 icon: "fas fa-palette",
-                colorClass: "card-up",
                 visits: 1900
             },
             {
@@ -1807,9 +1849,9 @@
                 title: "拟杰ai",
                 description: "AI绘画技术教程与资源分享。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/BCA8dg1",
                 icon: "fas fa-unlock-alt",
-                colorClass: "card-up",
                 visits: 3100
             },
             {
@@ -1817,9 +1859,9 @@
                 title: "杰惹杰OWO",
                 description: "创意内容分享，风格独特。",
                 category: "优质UP",
+                type: "web", // 网页推荐
                 url: "https://b23.tv/Ung9NvJ",
                 icon: "fas fa-palette",
-                colorClass: "card-up",
                 visits: 1700
             },
             {
@@ -1827,9 +1869,9 @@
                 title: "友链申请",
                 description: "网站友情链接申请通道。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://docs.qq.com/sheet/DWHpCVG9NRFBzSGRW",
                 icon: "fas fa-link",
-                colorClass: "card-other",
                 visits: 800
             },
             {
@@ -1837,9 +1879,9 @@
                 title: "趣味心理实验室",
                 description: "有趣的心理测试合集，探索内心世界。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://quiz.charlinserver.online/",
                 icon: "fas fa-brain",
-                colorClass: "card-learning",
                 visits: 4300
             },
             {
@@ -1847,9 +1889,9 @@
                 title: "小男孩冒险成长",
                 description: "鸿渚的自制网页小游戏，充满创意。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://watchfleeting.github.io/starsea-game/",
                 icon: "fas fa-gamepad",
-                colorClass: "card-game",
                 visits: 2900
             },
             {
@@ -1857,9 +1899,9 @@
                 title: "MDN Web Docs",
                 description: "Web开发技术文档，权威且详细。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://developer.mozilla.org/",
                 icon: "fas fa-file-code",
-                colorClass: "card-learning",
                 visits: 18500
             },
             {
@@ -1867,9 +1909,9 @@
                 title: "Can I Use",
                 description: "查询浏览器支持情况的工具，Web开发必备。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://caniuse.com/",
                 icon: "fas fa-check-circle",
-                colorClass: "card-tool",
                 visits: 9200
             },
             {
@@ -1877,9 +1919,9 @@
                 title: "JSON Formatter",
                 description: "JSON格式化工具，支持在线验证和美化。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://jsonformatter.org/",
                 icon: "fas fa-brackets-curly",
-                colorClass: "card-tool",
                 visits: 7600
             },
             {
@@ -1887,9 +1929,9 @@
                 title: "CSS Gradient",
                 description: "CSS渐变生成器，可视化创建渐变背景。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://cssgradient.io/",
                 icon: "fas fa-palette",
-                colorClass: "card-tool",
                 visits: 5400
             },
             {
@@ -1897,9 +1939,9 @@
                 title: "正则表达式测试",
                 description: "在线正则表达式测试工具，支持多种语言。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://regex101.com/",
                 icon: "fas fa-terminal",
-                colorClass: "card-tool",
                 visits: 6800
             },
             {
@@ -1907,16 +1949,16 @@
                 title: "W3Schools",
                 description: "Web开发教程网站，适合初学者学习。",
                 category: "其他资源",
+                type: "web", // 网页推荐
                 url: "https://www.w3schools.com/",
                 icon: "fas fa-graduation-cap",
-                colorClass: "card-learning",
                 visits: 24500
             }
         ];
 
         // ===== 更新日志数据 =====
         const updateLogs = [
-            { date: "2025-12-10", version: "v2.6.0", type: "feature", content: "新增多个资源卡片，丰富资源内容" },
+            { date: "2025-12-10", version: "v2.6.0", type: "feature", content: "新增卡片类型分类：网页推荐、文件分享、软件推荐" },
             { date: "2025-12-09", version: "v2.5.0", type: "feature", content: "新增文档显示功能，支持在线查看资源文档" },
             { date: "2025-11-25", version: "v2.4.0", type: "feature", content: "添加终端样式更新日志，优化界面显示" },
             { date: "2025-11-20", version: "v2.3.0", type: "security", content: "增强防复制功能，添加复制警告提示" },
@@ -1939,22 +1981,30 @@
                     <h2>网站使用指南</h2>
                     <p>欢迎使用鸿渚资源分享网站！本指南将帮助您快速了解和使用网站的各项功能。</p>
                     
-                    <h3>1. 资源浏览</h3>
+                    <h3>1. 资源类型说明</h3>
+                    <p>网站资源分为三种类型，每种类型有不同设计：</p>
+                    <ul>
+                        <li><strong>网页推荐（蓝色）</strong>：优质网站、在线工具、学习平台等</li>
+                        <li><strong>文件分享（绿色）</strong>：可下载的资源、文档、压缩包等</li>
+                        <li><strong>软件推荐（紫色）</strong>：应用程序、客户端软件、桌面工具等</li>
+                    </ul>
+                    
+                    <h3>2. 资源浏览</h3>
                     <p>网站资源按分类组织，您可以通过以下方式浏览：</p>
                     <ul>
                         <li><strong>分类筛选</strong>：点击导航栏的分类按钮，筛选特定类型的资源</li>
                         <li><strong>搜索功能</strong>：使用顶部搜索框，输入关键词查找特定资源</li>
-                        <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类或默认排序查看资源</li>
+                        <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类或类型排序</li>
                     </ul>
                     
-                    <h3>2. 视图切换</h3>
+                    <h3>3. 视图切换</h3>
                     <p>网站支持两种资源展示视图：</p>
                     <ul>
                         <li><strong>网格视图</strong>：适合快速浏览，每行显示多个资源卡片</li>
                         <li><strong>列表视图</strong>：适合详细查看，每行显示一个资源的详细信息</li>
                     </ul>
                     
-                    <h3>3. 资源操作</h3>
+                    <h3>4. 资源操作</h3>
                     <p>对每个资源，您可以执行以下操作：</p>
                     <ul>
                         <li><strong>访问网站</strong>：点击"访问网站"按钮，在新标签页打开资源链接</li>
@@ -1963,7 +2013,7 @@
                         <li><strong>分享资源</strong>：点击分享图标，复制资源链接或使用系统分享功能</li>
                     </ul>
                     
-                    <h3>4. 个人偏好</h3>
+                    <h3>5. 个人偏好</h3>
                     <p>网站会记住您的以下偏好设置：</p>
                     <ul>
                         <li><strong>收藏列表</strong>：本地存储您收藏的资源</li>
@@ -1971,10 +2021,10 @@
                         <li><strong>主题设置</strong>：记住您选择的主题（浅色/深色）</li>
                     </ul>
                     
-                    <h3>5. 更新日志</h3>
+                    <h3>6. 更新日志</h3>
                     <p>网站底部提供了终端样式的更新日志，记录了所有版本更新内容。您可以在这里了解网站的最新功能和改进。</p>
                     
-                    <h3>6. 注意事项</h3>
+                    <h3>7. 注意事项</h3>
                     <ul>
                         <li>网站资源来自网络，仅供学习交流使用</li>
                         <li>请遵守相关法律法规，合理使用资源</li>
@@ -1989,13 +2039,21 @@
                 content: `
                     <h2>常见问题 (FAQ)</h2>
                     
-                    <h3>1. 网站资源来自哪里？</h3>
+                    <h3>1. 三种卡片类型有什么区别？</h3>
+                    <p>网站将资源卡片分为三种类型：</p>
+                    <ul>
+                        <li><strong>网页推荐（蓝色）</strong>：可直接访问的网站、在线工具</li>
+                        <li><strong>文件分享（绿色）</strong>：提供文件下载的资源</li>
+                        <li><strong>软件推荐（紫色）</strong>：需要安装的应用程序</li>
+                    </ul>
+                    
+                    <h3>2. 网站资源来自哪里？</h3>
                     <p>网站资源由管理员从互联网收集整理，均为公开可访问的资源。我们会定期检查资源有效性，但无法保证所有资源始终可用。</p>
                     
-                    <h3>2. 如何提交新的资源？</h3>
+                    <h3>3. 如何提交新的资源？</h3>
                     <p>目前网站暂未开放用户提交功能。如果您有优质资源推荐，可以通过页面底部的邮箱联系我们。</p>
                     
-                    <h3>3. 为什么有些资源无法访问？</h3>
+                    <h3>4. 为什么有些资源无法访问？</h3>
                     <p>资源无法访问可能有以下原因：</p>
                     <ul>
                         <li>原网站已关闭或更改地址</li>
@@ -2005,29 +2063,29 @@
                     </ul>
                     <p>如果发现资源失效，请通过反馈功能报告，我们会及时更新或移除。</p>
                     
-                    <h3>4. 如何收藏资源？</h3>
+                    <h3>5. 如何收藏资源？</h3>
                     <p>点击资源卡片上的心形图标即可收藏。收藏列表会保存在您的浏览器本地存储中，清理浏览器数据会导致收藏丢失。</p>
                     
-                    <h3>5. 网站支持深色模式吗？</h3>
+                    <h3>6. 网站支持深色模式吗？</h3>
                     <p>支持。点击右上角的月亮图标可以切换深色模式，您的偏好设置会被保存。</p>
                     
-                    <h3>6. 为什么不能复制网站内容？</h3>
+                    <h3>7. 为什么不能复制网站内容？</h3>
                     <p>为了保护网站内容不被未经授权的复制，我们启用了防复制功能。但文档区域和终端区域允许复制，以便您获取有用信息。</p>
                     
-                    <h3>7. 网站会收集用户数据吗？</h3>
+                    <h3>8. 网站会收集用户数据吗？</h3>
                     <p>我们仅收集必要的匿名使用数据（如资源访问次数），用于改进网站体验。所有数据都保存在您的浏览器本地，不会上传到服务器。</p>
                     
-                    <h3>8. 如何联系管理员？</h3>
+                    <h3>9. 如何联系管理员？</h3>
                     <p>您可以通过以下方式联系我们：</p>
                     <ul>
                         <li>邮箱: lzc737507@outlook.com</li>
                         <li>反馈功能: 点击页面底部的"反馈问题"链接</li>
                     </ul>
                     
-                    <h3>9. 网站有移动端应用吗？</h3>
+                    <h3>10. 网站有移动端应用吗？</h3>
                     <p>目前只有网页版。网站已针对移动端进行优化，您可以将网站添加到手机主屏幕，获得类似应用的体验。</p>
                     
-                    <h3>10. 如何查看更新日志？</h3>
+                    <h3>11. 如何查看更新日志？</h3>
                     <p>页面底部的终端样式区域显示了完整的更新日志。您也可以点击右上角的终端图标快速滚动到更新日志。</p>
                 `
             },
@@ -2115,7 +2173,7 @@
             stats: {
                 totalCount: document.getElementById('total-count'),
                 favoritesStat: document.getElementById('favorites-stat'),
-                categoryCount: document.getElementById('category-count'),
+                categoryCount: document.getElementById('type-count'), // 注意：这里改成了type-count
                 updatedCount: document.getElementById('updated-count')
             },
             terminalContent: document.getElementById('terminal-content'),
@@ -2175,9 +2233,9 @@
             // 收藏数
             updateFavoritesCount();
             
-            // 分类数
-            const categories = new Set(resourcesData.map(r => r.category));
-            elements.stats.categoryCount.textContent = categories.size;
+            // 卡片类型数
+            const types = new Set(resourcesData.map(r => r.type));
+            elements.stats.categoryCount.textContent = types.size; // 这里显示的是类型数量
             
             // 最近更新数（显示最近添加的资源数）
             const recentCount = resourcesData.filter(r => r.id > 27).length;
@@ -2199,6 +2257,9 @@
                 </div>
                 <div class="terminal-line">
                     <span class="terminal-output">当前版本: <span class="terminal-output info">v2.6.0</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">卡片类型: <span class="terminal-output info">网页推荐、文件分享、软件推荐</span></span>
                 </div>
                 <div class="terminal-line">
                     <span class="terminal-output">最后更新: <span class="terminal-output info">2025-12-10</span></span>
@@ -2542,7 +2603,8 @@
                 filtered = filtered.filter(resource => 
                     resource.title.toLowerCase().includes(state.searchQuery) ||
                     resource.description.toLowerCase().includes(state.searchQuery) ||
-                    resource.category.toLowerCase().includes(state.searchQuery)
+                    resource.category.toLowerCase().includes(state.searchQuery) ||
+                    resource.type.toLowerCase().includes(state.searchQuery)
                 );
             }
 
@@ -2554,6 +2616,8 @@
                         return a.title.localeCompare(b.title);
                     case 'category':
                         return a.category.localeCompare(b.category);
+                    case 'type':
+                        return a.type.localeCompare(b.type);
                     default:
                         return b.visits - a.visits; // 默认按访问量降序排序
                 }
@@ -2595,17 +2659,27 @@
         function createResourceCard(resource, index) {
             const isFavorite = state.favorites.has(resource.id);
             const hasDoc = !!resource.docUrl;
+            
+            // 类型文本映射
+            const typeTexts = {
+                'web': '网页推荐',
+                'file': '文件分享',
+                'software': '软件推荐'
+            };
+            
+            const typeText = typeTexts[resource.type] || resource.type;
+            
             const card = document.createElement('div');
-            card.className = `resource-card`;
+            card.className = `resource-card card-type-${resource.type}`;
             card.style.setProperty('--index', index);
             
             // 根据当前视图模式选择模板
             if (state.currentView === 'grid') {
                 // 网格视图模板
                 card.innerHTML = `
-                    <div class="card-image ${resource.colorClass}">
+                    <div class="card-image">
                         <i class="${resource.icon}"></i>
-                        <div class="card-badge">${resource.category}</div>
+                        <div class="card-type-badge">${typeText}</div>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">
@@ -2614,14 +2688,7 @@
                         </h3>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
-                            <a href="${resource.url}" 
-                               class="card-link" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               onclick="trackVisit(${resource.id})">
-                                <i class="fas fa-external-link-alt"></i>
-                                访问网站
-                            </a>
+                            <span class="card-category">${resource.category}</span>
                             <div class="card-actions">
                                 ${hasDoc ? `
                                 <button class="action-btn" 
@@ -2642,14 +2709,22 @@
                                 </button>
                             </div>
                         </div>
+                        <a href="${resource.url}" 
+                           class="card-link" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           onclick="trackVisit(${resource.id})">
+                            <i class="fas fa-external-link-alt"></i>
+                            访问网站
+                        </a>
                     </div>
                 `;
             } else {
                 // 列表视图模板
                 card.innerHTML = `
-                    <div class="card-image ${resource.colorClass}">
+                    <div class="card-image">
                         <i class="${resource.icon}"></i>
-                        <div class="card-badge">${resource.category}</div>
+                        <div class="card-type-badge">${typeText}</div>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">
@@ -2658,14 +2733,9 @@
                         </h3>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
-                            <a href="${resource.url}" 
-                               class="card-link" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               onclick="trackVisit(${resource.id})">
-                                <i class="fas fa-external-link-alt"></i>
-                                访问
-                            </a>
+                            <div>
+                                <span class="card-category">${resource.category}</span>
+                            </div>
                             <div class="card-actions">
                                 ${hasDoc ? `
                                 <button class="action-btn" 
@@ -2685,6 +2755,14 @@
                                     <i class="fas fa-share-alt"></i>
                                 </button>
                             </div>
+                            <a href="${resource.url}" 
+                               class="card-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               onclick="trackVisit(${resource.id})">
+                                <i class="fas fa-external-link-alt"></i>
+                                访问
+                            </a>
                         </div>
                     </div>
                 `;
