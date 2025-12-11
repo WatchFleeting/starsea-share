@@ -416,6 +416,7 @@
             display: flex;
             flex-direction: column;
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
         
         .resource-card:hover {
@@ -500,7 +501,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 220px; /* 确保卡片内容区域有最小高度 */
+            min-height: 220px;
         }
         
         .card-title {
@@ -525,7 +526,7 @@
             flex: 1;
             overflow: hidden;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* 限制最多显示3行 */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
         
@@ -646,7 +647,7 @@
         
         .list-view .card-description {
             margin-bottom: 15px;
-            -webkit-line-clamp: 2; /* 限制描述显示行数 */
+            -webkit-line-clamp: 2;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -664,6 +665,195 @@
         .list-view .card-link {
             margin-top: 0;
             align-self: center;
+        }
+        
+        /* ===== 卡片详情模态框（新添加） ===== */
+        .detail-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2100;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .detail-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .detail-modal {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .detail-modal-overlay.active .detail-modal {
+            transform: translateY(0);
+        }
+        
+        .detail-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .detail-modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .detail-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .detail-modal-body {
+            padding: 24px;
+            overflow-y: auto;
+        }
+        
+        .detail-modal-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .detail-modal-icon i {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.1);
+            padding: 25px;
+            border-radius: 50%;
+        }
+        
+        .detail-modal-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .detail-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .detail-info-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .detail-info-value {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .detail-description {
+            margin-bottom: 30px;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+        
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .detail-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            min-width: 160px;
+        }
+        
+        .detail-btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .detail-btn-primary:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .detail-btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+        }
+        
+        .detail-btn-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .detail-btn-danger {
+            background: transparent;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
+        }
+        
+        .detail-btn-danger:hover {
+            background: var(--danger-color);
+            color: white;
+            transform: translateY(-2px);
         }
         
         /* ===== 文档显示模态框样式 ===== */
@@ -1111,7 +1301,7 @@
                 justify-content: space-between;
             }
             
-            .modal {
+            .modal, .detail-modal {
                 width: 95%;
                 height: 85vh;
             }
@@ -1134,6 +1324,15 @@
             
             .card-image {
                 height: 140px;
+            }
+            
+            .detail-modal-info {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .detail-actions {
+                flex-direction: column;
             }
         }
         
@@ -1501,6 +1700,7 @@
                         <button class="category-btn" data-category="程序资源">程序资源</button>
                         <button class="category-btn" data-category="识图资源">识图资源</button>
                         <button class="category-btn" data-category="优质UP">优质UP主</button>
+                        <button class="category-btn" data-category="图包资源">图包资源</button>
                         <button class="category-btn" data-category="其他资源">其他资源</button>
                     </div>
                 </div>
@@ -1648,6 +1848,61 @@
         </div>
     </div>
     
+    <!-- 卡片详情模态框（新添加） -->
+    <div class="detail-modal-overlay" id="detail-modal">
+        <div class="detail-modal">
+            <div class="detail-modal-header">
+                <div class="detail-modal-title">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="detail-title">资源详情</span>
+                </div>
+                <button class="detail-modal-close" id="detail-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="detail-modal-body">
+                <div class="detail-modal-icon">
+                    <i id="detail-icon" class="fas fa-globe"></i>
+                </div>
+                <div class="detail-modal-info">
+                    <div class="detail-info-item">
+                        <span class="detail-info-label"><i class="fas fa-tag"></i> 分类</span>
+                        <span class="detail-info-value" id="detail-category">-</span>
+                    </div>
+                    <div class="detail-info-item">
+                        <span class="detail-info-label"><i class="fas fa-layer-group"></i> 类型</span>
+                        <span class="detail-info-value" id="detail-type">-</span>
+                    </div>
+                    <div class="detail-info-item">
+                        <span class="detail-info-label"><i class="fas fa-eye"></i> 访问量</span>
+                        <span class="detail-info-value" id="detail-visits">-</span>
+                    </div>
+                    <div class="detail-info-item">
+                        <span class="detail-info-label"><i class="fas fa-calendar-alt"></i> 添加时间</span>
+                        <span class="detail-info-value" id="detail-added">-</span>
+                    </div>
+                </div>
+                <div class="detail-description allow-select" id="detail-description">
+                    <!-- 详细描述将通过JS动态生成 -->
+                </div>
+                <div class="detail-actions">
+                    <a href="#" id="detail-visit-btn" class="detail-btn detail-btn-primary" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt"></i>
+                        访问网站
+                    </a>
+                    <button id="detail-favorite-btn" class="detail-btn detail-btn-secondary">
+                        <i class="far fa-heart"></i>
+                        添加到收藏
+                    </button>
+                    <button id="detail-share-btn" class="detail-btn detail-btn-secondary">
+                        <i class="fas fa-share-alt"></i>
+                        分享资源
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- 文档显示模态框 -->
     <div class="modal-overlay" id="document-modal">
         <div class="modal">
@@ -1687,337 +1942,370 @@
             {
                 id: 1,
                 title: "nhentai",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。拥有详细的分类标签系统，便于用户快速找到自己喜欢的漫画类型。",
                 category: "漫画资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://nhentai.net/",
                 icon: "fas fa-book",
                 visits: 12500,
+                added: "2025-10-11"
             },
             {
                 id: 2,
                 title: "shotalove",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。特别适合喜欢轻松恋爱题材的用户。",
                 category: "漫画资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://shotalove.fun/",
                 icon: "fas fa-heart",
                 visits: 8900,
-                docUrl: "https://shotalove.fun/about/"
+                docUrl: "https://shotalove.fun/about/",
+                added: "2025-10-11"
             },
             {
                 id: 3,
                 title: "chin2",
-                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。",
+                description: "收录海量优质漫画，更新及时，画质清晰，支持多语言版本。以高质量的翻译和精致的排版著称。",
                 category: "漫画资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://www.chin2.net/",
                 icon: "fas fa-book-open",
                 visits: 7600,
-                docUrl: "https://www.chin2.net/Team"
+                docUrl: "https://www.chin2.net/Team",
+                added: "2025-10-11"
             },
             {
                 id: 4,
                 title: "彩e - 漫画资源",
-                description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。",
+                description: "Ehviewer彩版，功能强大的漫画阅读器，支持多种格式。拥有丰富的自定义选项和流畅的阅读体验。",
                 category: "程序资源",
-                type: "software", // 软件推荐
+                type: "software",
                 url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
                 icon: "fas fa-paint-brush",
                 visits: 15400,
-                docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/blob/1.8.x.x/docs/README/zh-cn.md"
+                docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/blob/1.8.x.x/docs/README/zh-cn.md",
+                added: "2025-10-11"
             },
             {
                 id: 5,
                 title: "绿e - 漫画资源",
-                description: "Ehviewer绿版，优化版本，提供更好的阅读体验。",
+                description: "Ehviewer绿版，优化版本，提供更好的阅读体验。体积小巧，运行流畅，适合低配置设备。",
                 category: "程序资源",
-                type: "software", // 软件推荐
+                type: "software",
                 url: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases",
                 icon: "fas fa-leaf",
                 visits: 9800,
-                docUrl: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/blob/BiLi_PC_Gamer/README.md"
+                docUrl: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/blob/BiLi_PC_Gamer/README.md",
+                added: "2025-10-11"
             },
             {
                 id: 6,
                 title: "白e - 漫画资源",
-                description: "Ehviewer白版，简洁界面，专注于核心阅读功能。",
+                description: "Ehviewer白版，简洁界面，专注于核心阅读功能。无广告，启动快速，适合追求简洁的用户。",
                 category: "程序资源",
-                type: "software", // 软件推荐
+                type: "software",
                 url: "https://gitee.com/nightmare97/EhViewer",
                 icon: "fas fa-snowflake",
                 visits: 6700,
-                docUrl: "https://gitee.com/nightmare97/EhViewer/blob/test/README.md"
+                docUrl: "https://gitee.com/nightmare97/EhViewer/blob/test/README.md",
+                added: "2025-10-11"
             },
             {
                 id: 7,
                 title: "GitHub",
-                description: "全球最大的代码托管平台，开源项目聚集地。",
+                description: "全球最大的代码托管平台，开源项目聚集地。开发者必备工具，支持Git版本控制，拥有强大的协作功能。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://github.com/",
                 icon: "fab fa-github",
-                visits: 45000
+                visits: 45000,
+                added: "2025-12-11"
             },
             {
                 id: 8,
                 title: "VSCode",
-                description: "微软开发的轻量级代码编辑器，功能强大，扩展丰富。",
+                description: "微软开发的轻量级代码编辑器，功能强大，扩展丰富。支持多种编程语言，拥有庞大的插件生态系统。",
                 category: "程序资源",
-                type: "software", // 软件推荐
+                type: "software",
                 url: "https://code.visualstudio.com/",
                 icon: "fas fa-code",
-                visits: 32000
+                visits: 32000,
+                added: "2025-12-11"
             },
             {
                 id: 9,
                 title: "Stack Overflow",
-                description: "程序员问答社区，解决各种编程问题。",
+                description: "程序员问答社区，解决各种编程问题。拥有海量的技术问答，是解决编程难题的首选平台。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://stackoverflow.com/",
                 icon: "fas fa-question-circle",
-                visits: 38000
+                visits: 38000,
+                added: "2025-12-11"
             },
             {
                 id: 10,
                 title: "谷歌搜图",
-                description: "强大的图片搜索引擎，支持以图搜图功能。",
+                description: "强大的图片搜索引擎，支持以图搜图功能。可以识别图片内容，找到相似图片或图片来源。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://www.google.com/imghp",
                 icon: "fab fa-google",
-                visits: 32000
+                visits: 32000,
+                added: "2025-10-11"
             },
             {
                 id: 11,
                 title: "yandex搜图",
-                description: "俄罗斯的搜索引擎，识图功能强大。",
+                description: "俄罗斯的搜索引擎，识图功能强大。特别擅长识别动漫和二次元图片，准确率较高。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://yandex.com/images/",
                 icon: "fas fa-search",
-                visits: 14500
+                visits: 14500,
+                added: "2025-10-11"
             },
             {
                 id: 12,
                 title: "trace搜图",
-                description: "动漫识图神器，可以识别动漫截图出处。",
+                description: "动漫识图神器，可以识别动漫截图出处。支持通过截图查找动画名称、集数和时间点。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://trace.moe/",
                 icon: "fas fa-film",
-                visits: 9800
+                visits: 9800,
+                added: "2025-10-11"
             },
             {
                 id: 13,
                 title: "SauceNAO搜图",
-                description: "Pixiv图片搜索专家，精准识别P站作品。",
+                description: "Pixiv图片搜索专家，精准识别P站作品。拥有庞大的数据库，支持多种图片来源查询。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://saucenao.com/",
                 icon: "fas fa-images",
-                visits: 17600
+                visits: 17600,
+                added: "2025-10-11"
             },
             {
                 id: 14,
                 title: "搜图bot搜图",
-                description: "专注于本子识图的机器人。",
+                description: "专注于本子识图的机器人。支持Telegram和Discord平台，使用方便快捷。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://soutubot.moe/",
                 icon: "fas fa-robot",
-                visits: 5400
+                visits: 5400,
+                added: "2025-10-11"
             },
             {
                 id: 15,
                 title: "二次元画像詳細検索",
-                description: "日本二次元图片详细搜索网站。",
+                description: "日本二次元图片详细搜索网站。拥有强大的筛选功能，可以按多种条件搜索图片。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://ascii2d.net/",
                 icon: "fas fa-search-plus",
-                visits: 8900
+                visits: 8900,
+                added: "2025-10-11"
             },
             {
                 id: 16,
                 title: "iqdb识图",
-                description: "多图库搜索，支持多种动漫图库。",
+                description: "多图库搜索，支持多种动漫图库。可以同时在多个图库中搜索图片，提高查找效率。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "http://www.iqdb.org/",
                 icon: "fas fa-database",
-                visits: 7600
+                visits: 7600,
+                added: "2025-10-11"
             },
             {
                 id: 17,
                 title: "tineye识图",
-                description: "反向图片搜索引擎，支持多种图片格式。",
+                description: "反向图片搜索引擎，支持多种图片格式。可以查找图片在互联网上的使用情况。",
                 category: "识图资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://tineye.com/",
                 icon: "fas fa-eye",
-                visits: 6500
+                visits: 6500,
+                added: "2025-10-11"
             },
             {
                 id: 18,
                 title: "仓鼠xixi",
-                description: "AI绘画作品分享，创意十足。",
+                description: "AI绘画作品分享，创意十足。专注于AI绘画教程和资源分享，适合AI绘画爱好者。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/neGKc6G",
                 icon: "fas fa-palette",
-                visits: 3200
+                visits: 3200,
+                added: "2025-10-11"
             },
             {
                 id: 19,
                 title: "鸿渚",
-                description: "地理视频课程分享，知识性强。",
+                description: "地理视频课程分享，知识性强。提供优质的地理教学资源，适合学生和地理爱好者。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/0HsCFFT",
                 icon: "fas fa-globe-asia",
-                visits: 5400
+                visits: 5400,
+                added: "2025-10-11"
             },
             {
                 id: 20,
                 title: "图片混淆/解混淆",
-                description: "在线图片加密解密工具，保护隐私。",
+                description: "在线图片加密解密工具，保护隐私。支持多种加密算法，操作简单方便。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://tool.hadsky.com/enimg",
                 icon: "fas fa-unlock-alt",
-                visits: 2100
+                visits: 2100,
+                added: "2025-10-11"
             },
             {
                 id: 21,
                 title: "集合体Aa",
-                description: "AI绘画技术分享与作品展示。",
+                description: "AI绘画技术分享与作品展示。专注于AI绘画技术的深度解析和创作经验分享。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/ve4uYzU",
                 icon: "fas fa-palette",
-                visits: 2800
+                visits: 2800,
+                added: "2025-11-11"
             },
             {
                 id: 22,
                 title: "风炎小正太",
-                description: "AI绘画创意分享社区。",
+                description: "AI绘画创意分享社区。分享独特的AI绘画创作思路和技巧。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/i7xD9ot",
                 icon: "fas fa-palette",
-                visits: 1900
+                visits: 1900,
+                added: "2025-11-11"
             },
             {
                 id: 23,
                 title: "拟杰ai",
-                description: "AI绘画技术教程与资源分享。",
+                description: "AI绘画技术教程与资源分享。提供详细的AI绘画入门教程和实用工具推荐。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/BCA8dg1",
                 icon: "fas fa-unlock-alt",
-                visits: 3100
+                visits: 3100,
+                added: "2025-11-11"
             },
             {
                 id: 24,
                 title: "杰惹杰OWO",
-                description: "创意内容分享，风格独特。",
+                description: "创意内容分享，风格独特。分享各种有趣的创意内容和艺术作品。",
                 category: "优质UP",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://b23.tv/Ung9NvJ",
                 icon: "fas fa-palette",
-                visits: 1700
+                visits: 1700,
+                added: "2025-11-11"
             },
             {
                 id: 25,
-                title: "友链申请",
-                description: "网站友情链接申请通道。",
-                category: "其他资源",
-                type: "web", // 网页推荐
-                url: "https://docs.qq.com/sheet/DWHpCVG9NRFBzSGRW",
-                icon: "fas fa-link",
-                visits: 800
+                title: "蓝轩宇",
+                description: "正太图包",
+                category: "图包资源[密码:EMHX]",
+                type: "file",
+                url: "http://nebulastorage.web1.fastfrp.asia:40030/s/BvDrWthB?密码:EMHX",
+                icon: "fas fa-palette",
+                visits: 1700,
+                added: "2025-12-11"
             },
             {
                 id: 26,
                 title: "趣味心理实验室",
-                description: "有趣的心理测试合集，探索内心世界。",
+                description: "有趣的心理测试合集，探索内心世界。包含多种专业的心理学测试工具。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://quiz.charlinserver.online/",
                 icon: "fas fa-brain",
-                visits: 4300
+                visits: 4300,
+                added: "2025-12-10"
             },
             {
                 id: 27,
                 title: "小男孩冒险成长",
-                description: "鸿渚的自制网页小游戏，充满创意。",
+                description: "鸿渚的自制网页小游戏，充满创意。一个有趣的成长冒险游戏，适合休闲娱乐。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://watchfleeting.github.io/starsea-game/",
                 icon: "fas fa-gamepad",
-                visits: 2900
+                visits: 2900,
+                added: "2025-12-10"
             },
             {
                 id: 28,
                 title: "MDN Web Docs",
-                description: "Web开发技术文档，权威且详细。",
+                description: "Web开发技术文档，权威且详细。提供HTML、CSS、JavaScript等前端技术的官方文档。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://developer.mozilla.org/",
                 icon: "fas fa-file-code",
-                visits: 18500
+                visits: 18500,
+                added: "2025-12-11"
             },
             {
                 id: 29,
                 title: "Can I Use",
-                description: "查询浏览器支持情况的工具，Web开发必备。",
+                description: "查询浏览器支持情况的工具，Web开发必备。可以查询各种Web技术在各个浏览器中的兼容性。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://caniuse.com/",
                 icon: "fas fa-check-circle",
-                visits: 9200
+                visits: 9200,
+                added: "2025-12-11"
             },
             {
                 id: 30,
                 title: "JSON Formatter",
-                description: "JSON格式化工具，支持在线验证和美化。",
+                description: "JSON格式化工具，支持在线验证和美化。可以快速格式化JSON数据，检查语法错误。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://jsonformatter.org/",
                 icon: "fas fa-brackets-curly",
-                visits: 7600
+                visits: 7600,
+                added: "2025-12-11"
             },
             {
                 id: 31,
                 title: "CSS Gradient",
-                description: "CSS渐变生成器，可视化创建渐变背景。",
+                description: "CSS渐变生成器，可视化创建渐变背景。提供直观的渐变编辑器，可以生成CSS代码。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://cssgradient.io/",
                 icon: "fas fa-palette",
-                visits: 5400
+                visits: 5400,
+                added: "2025-12-11"
             },
             {
                 id: 32,
                 title: "正则表达式测试",
-                description: "在线正则表达式测试工具，支持多种语言。",
+                description: "在线正则表达式测试工具，支持多种语言。可以实时测试正则表达式，查看匹配结果。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://regex101.com/",
                 icon: "fas fa-terminal",
-                visits: 6800
+                visits: 6800,
+                added: "2025-12-11"
             },
             {
                 id: 33,
                 title: "W3Schools",
-                description: "Web开发教程网站，适合初学者学习。",
+                description: "Web开发教程网站，适合初学者学习。提供简单易懂的Web开发教程和实例。",
                 category: "其他资源",
-                type: "web", // 网页推荐
+                type: "web",
                 url: "https://www.w3schools.com/",
                 icon: "fas fa-graduation-cap",
-                visits: 24500
+                visits: 24500,
+                added: "2025-12-11"
             }
         ];
 
@@ -2193,10 +2481,10 @@
 
         // ===== 应用配置常量 =====
         const config = {
-            itemsPerPage: 12,           // 每页显示资源数量
-            defaultView: 'grid',        // 默认视图模式
-            defaultCategory: 'all',     // 默认分类
-            storageKeys: {              // 本地存储键名
+            itemsPerPage: 12,
+            defaultView: 'grid',
+            defaultCategory: 'all',
+            storageKeys: {
                 favorites: 'resource_favorites',
                 viewMode: 'resource_view_mode',
                 theme: 'resource_theme'
@@ -2205,16 +2493,17 @@
 
         // ===== 应用状态对象 =====
         const state = {
-            currentPage: 1,             // 当前页码
-            currentCategory: config.defaultCategory, // 当前分类
-            currentView: config.defaultView,         // 当前视图模式
-            searchQuery: '',            // 搜索关键词
-            favorites: new Set(),       // 收藏的资源ID集合
-            filteredResources: [],      // 过滤后的资源列表
-            totalPages: 1,              // 总页数
-            isLoading: false,           // 加载状态
-            currentDocument: null,      // 当前查看的文档资源
-            documentTab: 'guide'        // 当前文档标签页
+            currentPage: 1,
+            currentCategory: config.defaultCategory,
+            currentView: config.defaultView,
+            searchQuery: '',
+            favorites: new Set(),
+            filteredResources: [],
+            totalPages: 1,
+            isLoading: false,
+            currentDocument: null,
+            documentTab: 'guide',
+            currentDetailResource: null // 新增：当前查看详情的资源
         };
 
         // ===== DOM元素引用 =====
@@ -2238,7 +2527,7 @@
             stats: {
                 totalCount: document.getElementById('total-count'),
                 favoritesStat: document.getElementById('favorites-stat'),
-                categoryCount: document.getElementById('type-count'), // 注意：这里改成了type-count
+                categoryCount: document.getElementById('type-count'),
                 updatedCount: document.getElementById('updated-count')
             },
             terminalContent: document.getElementById('terminal-content'),
@@ -2247,29 +2536,40 @@
             documentContent: document.getElementById('document-content'),
             documentClose: document.getElementById('document-close'),
             copyWarning: document.getElementById('copy-warning'),
-            copyWarningClose: document.getElementById('copy-warning-close')
+            copyWarningClose: document.getElementById('copy-warning-close'),
+            // 详情模态框元素
+            detailModal: document.getElementById('detail-modal'),
+            detailClose: document.getElementById('detail-close'),
+            detailTitle: document.getElementById('detail-title'),
+            detailIcon: document.getElementById('detail-icon'),
+            detailCategory: document.getElementById('detail-category'),
+            detailType: document.getElementById('detail-type'),
+            detailVisits: document.getElementById('detail-visits'),
+            detailAdded: document.getElementById('detail-added'),
+            detailDescription: document.getElementById('detail-description'),
+            detailVisitBtn: document.getElementById('detail-visit-btn'),
+            detailFavoriteBtn: document.getElementById('detail-favorite-btn'),
+            detailShareBtn: document.getElementById('detail-share-btn')
         };
 
         // ===== 应用初始化函数 =====
         function initApp() {
-            loadUserPreferences();     // 加载用户偏好设置
-            renderStatistics();        // 渲染统计信息
-            renderTerminalLogs();      // 渲染终端日志
-            setupEventListeners();     // 设置事件监听器
-            setupCopyProtection();     // 设置防复制保护
-            filterAndRenderResources(); // 初始渲染资源
+            loadUserPreferences();
+            renderStatistics();
+            renderTerminalLogs();
+            setupEventListeners();
+            setupCopyProtection();
+            filterAndRenderResources();
         }
 
         // ===== 加载用户偏好设置 =====
         function loadUserPreferences() {
-            // 加载主题设置
             const savedTheme = localStorage.getItem(config.storageKeys.theme);
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-theme');
                 updateThemeIcon('dark');
             }
 
-            // 加载收藏列表
             const savedFavorites = localStorage.getItem(config.storageKeys.favorites);
             if (savedFavorites) {
                 try {
@@ -2282,7 +2582,6 @@
                 }
             }
 
-            // 加载视图模式
             const savedViewMode = localStorage.getItem(config.storageKeys.viewMode);
             if (savedViewMode && ['grid', 'list'].includes(savedViewMode)) {
                 state.currentView = savedViewMode;
@@ -2292,17 +2591,10 @@
 
         // ===== 渲染统计信息 =====
         function renderStatistics() {
-            // 总资源数
             elements.stats.totalCount.textContent = resourcesData.length;
-            
-            // 收藏数
             updateFavoritesCount();
-            
-            // 卡片类型数
             const types = new Set(resourcesData.map(r => r.type));
-            elements.stats.categoryCount.textContent = types.size; // 这里显示的是类型数量
-            
-            // 最近更新数（显示最近添加的资源数）
+            elements.stats.categoryCount.textContent = types.size;
             const recentCount = resourcesData.filter(r => r.id > 27).length;
             elements.stats.updatedCount.textContent = recentCount;
         }
@@ -2311,7 +2603,6 @@
         function renderTerminalLogs() {
             let terminalHTML = '';
             
-            // 添加欢迎信息
             terminalHTML += `
                 <div class="terminal-line">
                     <span class="terminal-prompt">$</span>
@@ -2351,12 +2642,10 @@
                 </div>
             `;
             
-            // 添加更新日志条目
             updateLogs.forEach(log => {
                 let typeClass = '';
                 let typeText = '';
                 
-                // 根据更新类型设置样式
                 switch(log.type) {
                     case 'feature':
                         typeClass = 'info';
@@ -2386,7 +2675,6 @@
                 `;
             });
             
-            // 添加最后一行（闪烁光标）
             terminalHTML += `
                 <div class="terminal-line">
                     <span class="terminal-prompt">$</span>
@@ -2397,7 +2685,6 @@
             
             elements.terminalContent.innerHTML = terminalHTML;
             
-            // 自动滚动到底部（模拟终端输出效果）
             setTimeout(() => {
                 elements.terminalContent.scrollTop = elements.terminalContent.scrollHeight;
             }, 100);
@@ -2407,7 +2694,6 @@
         function updateFavoritesCount() {
             elements.stats.favoritesStat.textContent = state.favorites.size;
             
-            // 更新收藏按钮上的徽章
             const favoritesBtn = document.getElementById('favorites-btn');
             if (favoritesBtn) {
                 const badge = favoritesBtn.querySelector('.badge') || document.createElement('span');
@@ -2490,7 +2776,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // 滚动事件监听（显示/隐藏回到顶部按钮）
+            // 滚动事件监听
             window.addEventListener('scroll', () => {
                 if (window.pageYOffset > 300) {
                     elements.backToTop.classList.add('visible');
@@ -2541,6 +2827,34 @@
                 });
             }
 
+            // 详情模态框关闭按钮
+            elements.detailClose.addEventListener('click', closeDetailModal);
+            elements.detailModal.addEventListener('click', (e) => {
+                if (e.target === elements.detailModal) {
+                    closeDetailModal();
+                }
+            });
+
+            // 详情模态框操作按钮
+            elements.detailVisitBtn.addEventListener('click', (e) => {
+                if (state.currentDetailResource) {
+                    trackVisit(state.currentDetailResource.id);
+                }
+            });
+
+            elements.detailFavoriteBtn.addEventListener('click', () => {
+                if (state.currentDetailResource) {
+                    toggleFavorite(state.currentDetailResource.id);
+                    updateDetailFavoriteButton();
+                }
+            });
+
+            elements.detailShareBtn.addEventListener('click', () => {
+                if (state.currentDetailResource) {
+                    shareResource(state.currentDetailResource.id);
+                }
+            });
+
             // 文档模态框关闭按钮
             elements.documentClose.addEventListener('click', closeDocumentModal);
             elements.documentModal.addEventListener('click', (e) => {
@@ -2569,15 +2883,15 @@
 
             // 键盘快捷键支持
             document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + F 聚焦搜索框
                 if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
                     e.preventDefault();
                     elements.searchInput.focus();
                 }
                 
-                // ESC 清空搜索或关闭模态框
                 if (e.key === 'Escape') {
-                    if (elements.documentModal.classList.contains('active')) {
+                    if (elements.detailModal.classList.contains('active')) {
+                        closeDetailModal();
+                    } else if (elements.documentModal.classList.contains('active')) {
                         closeDocumentModal();
                     } else {
                         elements.searchInput.value = '';
@@ -2586,7 +2900,6 @@
                     }
                 }
                 
-                // Ctrl/Cmd + D 打开文档
                 if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
                     e.preventDefault();
                     openDocumentModal('guide');
@@ -2596,7 +2909,6 @@
 
         // ===== 设置防复制保护 =====
         function setupCopyProtection() {
-            // 阻止右键菜单（除了允许复制的区域）
             document.addEventListener('contextmenu', (e) => {
                 if (e.target.closest('.allow-select') || 
                     e.target.tagName === 'INPUT' || 
@@ -2609,7 +2921,6 @@
                 return false;
             });
             
-            // 阻止复制快捷键（Ctrl+C / Cmd+C）
             document.addEventListener('keydown', (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
                     const selection = window.getSelection();
@@ -2626,7 +2937,6 @@
                 }
             });
             
-            // 阻止拖拽选择
             document.addEventListener('dragstart', (e) => {
                 if (!e.target.closest('.allow-select')) {
                     e.preventDefault();
@@ -2639,7 +2949,6 @@
         function showCopyWarning() {
             elements.copyWarning.classList.add('show');
             
-            // 3秒后自动隐藏警告
             setTimeout(() => {
                 elements.copyWarning.classList.remove('show');
             }, 3000);
@@ -2656,14 +2965,12 @@
         function filterResources() {
             let filtered = [...resourcesData];
 
-            // 按分类筛选
             if (state.currentCategory !== 'all') {
                 filtered = filtered.filter(resource => 
                     resource.category === state.currentCategory
                 );
             }
 
-            // 按搜索关键词筛选
             if (state.searchQuery) {
                 filtered = filtered.filter(resource => 
                     resource.title.toLowerCase().includes(state.searchQuery) ||
@@ -2673,7 +2980,6 @@
                 );
             }
 
-            // 排序
             const sortBy = elements.sortSelect.value;
             filtered.sort((a, b) => {
                 switch (sortBy) {
@@ -2684,7 +2990,7 @@
                     case 'type':
                         return a.type.localeCompare(b.type);
                     default:
-                        return b.visits - a.visits; // 默认按访问量降序排序
+                        return b.visits - a.visits;
                 }
             });
 
@@ -2698,10 +3004,8 @@
             const endIndex = startIndex + config.itemsPerPage;
             const pageResources = state.filteredResources.slice(startIndex, endIndex);
 
-            // 清空资源容器
             elements.resourcesGrid.innerHTML = '';
 
-            // 显示空状态提示（如果没有资源）
             if (pageResources.length === 0) {
                 elements.emptyState.classList.remove('hidden');
                 elements.pagination.classList.add('hidden');
@@ -2710,13 +3014,11 @@
 
             elements.emptyState.classList.add('hidden');
 
-            // 渲染资源卡片
             pageResources.forEach((resource, index) => {
                 const card = createResourceCard(resource, index);
                 elements.resourcesGrid.appendChild(card);
             });
 
-            // 更新分页组件
             updatePagination();
         }
 
@@ -2725,7 +3027,6 @@
             const isFavorite = state.favorites.has(resource.id);
             const hasDoc = !!resource.docUrl;
             
-            // 类型文本映射
             const typeTexts = {
                 'web': '网页推荐',
                 'file': '文件分享',
@@ -2737,10 +3038,18 @@
             const card = document.createElement('div');
             card.className = `resource-card card-type-${resource.type}`;
             card.style.setProperty('--index', index);
+            card.dataset.resourceId = resource.id;
             
-            // 根据当前视图模式选择模板
+            // 添加点击事件监听器
+            card.addEventListener('click', (e) => {
+                // 防止按钮点击触发卡片点击
+                if (!e.target.closest('.action-btn') && !e.target.closest('.card-link')) {
+                    openDetailModal(resource.id);
+                }
+            });
+            
             if (state.currentView === 'grid') {
-                // 网格视图模板（优化版）
+                // 网格视图模板
                 card.innerHTML = `
                     <div class="card-image">
                         <i class="${resource.icon}"></i>
@@ -2757,18 +3066,18 @@
                             <div class="card-actions">
                                 ${hasDoc ? `
                                 <button class="action-btn" 
-                                        onclick="showResourceDoc(${resource.id})"
+                                        onclick="showResourceDoc(${resource.id}); event.stopPropagation();"
                                         aria-label="查看文档">
                                     <i class="fas fa-book"></i>
                                 </button>
                                 ` : ''}
                                 <button class="action-btn ${isFavorite ? 'active' : ''}" 
-                                        onclick="toggleFavorite(${resource.id})"
+                                        onclick="toggleFavorite(${resource.id}); event.stopPropagation();"
                                         aria-label="${isFavorite ? '取消收藏' : '收藏'}">
                                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                                 </button>
                                 <button class="action-btn" 
-                                        onclick="shareResource(${resource.id})"
+                                        onclick="shareResource(${resource.id}); event.stopPropagation();"
                                         aria-label="分享">
                                     <i class="fas fa-share-alt"></i>
                                 </button>
@@ -2778,14 +3087,14 @@
                            class="card-link" 
                            target="_blank" 
                            rel="noopener noreferrer"
-                           onclick="trackVisit(${resource.id})">
+                           onclick="trackVisit(${resource.id}); event.stopPropagation();">
                             <i class="fas fa-external-link-alt"></i>
                             访问网站
                         </a>
                     </div>
                 `;
             } else {
-                // 列表视图模板（优化版）
+                // 列表视图模板
                 card.innerHTML = `
                     <div class="card-image">
                         <i class="${resource.icon}"></i>
@@ -2804,18 +3113,18 @@
                             <div class="card-actions">
                                 ${hasDoc ? `
                                 <button class="action-btn" 
-                                        onclick="showResourceDoc(${resource.id})"
+                                        onclick="showResourceDoc(${resource.id}); event.stopPropagation();"
                                         aria-label="查看文档">
                                     <i class="fas fa-book"></i>
                                 </button>
                                 ` : ''}
                                 <button class="action-btn ${isFavorite ? 'active' : ''}" 
-                                        onclick="toggleFavorite(${resource.id})"
+                                        onclick="toggleFavorite(${resource.id}); event.stopPropagation();"
                                         aria-label="${isFavorite ? '取消收藏' : '收藏'}">
                                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                                 </button>
                                 <button class="action-btn" 
-                                        onclick="shareResource(${resource.id})"
+                                        onclick="shareResource(${resource.id}); event.stopPropagation();"
                                         aria-label="分享">
                                     <i class="fas fa-share-alt"></i>
                                 </button>
@@ -2824,7 +3133,7 @@
                                class="card-link" 
                                target="_blank" 
                                rel="noopener noreferrer"
-                               onclick="trackVisit(${resource.id})">
+                               onclick="trackVisit(${resource.id}); event.stopPropagation();">
                                 <i class="fas fa-external-link-alt"></i>
                                 访问网站
                             </a>
@@ -2845,11 +3154,9 @@
 
             elements.pagination.classList.remove('hidden');
             
-            // 更新上一页/下一页按钮状态
             elements.prevPage.disabled = state.currentPage === 1;
             elements.nextPage.disabled = state.currentPage === state.totalPages;
 
-            // 生成页码按钮
             let pageHTML = '';
             const maxVisiblePages = 5;
             let startPage = Math.max(1, state.currentPage - 2);
@@ -2878,7 +3185,7 @@
             window.scrollTo({ top: elements.resourcesGrid.offsetTop - 100, behavior: 'smooth' });
         }
 
-        // ===== 过滤并渲染资源（组合函数） =====
+        // ===== 过滤并渲染资源 =====
         function filterAndRenderResources() {
             filterResources();
             renderResources();
@@ -2893,16 +3200,84 @@
 
         // ===== 更新视图模式 =====
         function updateViewMode(view) {
-            // 更新视图按钮状态
             document.querySelectorAll('.view-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
             });
 
-            // 更新资源网格容器的类名
             elements.resourcesGrid.classList.toggle('list-view', view === 'list');
             
-            // 保存视图偏好到本地存储
             localStorage.setItem(config.storageKeys.viewMode, view);
+        }
+
+        // ===== 打开详情模态框 =====
+        function openDetailModal(resourceId) {
+            const resource = resourcesData.find(r => r.id === resourceId);
+            if (!resource) return;
+            
+            state.currentDetailResource = resource;
+            
+            // 更新模态框内容
+            elements.detailTitle.textContent = resource.title;
+            elements.detailIcon.className = resource.icon;
+            elements.detailCategory.textContent = resource.category;
+            
+            // 类型文本映射
+            const typeTexts = {
+                'web': '网页推荐',
+                'file': '文件分享',
+                'software': '软件推荐'
+            };
+            elements.detailType.textContent = typeTexts[resource.type] || resource.type;
+            
+            elements.detailVisits.textContent = resource.visits.toLocaleString();
+            elements.detailAdded.textContent = resource.added;
+            elements.detailDescription.textContent = resource.description;
+            
+            // 更新访问链接
+            elements.detailVisitBtn.href = resource.url;
+            
+            // 更新收藏按钮状态
+            updateDetailFavoriteButton();
+            
+            // 显示模态框
+            elements.detailModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // 追踪查看
+            showTerminalToast('查看详情', `正在查看: ${resource.title}`, 'info');
+        }
+
+        // ===== 关闭详情模态框 =====
+        function closeDetailModal() {
+            elements.detailModal.classList.remove('active');
+            document.body.style.overflow = '';
+            state.currentDetailResource = null;
+        }
+
+        // ===== 更新详情模态框的收藏按钮 =====
+        function updateDetailFavoriteButton() {
+            if (!state.currentDetailResource) return;
+            
+            const isFavorite = state.favorites.has(state.currentDetailResource.id);
+            const icon = elements.detailFavoriteBtn.querySelector('i');
+            const text = elements.detailFavoriteBtn.querySelector('span') || document.createElement('span');
+            
+            if (!elements.detailFavoriteBtn.querySelector('span')) {
+                text.className = 'btn-text';
+                elements.detailFavoriteBtn.appendChild(text);
+            }
+            
+            if (isFavorite) {
+                icon.className = 'fas fa-heart';
+                text.textContent = '已收藏';
+                elements.detailFavoriteBtn.classList.remove('detail-btn-secondary');
+                elements.detailFavoriteBtn.classList.add('detail-btn-danger');
+            } else {
+                icon.className = 'far fa-heart';
+                text.textContent = '添加到收藏';
+                elements.detailFavoriteBtn.classList.remove('detail-btn-danger');
+                elements.detailFavoriteBtn.classList.add('detail-btn-secondary');
+            }
         }
 
         // ===== 切换收藏状态 =====
@@ -2915,12 +3290,15 @@
                 showTerminalToast('添加收藏', '已添加到收藏列表', 'success');
             }
 
-            // 保存收藏列表到本地存储
             localStorage.setItem(config.storageKeys.favorites, JSON.stringify([...state.favorites]));
             
-            // 更新UI显示
             updateFavoritesCount();
             filterAndRenderResources();
+            
+            // 如果详情模态框正在显示，更新其收藏按钮状态
+            if (state.currentDetailResource && state.currentDetailResource.id === id) {
+                updateDetailFavoriteButton();
+            }
         }
 
         // ===== 分享资源 =====
@@ -2928,7 +3306,6 @@
             const resource = resourcesData.find(r => r.id === id);
             if (!resource) return;
 
-            // 如果浏览器支持Web Share API，使用系统分享
             if (navigator.share) {
                 navigator.share({
                     title: resource.title,
@@ -2936,7 +3313,6 @@
                     url: resource.url
                 }).catch(console.error);
             } else {
-                // 回退方案：复制链接到剪贴板
                 const text = `${resource.title}\n${resource.description}\n${resource.url}`;
                 navigator.clipboard.writeText(text)
                     .then(() => showTerminalToast('分享成功', '链接已复制到剪贴板', 'success'))
@@ -2952,7 +3328,6 @@
             state.currentDocument = resource;
             elements.documentTitle.textContent = `${resource.title} - 文档`;
             
-            // 显示外部文档（通过iframe）
             elements.documentContent.innerHTML = `
                 <div style="height: 600px;">
                     <iframe src="${resource.docUrl}" class="document-iframe" frameborder="0"></iframe>
@@ -2962,12 +3337,10 @@
                 </div>
             `;
             
-            // 激活外部文档标签页
             document.querySelectorAll('.document-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === 'external');
             });
             
-            // 显示文档模态框
             elements.documentModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -2991,14 +3364,11 @@
         function switchDocumentTab(tabName) {
             state.documentTab = tabName;
             
-            // 更新标签页激活状态
             document.querySelectorAll('.document-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === tabName);
             });
             
-            // 更新文档内容
             if (tabName === 'external' && state.currentDocument) {
-                // 外部文档模式
                 const resource = state.currentDocument;
                 elements.documentContent.innerHTML = `
                     <div style="height: 600px;">
@@ -3009,7 +3379,6 @@
                     </div>
                 `;
             } else {
-                // 内置文档模式
                 elements.documentContent.innerHTML = `
                     <div class="document-text">
                         ${documentContent[tabName].content}
@@ -3027,7 +3396,7 @@
             }
         }
 
-        // ===== 切换主题（白天/夜晚模式） =====
+        // ===== 切换主题 =====
         function toggleTheme() {
             const isDark = document.body.classList.toggle('dark-theme');
             updateThemeIcon(isDark ? 'dark' : 'light');
@@ -3044,23 +3413,17 @@
 
         // ===== 显示终端样式提示消息 =====
         function showTerminalToast(title, message, type = 'info') {
-            // 更新标题和内容
             elements.toastTitle.textContent = title;
             elements.toastContent.textContent = message;
-            
-            // 根据类型设置样式
             elements.terminalToast.className = `terminal-toast ${type}`;
-            
-            // 显示toast
             elements.terminalToast.classList.add('show');
             
-            // 3秒后自动隐藏
             setTimeout(() => {
                 elements.terminalToast.classList.remove('show');
             }, 3000);
         }
 
-        // ===== 防抖函数（用于搜索优化） =====
+        // ===== 防抖函数 =====
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -3073,12 +3436,13 @@
             };
         }
 
-        // ===== 全局函数导出（供HTML中的onclick使用） =====
+        // ===== 全局函数导出 =====
         window.toggleFavorite = toggleFavorite;
         window.shareResource = shareResource;
         window.trackVisit = trackVisit;
         window.goToPage = goToPage;
         window.showResourceDoc = showResourceDoc;
+        window.openDetailModal = openDetailModal;
 
         // ===== 应用初始化 =====
         document.addEventListener('DOMContentLoaded', initApp);
