@@ -424,6 +424,56 @@
             box-shadow: var(--card-shadow-hover);
         }
         
+        /* 卡片评分标签（新添加） */
+        .card-rating {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .card-rating i {
+            color: #ffc107;
+        }
+        
+        /* 卡片热度标签（新添加） */
+        .card-tag {
+            position: absolute;
+            top: 50px;
+            left: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card-tag.hot {
+            background: rgba(239, 71, 111, 0.9);
+            color: white;
+        }
+        
+        .card-tag.new {
+            background: rgba(6, 214, 160, 0.9);
+            color: white;
+        }
+        
+        .card-tag.recommended {
+            background: rgba(255, 209, 102, 0.9);
+            color: #212529;
+        }
+        
         .card-type-badge {
             position: absolute;
             top: 12px;
@@ -667,6 +717,21 @@
             align-self: center;
         }
         
+        /* 列表视图中的评分和标签样式 */
+        .list-view .card-rating {
+            position: static;
+            order: -1;
+            margin-left: auto;
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+        }
+        
+        .list-view .card-tag {
+            position: static;
+            order: -1;
+            margin-right: 10px;
+        }
+        
         /* ===== 卡片详情模态框（新添加） ===== */
         .detail-modal-overlay {
             position: fixed;
@@ -791,6 +856,48 @@
         .detail-info-value {
             font-weight: 600;
             font-size: 1rem;
+        }
+        
+        /* 详情模态框中的评分样式（新添加） */
+        .detail-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .detail-rating i {
+            color: #ffc107;
+        }
+        
+        /* 详情模态框中的标签样式（新添加） */
+        .detail-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+        
+        .detail-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .detail-tag.hot {
+            background: rgba(239, 71, 111, 0.15);
+            color: var(--danger-color);
+        }
+        
+        .detail-tag.new {
+            background: rgba(6, 214, 160, 0.15);
+            color: var(--success-color);
+        }
+        
+        .detail-tag.recommended {
+            background: rgba(255, 209, 102, 0.15);
+            color: var(--warning-color);
         }
         
         .detail-description {
@@ -1711,6 +1818,7 @@
                         <option value="name">按名称排序</option>
                         <option value="category">按分类排序</option>
                         <option value="type">按类型排序</option>
+                        <option value="rating">按评分排序</option>
                     </select>
                     
                     <div class="view-toggle">
@@ -1744,8 +1852,8 @@
                     <span class="stat-label">类型数量</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value" id="updated-count">27</span>
-                    <span class="stat-label">最近更新</span>
+                    <span class="stat-value" id="avg-rating">0.0</span>
+                    <span class="stat-label">平均评分</span>
                 </div>
             </div>
             
@@ -1778,7 +1886,7 @@
                         <div class="terminal-dot yellow"></div>
                         <div class="terminal-dot green"></div>
                     </div>
-                    <div class="terminal-title">更新日志 - v2.6.0</div>
+                    <div class="terminal-title">更新日志 - v2.7.0</div>
                 </div>
                 <div class="terminal-content allow-select" id="terminal-content">
                     <!-- 终端内容将通过JS动态生成 -->
@@ -1811,7 +1919,7 @@
                     <ul class="footer-links">
                         <li><a href="mailto:lzc737507@outlook.com"><i class="fas fa-envelope"></i> 邮箱联系</a></li>
                         <li><a href="#"><i class="fas fa-question-circle"></i> 常见问题</a></li>
-                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.6.0</a></li>
+                        <li><a href="#"><i class="fas fa-code-branch"></i> 版本: 2.7.0</a></li>
                     </ul>
                 </div>
                 
@@ -1822,7 +1930,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用 | 最后更新: 2025-12-10</p>
+                <p>&copy; 2025 鸿渚の资源分享 | 本网站仅供学习交流使用 | 最后更新: 2025-12-12</p>
             </div>
         </div>
     </footer>
@@ -1874,12 +1982,19 @@
                         <span class="detail-info-value" id="detail-type">-</span>
                     </div>
                     <div class="detail-info-item">
-                        <span class="detail-info-label"><i class="fas fa-eye"></i> 访问量</span>
-                        <span class="detail-info-value" id="detail-visits">-</span>
+                        <span class="detail-info-label"><i class="fas fa-star"></i> 评分</span>
+                        <span class="detail-info-value">
+                            <span id="detail-rating-value">-</span>
+                            <div class="detail-rating" id="detail-rating-stars"></div>
+                        </span>
                     </div>
                     <div class="detail-info-item">
                         <span class="detail-info-label"><i class="fas fa-calendar-alt"></i> 添加时间</span>
                         <span class="detail-info-value" id="detail-added">-</span>
+                    </div>
+                    <div class="detail-info-item full-width">
+                        <span class="detail-info-label"><i class="fas fa-tags"></i> 标签</span>
+                        <div class="detail-tags" id="detail-tags"></div>
                     </div>
                 </div>
                 <div class="detail-description allow-select" id="detail-description">
@@ -1937,7 +2052,7 @@
     </div>
 
     <script>
-        // ===== 资源数据 =====
+        // ===== 资源数据（已删除访问量，添加评分和标签） =====
         const resourcesData = [
             {
                 id: 1,
@@ -1947,7 +2062,8 @@
                 type: "web",
                 url: "https://nhentai.net/",
                 icon: "fas fa-book",
-                visits: 12500,
+                rating: 4.5,
+                tags: ["热门", "推荐"],
                 added: "2025-10-11"
             },
             {
@@ -1958,7 +2074,8 @@
                 type: "web",
                 url: "https://shotalove.fun/",
                 icon: "fas fa-heart",
-                visits: 8900,
+                rating: 4.0,
+                tags: ["最新"],
                 docUrl: "https://shotalove.fun/about/",
                 added: "2025-10-11"
             },
@@ -1970,7 +2087,8 @@
                 type: "web",
                 url: "https://www.chin2.net/",
                 icon: "fas fa-book-open",
-                visits: 7600,
+                rating: 4.2,
+                tags: ["推荐"],
                 docUrl: "https://www.chin2.net/Team",
                 added: "2025-10-11"
             },
@@ -1982,7 +2100,8 @@
                 type: "software",
                 url: "https://github.com/Ehviewer-Overhauled/Ehviewer/releases/",
                 icon: "fas fa-paint-brush",
-                visits: 15400,
+                rating: 4.8,
+                tags: ["热门", "推荐"],
                 docUrl: "https://github.com/Ehviewer-Overhauled/Ehviewer/blob/1.8.x.x/docs/README/zh-cn.md",
                 added: "2025-10-11"
             },
@@ -1994,7 +2113,8 @@
                 type: "software",
                 url: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/releases",
                 icon: "fas fa-leaf",
-                visits: 9800,
+                rating: 4.3,
+                tags: [],
                 docUrl: "https://github.com/xiaojieonly/Ehviewer_CN_SXJ/blob/BiLi_PC_Gamer/README.md",
                 added: "2025-10-11"
             },
@@ -2006,7 +2126,8 @@
                 type: "software",
                 url: "https://gitee.com/nightmare97/EhViewer",
                 icon: "fas fa-snowflake",
-                visits: 6700,
+                rating: 4.1,
+                tags: [],
                 docUrl: "https://gitee.com/nightmare97/EhViewer/blob/test/README.md",
                 added: "2025-10-11"
             },
@@ -2018,7 +2139,8 @@
                 type: "web",
                 url: "https://github.com/",
                 icon: "fab fa-github",
-                visits: 45000,
+                rating: 5.0,
+                tags: ["热门", "推荐"],
                 added: "2025-12-11"
             },
             {
@@ -2029,7 +2151,8 @@
                 type: "software",
                 url: "https://code.visualstudio.com/",
                 icon: "fas fa-code",
-                visits: 32000,
+                rating: 4.9,
+                tags: ["热门", "推荐"],
                 added: "2025-12-11"
             },
             {
@@ -2040,7 +2163,8 @@
                 type: "web",
                 url: "https://stackoverflow.com/",
                 icon: "fas fa-question-circle",
-                visits: 38000,
+                rating: 4.7,
+                tags: ["热门", "推荐"],
                 added: "2025-12-11"
             },
             {
@@ -2051,7 +2175,8 @@
                 type: "web",
                 url: "https://www.google.com/imghp",
                 icon: "fab fa-google",
-                visits: 32000,
+                rating: 4.6,
+                tags: ["热门"],
                 added: "2025-10-11"
             },
             {
@@ -2062,7 +2187,8 @@
                 type: "web",
                 url: "https://yandex.com/images/",
                 icon: "fas fa-search",
-                visits: 14500,
+                rating: 4.4,
+                tags: ["推荐"],
                 added: "2025-10-11"
             },
             {
@@ -2073,7 +2199,8 @@
                 type: "web",
                 url: "https://trace.moe/",
                 icon: "fas fa-film",
-                visits: 9800,
+                rating: 4.3,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2084,7 +2211,8 @@
                 type: "web",
                 url: "https://saucenao.com/",
                 icon: "fas fa-images",
-                visits: 17600,
+                rating: 4.5,
+                tags: ["推荐"],
                 added: "2025-10-11"
             },
             {
@@ -2095,7 +2223,8 @@
                 type: "web",
                 url: "https://soutubot.moe/",
                 icon: "fas fa-robot",
-                visits: 5400,
+                rating: 3.8,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2106,7 +2235,8 @@
                 type: "web",
                 url: "https://ascii2d.net/",
                 icon: "fas fa-search-plus",
-                visits: 8900,
+                rating: 4.0,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2117,7 +2247,8 @@
                 type: "web",
                 url: "http://www.iqdb.org/",
                 icon: "fas fa-database",
-                visits: 7600,
+                rating: 3.9,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2128,7 +2259,8 @@
                 type: "web",
                 url: "https://tineye.com/",
                 icon: "fas fa-eye",
-                visits: 6500,
+                rating: 4.1,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2139,7 +2271,8 @@
                 type: "web",
                 url: "https://b23.tv/neGKc6G",
                 icon: "fas fa-palette",
-                visits: 3200,
+                rating: 4.2,
+                tags: ["最新"],
                 added: "2025-10-11"
             },
             {
@@ -2150,7 +2283,8 @@
                 type: "web",
                 url: "https://b23.tv/0HsCFFT",
                 icon: "fas fa-globe-asia",
-                visits: 5400,
+                rating: 4.4,
+                tags: ["推荐"],
                 added: "2025-10-11"
             },
             {
@@ -2161,7 +2295,8 @@
                 type: "web",
                 url: "https://tool.hadsky.com/enimg",
                 icon: "fas fa-unlock-alt",
-                visits: 2100,
+                rating: 3.7,
+                tags: [],
                 added: "2025-10-11"
             },
             {
@@ -2172,7 +2307,8 @@
                 type: "web",
                 url: "https://b23.tv/ve4uYzU",
                 icon: "fas fa-palette",
-                visits: 2800,
+                rating: 4.1,
+                tags: ["最新"],
                 added: "2025-11-11"
             },
             {
@@ -2183,7 +2319,8 @@
                 type: "web",
                 url: "https://b23.tv/i7xD9ot",
                 icon: "fas fa-palette",
-                visits: 1900,
+                rating: 3.9,
+                tags: [],
                 added: "2025-11-11"
             },
             {
@@ -2194,7 +2331,8 @@
                 type: "web",
                 url: "https://b23.tv/BCA8dg1",
                 icon: "fas fa-unlock-alt",
-                visits: 3100,
+                rating: 4.0,
+                tags: ["最新"],
                 added: "2025-11-11"
             },
             {
@@ -2205,7 +2343,8 @@
                 type: "web",
                 url: "https://b23.tv/Ung9NvJ",
                 icon: "fas fa-palette",
-                visits: 1700,
+                rating: 3.8,
+                tags: [],
                 added: "2025-11-11"
             },
             {
@@ -2216,7 +2355,8 @@
                 type: "file",
                 url: "http://nebulastorage.web1.fastfrp.asia:40030/s/BvDrWthB?密码:EMHX",
                 icon: "fas fa-palette",
-                visits: 1700,
+                rating: 4.3,
+                tags: ["热门", "最新"],
                 added: "2025-12-11"
             },
             {
@@ -2227,7 +2367,8 @@
                 type: "web",
                 url: "https://quiz.charlinserver.online/",
                 icon: "fas fa-brain",
-                visits: 4300,
+                rating: 4.2,
+                tags: ["最新"],
                 added: "2025-12-10"
             },
             {
@@ -2238,7 +2379,8 @@
                 type: "web",
                 url: "https://watchfleeting.github.io/starsea-game/",
                 icon: "fas fa-gamepad",
-                visits: 2900,
+                rating: 4.5,
+                tags: ["推荐", "最新"],
                 added: "2025-12-10"
             },
             {
@@ -2249,7 +2391,8 @@
                 type: "web",
                 url: "https://developer.mozilla.org/",
                 icon: "fas fa-file-code",
-                visits: 18500,
+                rating: 4.9,
+                tags: ["热门", "推荐"],
                 added: "2025-12-11"
             },
             {
@@ -2260,7 +2403,8 @@
                 type: "web",
                 url: "https://caniuse.com/",
                 icon: "fas fa-check-circle",
-                visits: 9200,
+                rating: 4.7,
+                tags: ["推荐"],
                 added: "2025-12-11"
             },
             {
@@ -2271,7 +2415,8 @@
                 type: "web",
                 url: "https://jsonformatter.org/",
                 icon: "fas fa-brackets-curly",
-                visits: 7600,
+                rating: 4.3,
+                tags: [],
                 added: "2025-12-11"
             },
             {
@@ -2282,7 +2427,8 @@
                 type: "web",
                 url: "https://cssgradient.io/",
                 icon: "fas fa-palette",
-                visits: 5400,
+                rating: 4.1,
+                tags: [],
                 added: "2025-12-11"
             },
             {
@@ -2293,7 +2439,8 @@
                 type: "web",
                 url: "https://regex101.com/",
                 icon: "fas fa-terminal",
-                visits: 6800,
+                rating: 4.4,
+                tags: [],
                 added: "2025-12-11"
             },
             {
@@ -2304,13 +2451,17 @@
                 type: "web",
                 url: "https://www.w3schools.com/",
                 icon: "fas fa-graduation-cap",
-                visits: 24500,
+                rating: 4.6,
+                tags: ["热门", "推荐"],
                 added: "2025-12-11"
             }
         ];
 
         // ===== 更新日志数据 =====
         const updateLogs = [
+            { date: "2025-12-12", version: "v2.7.0", type: "feature", content: "新增资源评分系统，添加5星评分功能" },
+            { date: "2025-12-12", version: "v2.7.0", type: "feature", content: "新增资源热度标签：热门、最新、推荐" },
+            { date: "2025-12-12", version: "v2.7.0", type: "feature", content: "双击卡片查看详情功能优化" },
             { date: "2025-12-10", version: "v2.6.0", type: "feature", content: "新增卡片类型分类：网页推荐、文件分享、软件推荐" },
             { date: "2025-12-09", version: "v2.5.0", type: "feature", content: "新增文档显示功能，支持在线查看资源文档" },
             { date: "2025-11-25", version: "v2.4.0", type: "feature", content: "添加终端样式更新日志，优化界面显示" },
@@ -2342,31 +2493,51 @@
                         <li><strong>软件推荐（紫色）</strong>：应用程序、客户端软件、桌面工具等</li>
                     </ul>
                     
-                    <h3>2. 资源浏览</h3>
+                    <h3>2. 资源评分系统</h3>
+                    <p>所有资源都有1-5星的评分：</p>
+                    <ul>
+                        <li>⭐⭐⭐⭐⭐ (5星): 顶级推荐，必看资源</li>
+                        <li>⭐⭐⭐⭐ (4星): 优质资源，强烈推荐</li>
+                        <li>⭐⭐⭐ (3星): 良好资源，值得一看</li>
+                        <li>⭐⭐ (2星): 一般资源，有改进空间</li>
+                        <li>⭐ (1星): 基础资源，仅供参考</li>
+                    </ul>
+                    
+                    <h3>3. 资源热度标签</h3>
+                    <p>资源卡片会显示以下标签：</p>
+                    <ul>
+                        <li><span style="background:#ef476f;color:white;padding:2px 6px;border-radius:4px;font-size:0.8rem;">热门</span>：当前最受欢迎的资源</li>
+                        <li><span style="background:#06d6a0;color:white;padding:2px 6px;border-radius:4px;font-size:0.8rem;">最新</span>：最近添加的资源</li>
+                        <li><span style="background:#ffd166;color:#212529;padding:2px 6px;border-radius:4px;font-size:0.8rem;">推荐</span>：编辑特别推荐的优质资源</li>
+                    </ul>
+                    
+                    <h3>4. 资源浏览</h3>
                     <p>网站资源按分类组织，您可以通过以下方式浏览：</p>
                     <ul>
                         <li><strong>分类筛选</strong>：点击导航栏的分类按钮，筛选特定类型的资源</li>
                         <li><strong>搜索功能</strong>：使用顶部搜索框，输入关键词查找特定资源</li>
-                        <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类或类型排序</li>
+                        <li><strong>排序功能</strong>：使用排序下拉菜单，按名称、分类、类型或评分排序</li>
                     </ul>
                     
-                    <h3>3. 视图切换</h3>
+                    <h3>5. 视图切换</h3>
                     <p>网站支持两种资源展示视图：</p>
                     <ul>
                         <li><strong>网格视图</strong>：适合快速浏览，每行显示多个资源卡片</li>
                         <li><strong>列表视图</strong>：适合详细查看，每行显示一个资源的详细信息</li>
                     </ul>
                     
-                    <h3>4. 资源操作</h3>
-                    <p>对每个资源，您可以执行以下操作：</p>
+                    <h3>6. 卡片交互</h3>
+                    <p>对每个资源卡片，您可以执行以下操作：</p>
                     <ul>
+                        <li><strong>单击查看详情</strong>：点击卡片任意位置查看资源详情</li>
+                        <li><strong>双击快速访问</strong>：双击卡片在新标签页打开资源链接</li>
                         <li><strong>访问网站</strong>：点击"访问网站"按钮，在新标签页打开资源链接</li>
                         <li><strong>收藏资源</strong>：点击心形图标，将资源添加到收藏列表</li>
                         <li><strong>查看文档</strong>：点击文档图标，查看资源的详细文档（如果可用）</li>
                         <li><strong>分享资源</strong>：点击分享图标，复制资源链接或使用系统分享功能</li>
                     </ul>
                     
-                    <h3>5. 个人偏好</h3>
+                    <h3>7. 个人偏好</h3>
                     <p>网站会记住您的以下偏好设置：</p>
                     <ul>
                         <li><strong>收藏列表</strong>：本地存储您收藏的资源</li>
@@ -2374,14 +2545,15 @@
                         <li><strong>主题设置</strong>：记住您选择的主题（浅色/深色）</li>
                     </ul>
                     
-                    <h3>6. 更新日志</h3>
+                    <h3>8. 更新日志</h3>
                     <p>网站底部提供了终端样式的更新日志，记录了所有版本更新内容。您可以在这里了解网站的最新功能和改进。</p>
                     
-                    <h3>7. 注意事项</h3>
+                    <h3>9. 注意事项</h3>
                     <ul>
                         <li>网站资源来自网络，仅供学习交流使用</li>
                         <li>请遵守相关法律法规，合理使用资源</li>
                         <li>如发现资源失效或有问题，请通过反馈功能报告</li>
+                        <li>资源评分和标签由管理员根据质量和热度设定</li>
                     </ul>
                     
                     <p>如果您有任何问题或建议，请通过页面底部的联系方式与我们联系。</p>
@@ -2392,53 +2564,67 @@
                 content: `
                     <h2>常见问题 (FAQ)</h2>
                     
-                    <h3>1. 三种卡片类型有什么区别？</h3>
-                    <p>网站将资源卡片分为三种类型：</p>
+                    <h3>1. 资源评分是如何确定的？</h3>
+                    <p>资源评分由管理员根据以下因素综合评定：</p>
                     <ul>
-                        <li><strong>网页推荐（蓝色）</strong>：可直接访问的网站、在线工具</li>
-                        <li><strong>文件分享（绿色）</strong>：提供文件下载的资源</li>
-                        <li><strong>软件推荐（紫色）</strong>：需要安装的应用程序</li>
+                        <li>资源质量：内容的完整性、准确性、时效性</li>
+                        <li>用户体验：界面友好度、加载速度、易用性</li>
+                        <li>用户反馈：用户的评价和推荐度</li>
+                        <li>更新频率：资源是否持续更新和维护</li>
+                        <li>独特性：资源是否有独特价值或特色</li>
                     </ul>
                     
-                    <h3>2. 网站资源来自哪里？</h3>
+                    <h3>2. 热度标签有什么意义？</h3>
+                    <p>热度标签帮助您快速识别资源的特点：</p>
+                    <ul>
+                        <li><strong>热门</strong>：当前访问量高、用户关注度高的资源</li>
+                        <li><strong>最新</strong>：最近30天内添加的新资源</li>
+                        <li><strong>推荐</strong>：管理员特别推荐的优质资源，具有较高价值</li>
+                    </ul>
+                    
+                    <h3>3. 如何根据评分筛选资源？</h3>
+                    <p>目前您可以通过以下方式找到高评分资源：</p>
+                    <ul>
+                        <li>在排序下拉菜单中选择"按评分排序"</li>
+                        <li>查看带有"推荐"标签的资源</li>
+                        <li>关注平均评分较高的分类</li>
+                        <li>查看详情模态框中的评分信息</li>
+                    </ul>
+                    
+                    <h3>4. 双击卡片有什么作用？</h3>
+                    <p>双击卡片是快速访问资源的快捷方式：</p>
+                    <ul>
+                        <li>双击卡片任意位置，会直接在新标签页打开资源链接</li>
+                        <li>相比点击"访问网站"按钮，双击更加快捷</li>
+                        <li>如果您想先查看详情再决定是否访问，请单击卡片</li>
+                    </ul>
+                    
+                    <h3>5. 网站资源来自哪里？</h3>
                     <p>网站资源由管理员从互联网收集整理，均为公开可访问的资源。我们会定期检查资源有效性，但无法保证所有资源始终可用。</p>
                     
-                    <h3>3. 如何提交新的资源？</h3>
+                    <h3>6. 如何提交新的资源？</h3>
                     <p>目前网站暂未开放用户提交功能。如果您有优质资源推荐，可以通过页面底部的邮箱联系我们。</p>
                     
-                    <h3>4. 为什么有些资源无法访问？</h3>
-                    <p>资源无法访问可能有以下原因：</p>
-                    <ul>
-                        <li>原网站已关闭或更改地址</li>
-                        <li>网络连接问题</li>
-                        <li>资源被墙（需要科学上网）</li>
-                        <li>临时性的服务器问题</li>
-                    </ul>
-                    <p>如果发现资源失效，请通过反馈功能报告，我们会及时更新或移除。</p>
-                    
-                    <h3>5. 如何收藏资源？</h3>
+                    <h3>7. 如何收藏资源？</h3>
                     <p>点击资源卡片上的心形图标即可收藏。收藏列表会保存在您的浏览器本地存储中，清理浏览器数据会导致收藏丢失。</p>
                     
-                    <h3>6. 网站支持深色模式吗？</h3>
+                    <h3>8. 网站支持深色模式吗？</h3>
                     <p>支持。点击右上角的月亮图标可以切换深色模式，您的偏好设置会被保存。</p>
                     
-                    <h3>7. 为什么不能复制网站内容？</h3>
+                    <h3>9. 为什么不能复制网站内容？</h3>
                     <p>为了保护网站内容不被未经授权的复制，我们启用了防复制功能。但文档区域和终端区域允许复制，以便您获取有用信息。</p>
                     
-                    <h3>8. 网站会收集用户数据吗？</h3>
-                    <p>我们仅收集必要的匿名使用数据（如资源访问次数），用于改进网站体验。所有数据都保存在您的浏览器本地，不会上传到服务器。</p>
+                    <h3>10. 网站会收集用户数据吗？</h3>
+                    <p>我们仅收集必要的匿名使用数据（如资源收藏情况），用于改进网站体验。所有数据都保存在您的浏览器本地，不会上传到服务器。</p>
                     
-                    <h3>9. 如何联系管理员？</h3>
+                    <h3>11. 如何联系管理员？</h3>
                     <p>您可以通过以下方式联系我们：</p>
                     <ul>
                         <li>邮箱: lzc737507@outlook.com</li>
                         <li>反馈功能: 点击页面底部的"反馈问题"链接</li>
                     </ul>
                     
-                    <h3>10. 网站有移动端应用吗？</h3>
-                    <p>目前只有网页版。网站已针对移动端进行优化，您可以将网站添加到手机主屏幕，获得类似应用的体验。</p>
-                    
-                    <h3>11. 如何查看更新日志？</h3>
+                    <h3>12. 如何查看更新日志？</h3>
                     <p>页面底部的终端样式区域显示了完整的更新日志。您也可以点击右上角的终端图标快速滚动到更新日志。</p>
                 `
             },
@@ -2503,7 +2689,7 @@
             isLoading: false,
             currentDocument: null,
             documentTab: 'guide',
-            currentDetailResource: null // 新增：当前查看详情的资源
+            currentDetailResource: null // 当前查看详情的资源
         };
 
         // ===== DOM元素引用 =====
@@ -2528,7 +2714,7 @@
                 totalCount: document.getElementById('total-count'),
                 favoritesStat: document.getElementById('favorites-stat'),
                 categoryCount: document.getElementById('type-count'),
-                updatedCount: document.getElementById('updated-count')
+                avgRating: document.getElementById('avg-rating')
             },
             terminalContent: document.getElementById('terminal-content'),
             documentModal: document.getElementById('document-modal'),
@@ -2544,7 +2730,9 @@
             detailIcon: document.getElementById('detail-icon'),
             detailCategory: document.getElementById('detail-category'),
             detailType: document.getElementById('detail-type'),
-            detailVisits: document.getElementById('detail-visits'),
+            detailRatingValue: document.getElementById('detail-rating-value'),
+            detailRatingStars: document.getElementById('detail-rating-stars'),
+            detailTags: document.getElementById('detail-tags'),
             detailAdded: document.getElementById('detail-added'),
             detailDescription: document.getElementById('detail-description'),
             detailVisitBtn: document.getElementById('detail-visit-btn'),
@@ -2595,8 +2783,11 @@
             updateFavoritesCount();
             const types = new Set(resourcesData.map(r => r.type));
             elements.stats.categoryCount.textContent = types.size;
-            const recentCount = resourcesData.filter(r => r.id > 27).length;
-            elements.stats.updatedCount.textContent = recentCount;
+            
+            // 计算平均评分
+            const totalRating = resourcesData.reduce((sum, resource) => sum + (resource.rating || 0), 0);
+            const avgRating = resourcesData.length > 0 ? totalRating / resourcesData.length : 0;
+            elements.stats.avgRating.textContent = avgRating.toFixed(1);
         }
 
         // ===== 渲染终端日志 =====
@@ -2612,13 +2803,19 @@
                     <span class="terminal-output">欢迎访问鸿渚资源分享网站!</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="terminal-output">当前版本: <span class="terminal-output info">v2.6.0</span></span>
+                    <span class="terminal-output">当前版本: <span class="terminal-output info">v2.7.0</span></span>
                 </div>
                 <div class="terminal-line">
                     <span class="terminal-output">卡片类型: <span class="terminal-output info">网页推荐、文件分享、软件推荐</span></span>
                 </div>
                 <div class="terminal-line">
-                    <span class="terminal-output">最后更新: <span class="terminal-output info">2025-12-10</span></span>
+                    <span class="terminal-output">资源评分: <span class="terminal-output info">5星评分系统</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">热度标签: <span class="terminal-output info">热门、最新、推荐</span></span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">最后更新: <span class="terminal-output info">2025-12-12</span></span>
                 </div>
                 <div class="terminal-line">
                     <span class="terminal-output">系统状态: <span class="terminal-output success">● 运行正常</span></span>
@@ -2836,12 +3033,6 @@
             });
 
             // 详情模态框操作按钮
-            elements.detailVisitBtn.addEventListener('click', (e) => {
-                if (state.currentDetailResource) {
-                    trackVisit(state.currentDetailResource.id);
-                }
-            });
-
             elements.detailFavoriteBtn.addEventListener('click', () => {
                 if (state.currentDetailResource) {
                     toggleFavorite(state.currentDetailResource.id);
@@ -2976,7 +3167,8 @@
                     resource.title.toLowerCase().includes(state.searchQuery) ||
                     resource.description.toLowerCase().includes(state.searchQuery) ||
                     resource.category.toLowerCase().includes(state.searchQuery) ||
-                    resource.type.toLowerCase().includes(state.searchQuery)
+                    resource.type.toLowerCase().includes(state.searchQuery) ||
+                    (resource.tags && resource.tags.some(tag => tag.toLowerCase().includes(state.searchQuery)))
                 );
             }
 
@@ -2989,8 +3181,10 @@
                         return a.category.localeCompare(b.category);
                     case 'type':
                         return a.type.localeCompare(b.type);
+                    case 'rating':
+                        return (b.rating || 0) - (a.rating || 0);
                     default:
-                        return b.visits - a.visits;
+                        return 0;
                 }
             });
 
@@ -3017,6 +3211,9 @@
             pageResources.forEach((resource, index) => {
                 const card = createResourceCard(resource, index);
                 elements.resourcesGrid.appendChild(card);
+                
+                // 添加双击事件监听器
+                addDoubleClickListener(card, resource);
             });
 
             updatePagination();
@@ -3040,13 +3237,11 @@
             card.style.setProperty('--index', index);
             card.dataset.resourceId = resource.id;
             
-            // 添加点击事件监听器
-            card.addEventListener('click', (e) => {
-                // 防止按钮点击触发卡片点击
-                if (!e.target.closest('.action-btn') && !e.target.closest('.card-link')) {
-                    openDetailModal(resource.id);
-                }
-            });
+            // 构建评分星标
+            const ratingStars = generateRatingStars(resource.rating || 0);
+            
+            // 构建标签
+            const tagsHTML = generateTagsHTML(resource.tags || []);
             
             if (state.currentView === 'grid') {
                 // 网格视图模板
@@ -3054,6 +3249,8 @@
                     <div class="card-image">
                         <i class="${resource.icon}"></i>
                         <div class="card-type-badge">${typeText}</div>
+                        ${ratingStars ? `<div class="card-rating">${ratingStars} <span>${resource.rating?.toFixed(1) || '0.0'}</span></div>` : ''}
+                        ${tagsHTML}
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">
@@ -3106,7 +3303,10 @@
                                 <i class="fas fa-star"></i>
                                 ${resource.title}
                             </h3>
-                            <span class="card-category">${resource.category}</span>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                ${tagsHTML}
+                                ${ratingStars ? `<div class="card-rating">${ratingStars} <span>${resource.rating?.toFixed(1) || '0.0'}</span></div>` : ''}
+                            </div>
                         </div>
                         <p class="card-description allow-select">${resource.description}</p>
                         <div class="card-meta">
@@ -3143,6 +3343,87 @@
             }
 
             return card;
+        }
+
+        // ===== 添加双击事件监听器 =====
+        function addDoubleClickListener(card, resource) {
+            let clickCount = 0;
+            let timer;
+            
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.action-btn') || e.target.closest('.card-link')) {
+                    return; // 不处理按钮和链接的点击
+                }
+                
+                clickCount++;
+                
+                if (clickCount === 1) {
+                    timer = setTimeout(function() {
+                        // 单次点击 - 打开详情模态框
+                        openDetailModal(resource.id);
+                        clickCount = 0;
+                    }, 300);
+                } else if (clickCount === 2) {
+                    clearTimeout(timer);
+                    // 双击 - 直接访问网站
+                    window.open(resource.url, '_blank');
+                    trackVisit(resource.id);
+                    clickCount = 0;
+                    showTerminalToast('快速访问', `已在新标签页打开: ${resource.title}`, 'success');
+                }
+            });
+        }
+
+        // ===== 生成评分星标HTML =====
+        function generateRatingStars(rating) {
+            if (!rating || rating <= 0) return '';
+            
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            let starsHTML = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+            
+            return starsHTML;
+        }
+
+        // ===== 生成标签HTML =====
+        function generateTagsHTML(tags) {
+            if (!tags || tags.length === 0) return '';
+            
+            let tagsHTML = '';
+            tags.forEach(tag => {
+                let tagClass = '';
+                switch(tag) {
+                    case '热门':
+                        tagClass = 'hot';
+                        break;
+                    case '最新':
+                        tagClass = 'new';
+                        break;
+                    case '推荐':
+                        tagClass = 'recommended';
+                        break;
+                }
+                
+                if (tagClass) {
+                    tagsHTML += `<div class="card-tag ${tagClass}">${tag}</div>`;
+                }
+            });
+            
+            return tagsHTML;
         }
 
         // ===== 更新分页组件 =====
@@ -3229,7 +3510,36 @@
             };
             elements.detailType.textContent = typeTexts[resource.type] || resource.type;
             
-            elements.detailVisits.textContent = resource.visits.toLocaleString();
+            // 更新评分
+            elements.detailRatingValue.textContent = resource.rating?.toFixed(1) || '0.0';
+            elements.detailRatingStars.innerHTML = generateRatingStars(resource.rating || 0);
+            
+            // 更新标签
+            elements.detailTags.innerHTML = '';
+            if (resource.tags && resource.tags.length > 0) {
+                resource.tags.forEach(tag => {
+                    let tagClass = '';
+                    switch(tag) {
+                        case '热门':
+                            tagClass = 'hot';
+                            break;
+                        case '最新':
+                            tagClass = 'new';
+                            break;
+                        case '推荐':
+                            tagClass = 'recommended';
+                            break;
+                    }
+                    
+                    if (tagClass) {
+                        const tagElement = document.createElement('span');
+                        tagElement.className = `detail-tag ${tagClass}`;
+                        tagElement.textContent = tag;
+                        elements.detailTags.appendChild(tagElement);
+                    }
+                });
+            }
+            
             elements.detailAdded.textContent = resource.added;
             elements.detailDescription.textContent = resource.description;
             
@@ -3391,7 +3701,6 @@
         function trackVisit(id) {
             const resource = resourcesData.find(r => r.id === id);
             if (resource) {
-                resource.visits = (resource.visits || 0) + 1;
                 showTerminalToast('访问资源', `正在访问: ${resource.title}`, 'info');
             }
         }
