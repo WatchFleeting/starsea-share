@@ -736,19 +736,20 @@
                 gap: 20px;
             }
             
-            .resource-card {
+            .resource-card.mobile-list-view {
+                display: flex;
                 flex-direction: row;
                 align-items: stretch;
                 min-height: 180px;
             }
             
-            .card-header {
+            .resource-card.mobile-list-view .card-header {
                 width: 140px;
                 height: 180px;
                 flex-shrink: 0;
             }
             
-            .card-content {
+            .resource-card.mobile-list-view .card-content {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
@@ -756,13 +757,13 @@
                 min-height: 180px;
             }
             
-            .card-description {
+            .resource-card.mobile-list-view .card-description {
                 -webkit-line-clamp: 2;
                 margin-bottom: 16px;
                 flex: 1;
             }
             
-            .card-meta {
+            .resource-card.mobile-list-view .card-meta {
                 margin-top: auto;
                 padding-top: 16px;
                 flex-direction: column;
@@ -770,27 +771,27 @@
                 gap: 12px;
             }
             
-            .card-category {
+            .resource-card.mobile-list-view .card-category {
                 align-self: flex-start;
             }
             
-            .card-actions {
+            .resource-card.mobile-list-view .card-actions {
                 justify-content: center;
             }
             
-            .card-primary-action {
+            .resource-card.mobile-list-view .card-primary-action {
                 margin-top: 16px;
                 width: 100%;
             }
             
             /* 调整卡片徽章位置适应移动端 */
-            .card-badges {
+            .resource-card.mobile-list-view .card-badges {
                 flex-direction: row;
                 flex-wrap: wrap;
                 gap: 4px;
             }
             
-            .card-badge {
+            .resource-card.mobile-list-view .card-badge {
                 font-size: 0.7rem;
                 padding: 4px 8px;
             }
@@ -2326,7 +2327,7 @@
                     resourceType: "web",
                     targetUrl: "https://b23.tv/ve4uYzU",
                     iconClass: "fas fa-palette",
-                    tags: ["最新上架", "AI绘画", "正太", "虚拟主播"",
+                    tags: ["最新上架", "AI绘画", "正太", "虚拟主播"],
                     addedDate: "2025-11-11"
                 },
                 {
@@ -2359,7 +2360,7 @@
                     resourceType: "web",
                     targetUrl: "https://b23.tv/Ung9NvJ",
                     iconClass: "fas fa-palette",
-                    tags: ["最新上架", "小男孩", "男娘"",
+                    tags: ["最新上架", "小男孩", "男娘"],
                     addedDate: "2025-11-11"
                 },
                 {
@@ -2406,7 +2407,7 @@
                     tags: ["推荐资源", "最新上架", "网页游戏"],
                     addedDate: "2026-01-03"
                 }
-                   ],
+            ],
 
             // 系统更新日志
             changelog: [
@@ -2500,7 +2501,7 @@
                     changeType: "release",
                     description: "鸿渚资源库正式版发布，提供基础资源管理与展示功能"
                 }
-                      ],
+            ],
 
             // 文档内容库
             documentation: {
@@ -2592,7 +2593,7 @@
                             <li>关注更新日志中的问题修复</li>
                         </ul>
                     `
-                },
+                }
             }
         };
 
@@ -4125,4 +4126,3 @@
     </script>
 </body>
 </html>
-
