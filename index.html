@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <!-- 基础元数据 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="鸿渚资源分享">
@@ -8,56 +9,65 @@
     <meta name="author" content="鸿渚">
     <title>鸿渚资源库 | 数字资源聚合平台</title>
     
-    <!-- 字体图标库 -->
+    <!-- 外部资源依赖 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- 主样式定义 -->
     <style>
-        /* ==================== 设计系统变量定义 ==================== */
+        /* 
+        ===============================================
+        设计系统变量定义
+        ===============================================
+        */
+        
+        /* 根元素变量定义 - 支持主题切换 */
         :root {
-            /* 主色调系 - 采用科技蓝与活力青搭配 */
+            /* 主品牌色系 */
             --color-primary: #4f46e5;          /* 主品牌色 - 科技靛蓝 */
             --color-secondary: #06b6d4;        /* 辅助色 - 活力青色 */
-            --color-accent: #8b5cf6;          /* 强调色 - 创意紫色 */
-            --color-success: #10b981;         /* 成功色 - 生态绿色 */
-            --color-warning: #f59e0b;         /* 警告色 - 琥珀黄色 */
-            --color-danger: #ef4444;          /* 危险色 - 警示红色 */
+            --color-accent: #8b5cf6;           /* 强调色 - 创意紫色 */
+            --color-success: #10b981;          /* 成功色 - 生态绿色 */
+            --color-warning: #f59e0b;          /* 警告色 - 琥珀黄色 */
+            --color-danger: #ef4444;           /* 危险色 - 警示红色 */
             
-            /* 中性色调 - 支持深色/浅色模式切换 */
-            --color-bg-primary: #ffffff;
-            --color-bg-secondary: #f8fafc;
-            --color-bg-tertiary: #f1f5f9;
-            --color-text-primary: #1e293b;
-            --color-text-secondary: #64748b;
-            --color-text-tertiary: #94a3b8;
-            --color-border-light: #e2e8f0;
-            --color-border-medium: #cbd5e1;
+            /* 中性色调 - 支持浅色模式 */
+            --color-bg-primary: #ffffff;       /* 主背景色 */
+            --color-bg-secondary: #f8fafc;     /* 次要背景色 */
+            --color-bg-tertiary: #f1f5f9;      /* 第三背景色 */
+            --color-text-primary: #1e293b;     /* 主文本色 */
+            --color-text-secondary: #64748b;   /* 次要文本色 */
+            --color-text-tertiary: #94a3b8;    /* 第三文本色 */
+            --color-border-light: #e2e8f0;     /* 浅色边框 */
+            --color-border-medium: #cbd5e1;    /* 中等色边框 */
             
-            /* 卡片视觉设计 */
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.15);
-            --card-border-radius: 20px;
+            /* 卡片视觉效果 */
+            --card-bg: rgba(255, 255, 255, 0.95);     /* 卡片背景 */
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);      /* 卡片阴影 */
+            --card-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.15); /* 悬停阴影 */
+            --card-border-radius: 20px;               /* 圆角大小 */
             
             /* 交互动效配置 */
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);    /* 平滑过渡 */
+            --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* 弹性过渡 */
             
-            /* 特殊组件配色 */
+            /* 渐变背景定义 */
             --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-accent));
             --gradient-success: linear-gradient(135deg, var(--color-success), #34d399);
             --gradient-warning: linear-gradient(135deg, var(--color-warning), #fbbf24);
             
             /* 终端仿真器配色 */
-            --terminal-bg: #0f172a;
-            --terminal-text: #e2e8f0;
-            --terminal-green: #10b981;
-            --terminal-blue: #3b82f6;
-            --terminal-yellow: #f59e0b;
-            --terminal-red: #ef4444;
+            --terminal-bg: #0f172a;            /* 终端背景 */
+            --terminal-text: #e2e8f0;          /* 终端文本 */
+            --terminal-green: #10b981;         /* 终端成功色 */
+            --terminal-blue: #3b82f6;          /* 终端信息色 */
+            --terminal-yellow: #f59e0b;        /* 终端警告色 */
+            --terminal-red: #ef4444;           /* 终端错误色 */
         }
-
-        /* 深色主题配色方案 - 增强对比度 */
+        
+        /* 
+        深色主题配色方案 
+        通过body.theme-dark类覆盖变量值
+        */
         body.theme-dark {
             --color-bg-primary: #0a0a0f;
             --color-bg-secondary: #121826;
@@ -74,19 +84,27 @@
             
             --terminal-bg: #020617;
         }
-
-        /* ==================== 全局基础样式重置 ==================== */
+        
+        /* 
+        ===============================================
+        全局基础样式重置
+        ===============================================
+        */
+        
+        /* 全局盒模型设置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
+        /* 根元素基础设置 */
         html {
-            scroll-behavior: smooth;
-            font-size: 16px;
+            scroll-behavior: smooth;   /* 平滑滚动 */
+            font-size: 16px;           /* 基准字体大小 */
         }
-
+        
+        /* 主体样式 */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
             background: var(--color-bg-primary);
@@ -96,8 +114,8 @@
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
-
-        /* 允许特定内容区域文本选择 */
+        
+        /* 允许特定区域文本选择 */
         .selectable-text,
         .document-content,
         .resource-description,
@@ -107,19 +125,32 @@
         code {
             user-select: text !important;
         }
-
-        /* ==================== 布局容器系统 ==================== */
+        
+        /* 
+        ===============================================
+        布局容器系统
+        ===============================================
+        */
+        
+        /* 主容器 - 限制最大宽度并提供边距 */
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 24px;
         }
-
+        
+        /* 区块内边距 */
         .section-padding {
             padding: 80px 0;
         }
-
-        /* ==================== 动画效果定义 ==================== */
+        
+        /* 
+        ===============================================
+        动画效果定义
+        ===============================================
+        */
+        
+        /* 淡入向上动画 */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -130,7 +161,8 @@
                 transform: translateY(0);
             }
         }
-
+        
+        /* 浮动动画 */
         @keyframes floatAnimation {
             0%, 100% {
                 transform: translateY(0);
@@ -139,7 +171,8 @@
                 transform: translateY(-10px);
             }
         }
-
+        
+        /* 闪烁动画 */
         @keyframes shimmer {
             0% {
                 background-position: -1000px 0;
@@ -148,7 +181,8 @@
                 background-position: 1000px 0;
             }
         }
-
+        
+        /* 渐变位移动画 */
         @keyframes gradientShift {
             0%, 100% {
                 background-position: 0% 50%;
@@ -157,7 +191,8 @@
                 background-position: 100% 50%;
             }
         }
-
+        
+        /* 脉动发光动画 */
         @keyframes pulseGlow {
             0%, 100% {
                 box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
@@ -166,7 +201,8 @@
                 box-shadow: 0 0 30px rgba(79, 70, 229, 0.6);
             }
         }
-
+        
+        /* 模态框淡入动画 */
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
@@ -177,8 +213,26 @@
                 transform: scale(1) translateY(0);
             }
         }
-
-        /* ==================== 顶部导航栏设计 ==================== */
+        
+        /* 旋转加载动画 */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 光标闪烁动画 */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* 
+        ===============================================
+        顶部导航栏设计
+        ===============================================
+        */
+        
+        /* 站点头部 */
         .site-header {
             position: sticky;
             top: 0;
@@ -188,11 +242,13 @@
             border-bottom: 1px solid var(--color-border-light);
             transition: var(--transition-smooth);
         }
-
+        
+        /* 深色主题头部背景 */
         body.theme-dark .site-header {
             background: rgba(10, 10, 15, 0.85);
         }
-
+        
+        /* 头部内容布局 */
         .header-content {
             display: flex;
             align-items: center;
@@ -200,8 +256,8 @@
             height: 80px;
             gap: 24px;
         }
-
-        /* 品牌标识设计 */
+        
+        /* 品牌标识 */
         .brand-logo {
             display: flex;
             align-items: center;
@@ -212,11 +268,12 @@
             font-size: 1.5rem;
             transition: var(--transition-smooth);
         }
-
+        
         .brand-logo:hover {
             transform: translateY(-2px);
         }
-
+        
+        /* 品牌图标 */
         .logo-icon {
             width: 40px;
             height: 40px;
@@ -229,14 +286,15 @@
             font-size: 1.2rem;
             animation: pulseGlow 2s infinite;
         }
-
-        /* 智能搜索框设计 */
+        
+        /* 搜索容器 */
         .search-container {
             flex: 1;
             max-width: 600px;
             position: relative;
         }
-
+        
+        /* 搜索包装器 */
         .search-wrapper {
             position: relative;
             background: var(--color-bg-secondary);
@@ -244,13 +302,15 @@
             border: 2px solid transparent;
             transition: var(--transition-smooth);
         }
-
+        
+        /* 搜索框聚焦状态 */
         .search-wrapper:focus-within {
             border-color: var(--color-primary);
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
             transform: translateY(-2px);
         }
-
+        
+        /* 搜索输入框 */
         .search-input {
             width: 100%;
             padding: 16px 24px 16px 52px;
@@ -260,11 +320,12 @@
             font-size: 1rem;
             outline: none;
         }
-
+        
         .search-input::placeholder {
             color: var(--color-text-tertiary);
         }
-
+        
+        /* 搜索图标 */
         .search-icon {
             position: absolute;
             left: 24px;
@@ -272,7 +333,8 @@
             transform: translateY(-50%);
             color: var(--color-text-tertiary);
         }
-
+        
+        /* 搜索按钮 */
         .search-button {
             position: absolute;
             right: 8px;
@@ -287,18 +349,19 @@
             cursor: pointer;
             transition: var(--transition-smooth);
         }
-
+        
         .search-button:hover {
             transform: translateY(-50%) scale(1.1);
         }
-
+        
         /* 用户控制面板 */
         .user-controls {
             display: flex;
             gap: 12px;
             align-items: center;
         }
-
+        
+        /* 控制按钮 */
         .control-button {
             width: 48px;
             height: 48px;
@@ -313,13 +376,14 @@
             transition: var(--transition-smooth);
             position: relative;
         }
-
+        
         .control-button:hover {
             background: var(--color-bg-tertiary);
             color: var(--color-primary);
             transform: translateY(-2px);
         }
-
+        
+        /* 通知徽章 */
         .notification-badge {
             position: absolute;
             top: -2px;
@@ -332,8 +396,13 @@
             min-width: 18px;
             text-align: center;
         }
-
-        /* ==================== 内容分类导航 ==================== */
+        
+        /* 
+        ===============================================
+        内容分类导航
+        ===============================================
+        */
+        
         .category-navigation {
             background: var(--color-bg-secondary);
             padding: 20px 0;
@@ -342,31 +411,36 @@
             z-index: 999;
             backdrop-filter: blur(10px);
         }
-
+        
+        /* 分类容器 */
         .category-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 24px;
         }
-
+        
+        /* 分类滚动容器 */
         .category-scroller {
             flex: 1;
             overflow-x: auto;
-            scrollbar-width: none;
+            scrollbar-width: none; /* Firefox */
             padding-bottom: 8px;
         }
-
+        
+        /* 隐藏滚动条（Webkit浏览器） */
         .category-scroller::-webkit-scrollbar {
             display: none;
         }
-
+        
+        /* 分类列表 */
         .category-list {
             display: flex;
             gap: 12px;
             list-style: none;
         }
-
+        
+        /* 分类项 */
         .category-item {
             padding: 10px 24px;
             background: var(--color-bg-primary);
@@ -379,27 +453,28 @@
             white-space: nowrap;
             transition: var(--transition-smooth);
         }
-
+        
         .category-item:hover {
             border-color: var(--color-primary);
             color: var(--color-primary);
             transform: translateY(-2px);
         }
-
+        
         .category-item.active {
             background: var(--gradient-primary);
             border-color: transparent;
             color: white;
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
-
-        /* 视图控制工具 - 移除视图切换，只保留排序 */
+        
+        /* 视图控制工具 */
         .view-controls {
             display: flex;
             gap: 12px;
             align-items: center;
         }
-
+        
+        /* 排序选择器 */
         .sort-selector {
             padding: 10px 16px;
             background: var(--color-bg-primary);
@@ -415,8 +490,13 @@
             background-size: 20px;
             padding-right: 40px;
         }
-
-        /* ==================== 数据统计面板 ==================== */
+        
+        /* 
+        ===============================================
+        数据统计面板
+        ===============================================
+        */
+        
         .stats-panel {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -424,7 +504,8 @@
             margin-bottom: 60px;
             animation: fadeInUp 0.6s ease-out;
         }
-
+        
+        /* 统计卡片 */
         .stat-card {
             background: var(--card-bg);
             padding: 32px;
@@ -435,12 +516,13 @@
             transition: var(--transition-smooth);
             backdrop-filter: blur(10px);
         }
-
+        
         .stat-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--card-shadow-hover);
         }
-
+        
+        /* 统计数值 */
         .stat-value {
             font-size: 3rem;
             font-weight: 800;
@@ -451,7 +533,8 @@
             margin-bottom: 12px;
             line-height: 1;
         }
-
+        
+        /* 统计标签 */
         .stat-label {
             font-size: 1rem;
             color: var(--color-text-secondary);
@@ -459,16 +542,22 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        /* ==================== 资源卡片网格系统 ==================== */
+        
+        /* 
+        ===============================================
+        资源卡片网格系统
+        ===============================================
+        */
+        
+        /* 资源网格容器 */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 30px;
             margin-bottom: 60px;
         }
-
-        /* 卡片通用样式 */
+        
+        /* 资源卡片通用样式 */
         .resource-card {
             background: var(--card-bg);
             border-radius: var(--card-border-radius);
@@ -481,13 +570,13 @@
             opacity: 0;
             animation-delay: calc(var(--card-index) * 0.05s);
         }
-
+        
         .resource-card:hover {
             transform: translateY(-12px);
             box-shadow: var(--card-shadow-hover);
             border-color: var(--color-primary);
         }
-
+        
         /* 卡片类型标识 */
         .card-type-indicator {
             position: absolute;
@@ -501,26 +590,27 @@
             letter-spacing: 0.5px;
             z-index: 2;
         }
-
+        
+        /* 不同类型卡片颜色 */
         .type-web {
             background: rgba(59, 130, 246, 0.15);
             color: var(--color-primary);
             border: 2px solid rgba(59, 130, 246, 0.3);
         }
-
+        
         .type-file {
             background: rgba(16, 185, 129, 0.15);
             color: var(--color-success);
             border: 2px solid rgba(16, 185, 129, 0.3);
         }
-
+        
         .type-software {
             background: rgba(139, 92, 246, 0.15);
             color: var(--color-accent);
             border: 2px solid rgba(139, 92, 246, 0.3);
         }
-
-        /* 卡片徽章系统 */
+        
+        /* 卡片徽章容器 */
         .card-badges {
             position: absolute;
             top: 20px;
@@ -530,7 +620,8 @@
             gap: 8px;
             z-index: 2;
         }
-
+        
+        /* 单个徽章样式 */
         .card-badge {
             padding: 6px 12px;
             border-radius: 12px;
@@ -540,29 +631,31 @@
             letter-spacing: 0.5px;
             backdrop-filter: blur(10px);
         }
-
+        
+        /* 徽章颜色变体 */
         .badge-hot {
             background: linear-gradient(135deg, #ef4444, #f97316);
             color: white;
         }
-
+        
         .badge-new {
             background: linear-gradient(135deg, #10b981, #34d399);
             color: white;
         }
-
+        
         .badge-recommended {
             background: linear-gradient(135deg, #f59e0b, #fbbf24);
             color: white;
         }
-
+        
         /* 卡片头图区域 */
         .card-header {
             height: 200px;
             position: relative;
             overflow: hidden;
         }
-
+        
+        /* 卡片渐变背景 */
         .card-gradient {
             position: absolute;
             top: 0;
@@ -571,19 +664,21 @@
             bottom: 0;
             opacity: 0.9;
         }
-
+        
+        /* 不同类型渐变 */
         .gradient-web {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
         }
-
+        
         .gradient-file {
             background: linear-gradient(135deg, #10b981, #34d399);
         }
-
+        
         .gradient-software {
             background: linear-gradient(135deg, #8b5cf6, #a855f7);
         }
-
+        
+        /* 卡片图标 */
         .card-icon {
             position: absolute;
             top: 50%;
@@ -594,17 +689,18 @@
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
             transition: var(--transition-smooth);
         }
-
+        
         .resource-card:hover .card-icon {
             transform: translate(-50%, -50%) scale(1.1) rotate(5deg);
         }
-
+        
         /* 卡片内容区域 */
         .card-content {
             padding: 32px;
             position: relative;
         }
-
+        
+        /* 卡片标题 */
         .card-title {
             font-size: 1.4rem;
             font-weight: 700;
@@ -614,11 +710,13 @@
             align-items: center;
             gap: 10px;
         }
-
+        
+        /* 标题图标 */
         .card-title-icon {
             color: var(--color-warning);
         }
-
+        
+        /* 卡片描述 */
         .card-description {
             color: var(--color-text-secondary);
             font-size: 1rem;
@@ -629,8 +727,8 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
-        /* 卡片元信息 */
+        
+        /* 卡片元信息区域 */
         .card-meta {
             display: flex;
             justify-content: space-between;
@@ -639,7 +737,8 @@
             border-top: 1px solid var(--color-border-light);
             margin-top: 24px;
         }
-
+        
+        /* 卡片分类标签 */
         .card-category {
             padding: 8px 16px;
             background: var(--color-bg-secondary);
@@ -648,12 +747,14 @@
             font-weight: 600;
             color: var(--color-text-tertiary);
         }
-
+        
+        /* 卡片操作按钮容器 */
         .card-actions {
             display: flex;
             gap: 8px;
         }
-
+        
+        /* 单个操作按钮 */
         .action-button {
             width: 40px;
             height: 40px;
@@ -667,35 +768,39 @@
             transition: var(--transition-smooth);
             color: var(--color-text-tertiary);
         }
-
+        
         .action-button:hover {
             border-color: var(--color-primary);
             color: var(--color-primary);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
-
+        
+        /* 收藏按钮激活状态 */
         .action-button.favorite.active {
             background: var(--color-danger);
             border-color: var(--color-danger);
             color: white;
         }
-
+        
+        /* 文档按钮样式 */
         .action-button.document {
             position: relative;
         }
-
+        
+        /* 预览按钮样式 */
         .action-button.preview {
             background: rgba(59, 130, 246, 0.1);
             border-color: rgba(59, 130, 246, 0.3);
             color: var(--color-primary);
         }
-
+        
         .action-button.preview:hover {
             background: var(--color-primary);
             color: white;
         }
-
+        
+        /* 文档指示器（小红点） */
         .document-indicator {
             position: absolute;
             top: -2px;
@@ -705,7 +810,7 @@
             background: var(--color-success);
             border-radius: 50%;
         }
-
+        
         /* 卡片主操作按钮 */
         .card-primary-action {
             display: flex;
@@ -723,81 +828,19 @@
             margin-top: 20px;
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
-
+        
         .card-primary-action:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
         }
-
-        /* ==================== 移动端列表视图 ==================== */
-        @media (max-width: 768px) {
-            .resources-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .resource-card.mobile-list-view {
-                display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                min-height: 180px;
-            }
-            
-            .resource-card.mobile-list-view .card-header {
-                width: 140px;
-                height: 180px;
-                flex-shrink: 0;
-            }
-            
-            .resource-card.mobile-list-view .card-content {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                padding: 20px;
-                min-height: 180px;
-            }
-            
-            .resource-card.mobile-list-view .card-description {
-                -webkit-line-clamp: 2;
-                margin-bottom: 16px;
-                flex: 1;
-            }
-            
-            .resource-card.mobile-list-view .card-meta {
-                margin-top: auto;
-                padding-top: 16px;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-            
-            .resource-card.mobile-list-view .card-category {
-                align-self: flex-start;
-            }
-            
-            .resource-card.mobile-list-view .card-actions {
-                justify-content: center;
-            }
-            
-            .resource-card.mobile-list-view .card-primary-action {
-                margin-top: 16px;
-                width: 100%;
-            }
-            
-            /* 调整卡片徽章位置适应移动端 */
-            .resource-card.mobile-list-view .card-badges {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            
-            .resource-card.mobile-list-view .card-badge {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-        }
-
-        /* ==================== 模态对话框系统 ==================== */
+        
+        /* 
+        ===============================================
+        模态对话框系统
+        ===============================================
+        */
+        
+        /* 模态框遮罩层 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -814,12 +857,14 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
         }
-
+        
+        /* 模态框激活状态 */
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
-
+        
+        /* 模态框对话框 */
         .modal-dialog {
             background: var(--card-bg);
             border-radius: var(--card-border-radius);
@@ -836,11 +881,11 @@
             backdrop-filter: blur(20px);
             animation: modalFadeIn 0.3s ease-out;
         }
-
+        
         .modal-overlay.active .modal-dialog {
             transform: translateY(0) scale(1);
         }
-
+        
         /* 模态框头部 */
         .modal-header {
             padding: 32px;
@@ -848,7 +893,8 @@
             color: white;
             position: relative;
         }
-
+        
+        /* 模态框标题 */
         .modal-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -856,7 +902,8 @@
             align-items: center;
             gap: 16px;
         }
-
+        
+        /* 模态框关闭按钮 */
         .modal-close {
             position: absolute;
             top: 32px;
@@ -874,33 +921,41 @@
             transition: var(--transition-smooth);
             font-size: 1.2rem;
         }
-
+        
         .modal-close:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: rotate(90deg);
         }
-
+        
         /* 模态框内容区 */
         .modal-body {
             padding: 32px;
             overflow-y: auto;
             max-height: 60vh;
         }
-
-        /* ==================== 资源详情模态框 ==================== */
+        
+        /* 
+        ===============================================
+        资源详情模态框
+        ===============================================
+        */
+        
+        /* 资源信息网格布局 */
         .resource-info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 24px;
             margin-bottom: 32px;
         }
-
+        
+        /* 信息项 */
         .info-item {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
-
+        
+        /* 信息标签 */
         .info-label {
             font-size: 0.9rem;
             color: var(--color-text-tertiary);
@@ -908,27 +963,30 @@
             align-items: center;
             gap: 8px;
         }
-
+        
+        /* 信息值 */
         .info-value {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--color-text-primary);
         }
-
+        
+        /* 标签容器 */
         .tag-container {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 8px;
         }
-
+        
         /* 详情操作按钮组 */
         .detail-actions {
             display: flex;
             gap: 16px;
             margin-top: 32px;
         }
-
+        
+        /* 详情按钮基础样式 */
         .detail-button {
             flex: 1;
             display: flex;
@@ -943,48 +1001,58 @@
             border: 2px solid transparent;
             font-size: 1rem;
         }
-
+        
+        /* 主要按钮样式 */
         .button-primary {
             background: var(--gradient-primary);
             color: white;
         }
-
+        
         .button-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
         }
-
+        
+        /* 次要按钮样式 */
         .button-secondary {
             background: transparent;
             color: var(--color-text-primary);
             border-color: var(--color-border-medium);
         }
-
+        
         .button-secondary:hover {
             border-color: var(--color-primary);
             color: var(--color-primary);
             transform: translateY(-3px);
         }
-
+        
+        /* 危险按钮样式 */
         .button-danger {
             background: transparent;
             color: var(--color-danger);
             border-color: var(--color-danger);
         }
-
+        
         .button-danger:hover {
             background: var(--color-danger);
             color: white;
             transform: translateY(-3px);
         }
-
-        /* ==================== 文档查看器模态框 ==================== */
+        
+        /* 
+        ===============================================
+        文档查看器模态框
+        ===============================================
+        */
+        
+        /* 文档标签页容器 */
         .document-tabs {
             display: flex;
             background: var(--color-bg-secondary);
             border-bottom: 1px solid var(--color-border-light);
         }
-
+        
+        /* 文档标签页 */
         .document-tab {
             padding: 20px 32px;
             background: transparent;
@@ -996,17 +1064,18 @@
             position: relative;
             font-weight: 600;
         }
-
+        
         .document-tab:hover {
             color: var(--color-primary);
             background: rgba(79, 70, 229, 0.05);
         }
-
+        
+        /* 激活状态的标签页 */
         .document-tab.active {
             color: var(--color-primary);
             background: var(--card-bg);
         }
-
+        
         .document-tab.active::after {
             content: '';
             position: absolute;
@@ -1016,55 +1085,57 @@
             height: 3px;
             background: var(--gradient-primary);
         }
-
+        
+        /* 文档查看器主体 */
         .document-viewer {
             flex: 1;
             overflow-y: auto;
             padding: 32px;
             background: var(--card-bg);
         }
-
-        /* 文档内容排版 */
+        
+        /* 文档内容排版样式 */
         .document-content {
             line-height: 1.8;
             color: var(--color-text-primary);
         }
-
+        
         .document-content h2 {
             font-size: 1.8rem;
             font-weight: 700;
             margin: 32px 0 16px;
             color: var(--color-primary);
         }
-
+        
         .document-content h3 {
             font-size: 1.4rem;
             font-weight: 600;
             margin: 24px 0 12px;
             color: var(--color-secondary);
         }
-
+        
         .document-content p {
             margin-bottom: 20px;
         }
-
+        
         .document-content ul,
         .document-content ol {
             margin: 16px 0 24px 32px;
         }
-
+        
         .document-content li {
             margin-bottom: 10px;
             position: relative;
         }
-
+        
         .document-content li::before {
             content: '›';
             color: var(--color-primary);
             position: absolute;
             left: -20px;
         }
-
+        
+        /* 代码块样式 */
         .document-content pre {
             background: var(--terminal-bg);
             color: var(--terminal-text);
@@ -1077,7 +1148,7 @@
             line-height: 1.6;
             border: 1px solid var(--color-border-light);
         }
-
+        
         .document-content code {
             background: var(--color-bg-tertiary);
             padding: 4px 8px;
@@ -1086,8 +1157,14 @@
             font-size: 0.9rem;
             border: 1px solid var(--color-border-light);
         }
-
-        /* ==================== 网站预览功能样式 ==================== */
+        
+        /* 
+        ===============================================
+        网站预览功能样式
+        ===============================================
+        */
+        
+        /* 网站预览容器 */
         .website-preview-container {
             width: 100%;
             height: 500px;
@@ -1097,14 +1174,16 @@
             background: var(--color-bg-primary);
             position: relative;
         }
-
+        
+        /* 预览iframe */
         .website-preview-frame {
             width: 100%;
             height: 100%;
             border: none;
             background: white;
         }
-
+        
+        /* 预览加载状态 */
         .preview-loading {
             position: absolute;
             top: 0;
@@ -1119,7 +1198,8 @@
             gap: 20px;
             z-index: 10;
         }
-
+        
+        /* 加载旋转动画 */
         .preview-loading-spinner {
             width: 50px;
             height: 50px;
@@ -1128,7 +1208,8 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
+        
+        /* 预览控制栏 */
         .preview-controls {
             display: flex;
             justify-content: space-between;
@@ -1140,7 +1221,8 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-
+        
+        /* 预览URL显示 */
         .preview-url-display {
             display: flex;
             align-items: center;
@@ -1155,19 +1237,22 @@
             flex: 1;
             min-width: 200px;
         }
-
+        
+        /* URL文本 */
         .preview-url-text {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-
+        
+        /* 预览控制按钮容器 */
         .preview-control-buttons {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
-
+        
+        /* 预览控制按钮 */
         .preview-control-button {
             padding: 10px 16px;
             background: var(--color-bg-primary);
@@ -1182,19 +1267,20 @@
             font-size: 0.9rem;
             font-weight: 600;
         }
-
+        
         .preview-control-button:hover {
             background: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ==================== 终端仿真器组件 ==================== */
+        
+        /* 
+        ===============================================
+        终端仿真器组件
+        ===============================================
+        */
+        
+        /* 终端仿真器容器 */
         .terminal-emulator {
             background: var(--terminal-bg);
             border-radius: var(--card-border-radius);
@@ -1204,7 +1290,8 @@
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(10px);
         }
-
+        
+        /* 终端头部 */
         .terminal-header {
             background: #1e293b;
             padding: 20px 32px;
@@ -1213,42 +1300,47 @@
             justify-content: space-between;
             border-bottom: 1px solid var(--color-border-light);
         }
-
+        
+        /* 终端控制按钮（红黄绿） */
         .terminal-controls {
             display: flex;
             gap: 12px;
         }
-
+        
+        /* 控制点样式 */
         .control-dot {
             width: 16px;
             height: 16px;
             border-radius: 50%;
             transition: var(--transition-smooth);
         }
-
+        
+        /* 不同控制点颜色 */
         .control-dot.close {
             background: #ef4444;
         }
-
+        
         .control-dot.minimize {
             background: #f59e0b;
         }
-
+        
         .control-dot.maximize {
             background: #10b981;
         }
-
+        
         .control-dot:hover {
             transform: scale(1.2);
         }
-
+        
+        /* 终端标题 */
         .terminal-title {
             font-family: 'Cascadia Code', monospace;
             color: var(--color-text-tertiary);
             font-size: 1rem;
             font-weight: 600;
         }
-
+        
+        /* 终端主体内容区 */
         .terminal-body {
             padding: 32px;
             font-family: 'Cascadia Code', 'JetBrains Mono', monospace;
@@ -1258,7 +1350,8 @@
             max-height: 600px;
             overflow-y: auto;
         }
-
+        
+        /* 终端行 */
         .terminal-line {
             margin-bottom: 16px;
             display: flex;
@@ -1267,40 +1360,45 @@
             animation: fadeInUp 0.3s ease-out forwards;
             opacity: 0;
         }
-
+        
+        /* 终端提示符 */
         .terminal-prompt {
             color: var(--terminal-green);
             font-weight: bold;
             flex-shrink: 0;
         }
-
+        
+        /* 终端命令 */
         .terminal-command {
             color: var(--terminal-blue);
             flex-shrink: 0;
             font-weight: 600;
         }
-
+        
+        /* 终端输出 */
         .terminal-output {
             color: var(--terminal-text);
             flex: 1;
         }
-
+        
+        /* 不同类型的终端输出 */
         .terminal-output.success {
             color: var(--terminal-green);
         }
-
+        
         .terminal-output.error {
             color: var(--terminal-red);
         }
-
+        
         .terminal-output.warning {
             color: var(--terminal-yellow);
         }
-
+        
         .terminal-output.info {
             color: var(--terminal-blue);
         }
-
+        
+        /* 光标闪烁动画 */
         .cursor {
             display: inline-block;
             width: 10px;
@@ -1310,22 +1408,30 @@
             vertical-align: middle;
             animation: blink 1s infinite;
         }
-
-        /* ==================== 网站页脚设计 ==================== */
+        
+        /* 
+        ===============================================
+        网站页脚设计
+        ===============================================
+        */
+        
+        /* 站点页脚 */
         .site-footer {
             background: var(--color-bg-secondary);
             padding: 80px 0 40px;
             margin-top: 80px;
             border-top: 1px solid var(--color-border-light);
         }
-
+        
+        /* 页脚内容网格布局 */
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 60px;
             margin-bottom: 60px;
         }
-
+        
+        /* 页脚区块标题 */
         .footer-section h3 {
             font-size: 1.3rem;
             margin-bottom: 24px;
@@ -1333,7 +1439,8 @@
             position: relative;
             padding-bottom: 16px;
         }
-
+        
+        /* 标题下划线装饰 */
         .footer-section h3::after {
             content: '';
             position: absolute;
@@ -1344,20 +1451,23 @@
             background: var(--gradient-primary);
             border-radius: 2px;
         }
-
+        
+        /* 页脚描述文本 */
         .footer-description {
             color: var(--color-text-secondary);
             line-height: 1.7;
         }
-
+        
+        /* 页脚链接列表 */
         .footer-links {
             list-style: none;
         }
-
+        
         .footer-links li {
             margin-bottom: 16px;
         }
-
+        
+        /* 页脚链接样式 */
         .footer-link {
             color: var(--color-text-secondary);
             text-decoration: none;
@@ -1366,12 +1476,13 @@
             align-items: center;
             gap: 12px;
         }
-
+        
         .footer-link:hover {
             color: var(--color-primary);
             transform: translateX(8px);
         }
-
+        
+        /* 版权信息区域 */
         .footer-copyright {
             text-align: center;
             padding-top: 40px;
@@ -1379,8 +1490,14 @@
             color: var(--color-text-tertiary);
             font-size: 0.95rem;
         }
-
-        /* ==================== 辅助功能组件 ==================== */
+        
+        /* 
+        ===============================================
+        辅助功能组件
+        ===============================================
+        */
+        
+        /* 返回顶部按钮 */
         .scroll-to-top {
             position: fixed;
             bottom: 32px;
@@ -1402,18 +1519,18 @@
             box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
             font-size: 1.2rem;
         }
-
+        
         .scroll-to-top.visible {
             opacity: 1;
             visibility: visible;
             animation: floatAnimation 3s ease-in-out infinite;
         }
-
+        
         .scroll-to-top:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 32px rgba(79, 70, 229, 0.4);
         }
-
+        
         /* 通知提示组件 */
         .notification-toast {
             position: fixed;
@@ -1433,12 +1550,13 @@
             border: 1px solid var(--color-border-light);
             overflow: hidden;
         }
-
+        
         .notification-toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
-
+        
+        /* 通知头部 */
         .toast-header {
             background: #1e293b;
             padding: 20px;
@@ -1447,14 +1565,16 @@
             justify-content: space-between;
             border-bottom: 1px solid var(--color-border-light);
         }
-
+        
+        /* 通知标题 */
         .toast-title {
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 600;
         }
-
+        
+        /* 通知关闭按钮 */
         .toast-close {
             background: transparent;
             border: none;
@@ -1463,44 +1583,53 @@
             font-size: 1.2rem;
             transition: var(--transition-smooth);
         }
-
+        
         .toast-close:hover {
             color: white;
             transform: rotate(90deg);
         }
-
+        
+        /* 通知内容区 */
         .toast-body {
             padding: 20px;
             line-height: 1.6;
         }
-
+        
         /* 空状态提示 */
         .empty-state {
             text-align: center;
             padding: 80px 32px;
             color: var(--color-text-tertiary);
         }
-
+        
+        /* 空状态图标 */
         .empty-state-icon {
             font-size: 4rem;
             color: var(--color-border-light);
             margin-bottom: 24px;
         }
-
+        
+        /* 空状态标题 */
         .empty-state-title {
             font-size: 1.8rem;
             margin-bottom: 16px;
             color: var(--color-text-secondary);
             font-weight: 700;
         }
-
+        
+        /* 空状态描述 */
         .empty-state-description {
             font-size: 1.1rem;
             max-width: 500px;
             margin: 0 auto;
         }
-
-        /* ==================== 分页导航组件 ==================== */
+        
+        /* 
+        ===============================================
+        分页导航组件
+        ===============================================
+        */
+        
         .pagination {
             display: flex;
             justify-content: center;
@@ -1508,7 +1637,8 @@
             gap: 12px;
             margin-top: 60px;
         }
-
+        
+        /* 分页按钮 */
         .page-button {
             min-width: 48px;
             height: 48px;
@@ -1524,27 +1654,34 @@
             align-items: center;
             justify-content: center;
         }
-
+        
         .page-button:hover {
             border-color: var(--color-primary);
             color: var(--color-primary);
             transform: translateY(-2px);
         }
-
+        
+        /* 激活状态的分页按钮 */
         .page-button.active {
             background: var(--gradient-primary);
             color: white;
             border-color: transparent;
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
-
+        
         .page-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
-
-        /* ==================== 响应式设计适配 ==================== */
+        
+        /* 
+        ===============================================
+        响应式设计适配
+        ===============================================
+        */
+        
+        /* 平板设备 (768px - 1024px) */
         @media (max-width: 1024px) {
             .container {
                 padding: 0 20px;
@@ -1559,7 +1696,8 @@
                 height: 180px;
             }
         }
-
+        
+        /* 移动设备 (最大768px) */
         @media (max-width: 768px) {
             .section-padding {
                 padding: 60px 0;
@@ -1615,7 +1753,8 @@
                 height: 300px;
             }
         }
-
+        
+        /* 小屏幕手机 (最大480px) */
         @media (max-width: 480px) {
             .container {
                 padding: 0 16px;
@@ -1659,8 +1798,14 @@
                 height: 250px;
             }
         }
-
-        /* ==================== 工具类辅助样式 ==================== */
+        
+        /* 
+        ===============================================
+        工具类辅助样式
+        ===============================================
+        */
+        
+        /* 视觉隐藏（屏幕阅读器可用） */
         .visually-hidden {
             position: absolute;
             width: 1px;
@@ -1672,59 +1817,73 @@
             white-space: nowrap;
             border: 0;
         }
-
+        
+        /* 渐变文本效果 */
         .text-gradient {
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
+        
+        /* 毛玻璃效果 */
         .glass-effect {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
+        
+        /* 隐藏元素 */
         .hidden {
             display: none !important;
         }
-
-        /* ==================== 自定义滚动条样式 ==================== */
+        
+        /* 
+        ===============================================
+        自定义滚动条样式
+        ===============================================
+        */
+        
         ::-webkit-scrollbar {
             width: 10px;
             height: 10px;
         }
-
+        
         ::-webkit-scrollbar-track {
             background: var(--color-bg-secondary);
             border-radius: 5px;
         }
-
+        
         ::-webkit-scrollbar-thumb {
             background: var(--color-border-medium);
             border-radius: 5px;
             border: 2px solid var(--color-bg-secondary);
         }
-
+        
         ::-webkit-scrollbar-thumb:hover {
             background: var(--color-primary);
         }
-
+        
         /* 深色主题滚动条优化 */
         body.theme-dark ::-webkit-scrollbar-track {
             background: var(--color-bg-tertiary);
         }
-
+        
         body.theme-dark ::-webkit-scrollbar-thumb {
             background: var(--color-border-light);
         }
-
+        
         body.theme-dark ::-webkit-scrollbar-thumb:hover {
             background: var(--color-primary);
         }
         
-        /* 预览错误状态样式 */
+        /* 
+        ===============================================
+        预览错误状态样式
+        ===============================================
+        */
+        
+        /* 预览错误状态容器 */
         .preview-error-state {
             display: flex;
             flex-direction: column;
@@ -1736,24 +1895,424 @@
             background: var(--color-bg-secondary);
             border-radius: 12px;
         }
-
+        
+        /* 预览错误图标 */
         .preview-error-icon {
             font-size: 4rem;
             color: var(--color-danger);
             margin-bottom: 20px;
         }
-
+        
+        /* 预览错误标题 */
         .preview-error-title {
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 12px;
             color: var(--color-text-primary);
         }
-
+        
+        /* 预览错误消息 */
         .preview-error-message {
             color: var(--color-text-secondary);
             margin-bottom: 24px;
             max-width: 400px;
+        }
+        
+        /* 
+        ===============================================
+        移动端优化样式
+        ===============================================
+        */
+        
+        @media (max-width: 768px) {
+            /* 移动端资源网格布局 */
+            .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            /* 移动端资源卡片布局 */
+            .resource-card {
+                display: flex;
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            /* 移动端头部优化 */
+            .header-content {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 15px 0;
+                gap: 12px;
+            }
+            
+            /* 搜索框移动端布局 */
+            .search-container {
+                order: 3;
+                width: 100%;
+                max-width: none;
+                margin-top: 10px;
+            }
+            
+            /* 品牌标识移动端优化 */
+            .brand-logo {
+                font-size: 1.2rem;
+            }
+            
+            /* 分类导航移动端优化 */
+            .category-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            
+            .category-list {
+                gap: 8px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .category-item {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            
+            /* 统计面板移动端优化 */
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+                min-height: 100px;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.85rem;
+            }
+            
+            /* 资源卡片移动端优化 */
+            .card-header {
+                height: 160px;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .card-title-icon {
+                align-self: flex-start;
+            }
+            
+            .card-description {
+                font-size: 0.95rem;
+                -webkit-line-clamp: 2;
+                line-height: 1.5;
+            }
+            
+            /* 卡片元信息移动端优化 */
+            .card-meta {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 20px;
+                margin-top: 20px;
+            }
+            
+            .card-category {
+                align-self: flex-start;
+            }
+            
+            .card-actions {
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .action-button {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            
+            /* 主操作按钮移动端优化 */
+            .card-primary-action {
+                margin-top: 16px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* 终端仿真器移动端优化 */
+            .terminal-emulator {
+                margin: 40px 0;
+            }
+            
+            .terminal-header {
+                padding: 15px 20px;
+            }
+            
+            .terminal-body {
+                padding: 20px;
+                max-height: 300px;
+            }
+            
+            .terminal-line {
+                font-size: 0.85rem;
+            }
+            
+            /* 模态框移动端优化 */
+            .modal-dialog {
+                width: 95%;
+                height: 90vh;
+                margin: 10px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+                max-height: 70vh;
+            }
+            
+            .modal-title {
+                font-size: 1.4rem;
+                flex-wrap: wrap;
+            }
+            
+            /* 资源详情网格移动端优化 */
+            .resource-info-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .detail-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .detail-button {
+                width: 100%;
+                padding: 14px 20px;
+            }
+            
+            /* 网站预览移动端优化 */
+            .website-preview-container {
+                height: 300px;
+            }
+            
+            .preview-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .preview-url-display {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .preview-control-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .preview-control-button {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            /* 页脚移动端优化 */
+            .site-footer {
+                padding: 40px 0 30px;
+                margin-top: 40px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .footer-copyright {
+                padding-top: 30px;
+                font-size: 0.85rem;
+            }
+            
+            /* 返回顶部按钮移动端优化 */
+            .scroll-to-top {
+                width: 48px;
+                height: 48px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1rem;
+            }
+            
+            /* 通知提示移动端优化 */
+            .notification-toast {
+                width: calc(100% - 20px);
+                left: 10px;
+                transform: translateX(0) translateY(100px);
+            }
+            
+            .toast-header, .toast-body {
+                padding: 15px;
+            }
+            
+            /* 卡片徽章移动端优化 */
+            .card-badges {
+                top: 10px;
+                left: 10px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            
+            .card-badge {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            
+            .card-type-indicator {
+                top: 10px;
+                right: 10px;
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* 小屏幕手机额外优化 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            .section-padding {
+                padding: 40px 0;
+            }
+            
+            .stats-panel {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 16px;
+            }
+            
+            .stat-value {
+                font-size: 1.8rem;
+            }
+            
+            .card-header {
+                height: 140px;
+            }
+            
+            .card-content {
+                padding: 16px;
+            }
+            
+            .card-title {
+                font-size: 1.1rem;
+            }
+            
+            .card-description {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 3;
+            }
+            
+            .action-button {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .terminal-body {
+                padding: 16px;
+                font-size: 0.85rem;
+            }
+            
+            .website-preview-container {
+                height: 250px;
+            }
+            
+            .modal-dialog {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            /* 控制按钮移动端触摸优化 */
+            .control-button {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .search-input {
+                padding: 14px 24px 14px 48px;
+                font-size: 0.95rem;
+            }
+            
+            .search-button {
+                width: 36px;
+                height: 36px;
+            }
+            
+            /* 分页控件移动端优化 */
+            .pagination {
+                gap: 8px;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+            
+            .page-button {
+                min-width: 40px;
+                height: 40px;
+                padding: 0 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* 确保文本可选中区域在移动端正常工作 */
+        @media (max-width: 768px) {
+            .selectable-text {
+                user-select: text;
+                -webkit-user-select: text;
+            }
+            
+            .document-content {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            
+            .document-content h2 {
+                font-size: 1.4rem;
+            }
+            
+            .document-content h3 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -1820,7 +2379,7 @@
                     </ul>
                 </div>
                 
-                <!-- 视图与排序控制 - 移除了视图切换，只保留排序 -->
+                <!-- 视图与排序控制 -->
                 <div class="view-controls">
                     <select class="sort-selector" id="sort-selector" aria-label="排序方式选择">
                         <option value="default">智能推荐</option>
@@ -1831,7 +2390,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+</nav>
     
     <!-- 页面主内容区域 -->
     <main>
@@ -2051,12 +2610,18 @@
 
     <!-- 应用主脚本 -->
     <script>
-        /* =================================================== */
-        /* 鸿渚资源库 - 主应用程序脚本 */
-        /* 版本: 2.9.0 | 最后更新: 2026-01-03 */
-        /* =================================================== */
-
-        // ==================== 应用配置常量 ====================
+        /* 
+        ===============================================
+        鸿渚资源库 - 主应用程序脚本
+        版本: 2.9.0 | 最后更新: 2026-01-03
+        ===============================================
+        */
+        
+        /*
+        ===============================================
+        应用配置常量
+        ===============================================
+        */
         const APP_CONFIG = {
             // 分页显示设置
             ITEMS_PER_PAGE: 12,
@@ -2067,10 +2632,10 @@
             
             // 本地存储键名
             STORAGE_KEYS: {
-                FAVORITES: 'hongzhu_favorites',
-                VIEW_MODE: 'hongzhu_view_mode',
-                COLOR_THEME: 'hongzhu_color_theme',
-                USER_SETTINGS: 'hongzhu_user_settings'
+                FAVORITES: 'hongzhu_favorites',          // 收藏资源存储键
+                VIEW_MODE: 'hongzhu_view_mode',          // 视图模式存储键
+                COLOR_THEME: 'hongzhu_color_theme',      // 主题颜色存储键
+                USER_SETTINGS: 'hongzhu_user_settings'   // 用户设置存储键
             },
             
             // 动画延迟配置
@@ -2087,7 +2652,11 @@
             PREVIEW_TIMEOUT: 15000           // 预览加载超时时间（毫秒）
         };
 
-        // ==================== 应用状态管理 ====================
+        /*
+        ===============================================
+        应用状态管理
+        ===============================================
+        */
         const APP_STATE = {
             // 当前页面状态
             currentPage: 1,                  // 当前页码
@@ -2113,7 +2682,11 @@
             currentPreviewUrl: null          // 当前预览的网站URL
         };
 
-        // ==================== 数据资源库 ====================
+        /*
+        ===============================================
+        数据资源库
+        ===============================================
+        */
         const RESOURCE_LIBRARY = {
             // 所有可用资源数据
             items: [
@@ -2597,7 +3170,11 @@
             }
         };
 
-        // ==================== DOM元素引用管理 ====================
+        /*
+        ===============================================
+        DOM元素引用管理
+        ===============================================
+        */
         const DOM_ELEMENTS = {
             // 页面结构元素
             pageLoader: document.getElementById('page-loader'),
@@ -2655,9 +3232,17 @@
             protectionConfirm: document.getElementById('protection-confirm')
         };
 
-        // ==================== 工具函数库 ====================
+        /*
+        ===============================================
+        工具函数库
+        ===============================================
+        */
         const UTILS = {
-            // 防抖函数优化性能
+            /*
+            防抖函数优化性能
+            参数：func - 要执行的函数，delay - 延迟时间（毫秒）
+            返回：防抖处理后的函数
+            */
             debounce: (func, delay) => {
                 let timeoutId;
                 return (...args) => {
@@ -2666,7 +3251,11 @@
                 };
             },
 
-            // 生成资源徽章HTML
+            /*
+            生成资源徽章HTML
+            参数：tags - 资源标签数组
+            返回：徽章HTML字符串
+            */
             generateBadgesHTML: (tags) => {
                 if (!tags || tags.length === 0) return '';
                 
@@ -2706,7 +3295,11 @@
                 }).join('');
             },
 
-            // 显示系统通知
+            /*
+            显示系统通知
+            参数：title - 通知标题，message - 通知内容，type - 通知类型（info/success/error/warning）
+            返回：无
+            */
             showNotification: (title, message, type = 'info') => {
                 DOM_ELEMENTS.toastTitle.textContent = title;
                 DOM_ELEMENTS.toastMessage.textContent = message;
@@ -2738,7 +3331,11 @@
                 }, APP_CONFIG.ANIMATION_DELAYS.NOTIFICATION_DURATION);
             },
 
-            // 更新收藏计数显示
+            /*
+            更新收藏计数显示
+            参数：无
+            返回：无
+            */
             updateFavoritesCount: () => {
                 const count = APP_STATE.favoriteResources.size;
                 DOM_ELEMENTS.favoritesCount.textContent = count;
@@ -2747,7 +3344,11 @@
                 DOM_ELEMENTS.favoritesCount.style.display = count > 0 ? 'block' : 'none';
             },
 
-            // 安全复制到剪贴板
+            /*
+            安全复制到剪贴板
+            参数：text - 要复制的文本
+            返回：Promise（复制成功/失败）
+            */
             copyToClipboard: async (text) => {
                 try {
                     await navigator.clipboard.writeText(text);
@@ -2766,7 +3367,11 @@
                 }
             },
 
-            // 格式化日期显示
+            /*
+            格式化日期显示
+            参数：dateString - 日期字符串
+            返回：格式化后的日期字符串
+            */
             formatDate: (dateString) => {
                 const date = new Date(dateString);
                 return date.toLocaleDateString('zh-CN', {
@@ -2776,17 +3381,29 @@
                 });
             },
 
-            // 生成唯一ID
+            /*
+            生成唯一ID
+            参数：无
+            返回：唯一ID字符串
+            */
             generateId: () => {
                 return Date.now().toString(36) + Math.random().toString(36).substr(2);
             },
 
-            // 检查是否是移动设备
+            /*
+            检查是否是移动设备
+            参数：无
+            返回：布尔值（是否为移动设备）
+            */
             isMobileDevice: () => {
                 return window.innerWidth <= 768;
             },
 
-            // 检查URL是否可在iframe中加载
+            /*
+            检查URL是否可在iframe中加载
+            参数：url - 要检查的URL
+            返回：布尔值（是否兼容iframe）
+            */
             checkIframeCompatibility: (url) => {
                 try {
                     const urlObj = new URL(url);
@@ -2807,9 +3424,17 @@
             }
         };
 
-        // ==================== 资源管理模块 ====================
+        /*
+        ===============================================
+        资源管理模块
+        ===============================================
+        */
         const RESOURCE_MANAGER = {
-            // 过滤当前显示的资源
+            /*
+            过滤当前显示的资源
+            参数：无
+            返回：无
+            */
             filterResources: () => {
                 let filtered = [...RESOURCE_LIBRARY.items];
 
@@ -2865,7 +3490,11 @@
                 APP_STATE.totalPages = Math.ceil(filtered.length / APP_CONFIG.ITEMS_PER_PAGE);
             },
 
-            // 渲染资源卡片到页面
+            /*
+            渲染资源卡片到页面
+            参数：无
+            返回：无
+            */
             renderResources: () => {
                 const startIndex = (APP_STATE.currentPage - 1) * APP_CONFIG.ITEMS_PER_PAGE;
                 const endIndex = startIndex + APP_CONFIG.ITEMS_PER_PAGE;
@@ -2897,7 +3526,11 @@
                 RESOURCE_MANAGER.updatePagination();
             },
 
-            // 创建单个资源卡片HTML
+            /*
+            创建单个资源卡片HTML
+            参数：resource - 资源对象，index - 索引值
+            返回：卡片DOM元素
+            */
             createResourceCard: (resource, index) => {
                 const isFavorite = APP_STATE.favoriteResources.has(resource.id);
                 const hasDocumentation = !!resource.documentationUrl;
@@ -3041,7 +3674,11 @@
                 return card;
             },
 
-            // 绑定卡片交互事件
+            /*
+            绑定卡片交互事件
+            参数：card - 卡片DOM元素，resource - 资源对象
+            返回：无
+            */
             bindCardEvents: (card, resource) => {
                 // 卡片点击事件
                 let clickTimer;
@@ -3119,7 +3756,11 @@
                 }
             },
 
-            // 更新分页控件
+            /*
+            更新分页控件
+            参数：无
+            返回：无
+            */
             updatePagination: () => {
                 if (APP_STATE.totalPages <= 1) {
                     DOM_ELEMENTS.paginationControls.classList.add('hidden');
@@ -3155,22 +3796,38 @@
                 DOM_ELEMENTS.pageNumbersContainer.innerHTML = pageHTML;
             },
 
-            // 过滤并重新渲染资源
+            /*
+            过滤并重新渲染资源
+            参数：无
+            返回：无
+            */
             filterAndRender: () => {
                 RESOURCE_MANAGER.filterResources();
                 RESOURCE_MANAGER.renderResources();
                 RESOURCE_MANAGER.updateStatistics();
             },
 
-            // 更新统计信息
+            /*
+            更新统计信息
+            参数：无
+            返回：无
+            */
             updateStatistics: () => {
                 DOM_ELEMENTS.totalResources.textContent = RESOURCE_LIBRARY.items.length;
             }
         };
 
-        // ==================== 用户界面控制模块 ====================
+        /*
+        ===============================================
+        用户界面控制模块
+        ===============================================
+        */
         const UI_CONTROLLER = {
-            // 初始化用户界面
+            /*
+            初始化用户界面
+            参数：无
+            返回：无
+            */
             initialize: () => {
                 UI_CONTROLLER.loadUserPreferences();
                 UI_CONTROLLER.renderTerminalLogs();
@@ -3179,7 +3836,11 @@
                 RESOURCE_MANAGER.filterAndRender();
             },
 
-            // 加载用户偏好设置
+            /*
+            加载用户偏好设置
+            参数：无
+            返回：无
+            */
             loadUserPreferences: () => {
                 // 加载主题设置
                 const savedTheme = localStorage.getItem(APP_CONFIG.STORAGE_KEYS.COLOR_THEME);
@@ -3212,7 +3873,11 @@
                 }
             },
 
-            // 渲染终端更新日志
+            /*
+            渲染终端更新日志
+            参数：无
+            返回：无
+            */
             renderTerminalLogs: () => {
                 let terminalHTML = '';
                 
@@ -3316,7 +3981,11 @@
                 }, 100);
             },
 
-            // 设置事件监听器
+            /*
+            设置事件监听器
+            参数：无
+            返回：无
+            */
             setupEventListeners: () => {
                 // 搜索功能
                 DOM_ELEMENTS.searchInput.addEventListener('input', 
@@ -3500,7 +4169,11 @@
                 }, 250));
             },
 
-            // 设置文档标签页切换
+            /*
+            设置文档标签页切换
+            参数：无
+            返回：无
+            */
             setupDocumentTabs: () => {
                 document.addEventListener('click', (e) => {
                     const tab = e.target.closest('.document-tab');
@@ -3510,7 +4183,11 @@
                 });
             },
 
-            // 内容保护设置
+            /*
+            内容保护设置
+            参数：无
+            返回：无
+            */
             setupContentProtection: () => {
                 // 右键点击保护
                 document.addEventListener('contextmenu', (e) => {
@@ -3552,12 +4229,20 @@
                 });
             },
 
-            // 显示保护提示
+            /*
+            显示保护提示
+            参数：无
+            返回：无
+            */
             showProtectionNotice: () => {
                 UI_CONTROLLER.openModal('protection-notice-modal');
             },
 
-            // 获取当前活动的模态框
+            /*
+            获取当前活动的模态框
+            参数：无
+            返回：模态框ID或null
+            */
             getActiveModal: () => {
                 const modals = ['resource-detail-modal', 'document-viewer-modal', 'website-preview-modal', 'protection-notice-modal'];
                 for (const modalId of modals) {
@@ -3569,21 +4254,33 @@
                 return null;
             },
 
-            // 搜索处理
+            /*
+            搜索处理
+            参数：无
+            返回：无
+            */
             handleSearch: () => {
                 APP_STATE.searchQuery = DOM_ELEMENTS.searchInput.value.trim().toLowerCase();
                 APP_STATE.currentPage = 1;
                 RESOURCE_MANAGER.filterAndRender();
             },
 
-            // 更新活动分类状态
+            /*
+            更新活动分类状态
+            参数：category - 分类名称
+            返回：无
+            */
             updateActiveCategory: (category) => {
                 document.querySelectorAll('.category-item').forEach(item => {
                     item.classList.toggle('active', item.dataset.category === category);
                 });
             },
 
-            // 切换主题模式
+            /*
+            切换主题模式
+            参数：无
+            返回：无
+            */
             toggleTheme: () => {
                 const isDark = document.body.classList.toggle('theme-dark');
                 UI_CONTROLLER.updateThemeIcon(isDark ? 'dark' : 'light');
@@ -3596,7 +4293,11 @@
                 );
             },
 
-            // 更新主题图标
+            /*
+            更新主题图标
+            参数：theme - 主题名称（'light' 或 'dark'）
+            返回：无
+            */
             updateThemeIcon: (theme) => {
                 const icon = DOM_ELEMENTS.themeToggle.querySelector('i');
                 if (icon) {
@@ -3604,7 +4305,11 @@
                 }
             },
 
-            // 滚动到资源区域
+            /*
+            滚动到资源区域
+            参数：无
+            返回：无
+            */
             scrollToResources: () => {
                 const resourcesSection = document.querySelector('.resources-grid');
                 if (resourcesSection) {
@@ -3615,7 +4320,11 @@
                 }
             },
 
-            // 打开模态框
+            /*
+            打开模态框
+            参数：modalId - 模态框ID
+            返回：无
+            */
             openModal: (modalId) => {
                 const modal = document.getElementById(modalId);
                 if (modal) {
@@ -3631,7 +4340,11 @@
                 }
             },
 
-            // 关闭模态框
+            /*
+            关闭模态框
+            参数：modalId - 模态框ID
+            返回：无
+            */
             closeModal: (modalId) => {
                 const modal = document.getElementById(modalId);
                 if (modal) {
@@ -3655,7 +4368,11 @@
                 }
             },
 
-            // 打开文档查看器
+            /*
+            打开文档查看器
+            参数：resourceId - 资源ID（可选）
+            返回：无
+            */
             openDocumentation: (resourceId = null) => {
                 if (resourceId) {
                     const resource = RESOURCE_LIBRARY.items.find(r => r.id === resourceId);
@@ -3672,7 +4389,11 @@
                 UI_CONTROLLER.openModal('document-viewer-modal');
             },
 
-            // 切换文档标签页
+            /*
+            切换文档标签页
+            参数：tabName - 标签页名称
+            返回：无
+            */
             switchDocumentTab: (tabName) => {
                 // 更新标签状态
                 document.querySelectorAll('.document-tab').forEach(tab => {
@@ -3695,7 +4416,11 @@
                 }
             },
 
-            // 设置预览功能事件
+            /*
+            设置预览功能事件
+            参数：无
+            返回：无
+            */
             setupPreviewEvents: () => {
                 const startPreview = document.getElementById('start-preview');
                 const websiteSelector = document.getElementById('website-selector');
@@ -3743,7 +4468,11 @@
                 }
             },
 
-            // 加载网站预览
+            /*
+            加载网站预览
+            参数：url - 网站URL，isRefresh - 是否刷新
+            返回：无
+            */
             loadWebsitePreview: (url, isRefresh = false) => {
                 APP_STATE.currentPreviewUrl = url;
                 
@@ -3777,7 +4506,11 @@
                 }
             },
 
-            // 打开网站预览模态框 - 修复后的通用版本
+            /*
+            打开网站预览模态框
+            参数：resource - 资源对象
+            返回：无
+            */
             openWebsitePreviewModal: (resource) => {
                 const previewTitle = document.getElementById('preview-modal-title');
                 const previewBody = document.getElementById('preview-modal-body');
@@ -3946,14 +4679,26 @@
             }
         };
 
-        // ==================== 应用主控制器 ====================
+        /*
+        ===============================================
+        应用主控制器
+        ===============================================
+        */
         const APP_CONTROLLER = {
-            // 初始化应用
+            /*
+            初始化应用
+            参数：无
+            返回：无
+            */
             initialize: () => {
                 UI_CONTROLLER.initialize();
             },
 
-            // 切换收藏状态
+            /*
+            切换收藏状态
+            参数：resourceId - 资源ID
+            返回：无
+            */
             toggleFavorite: (resourceId) => {
                 if (APP_STATE.favoriteResources.has(resourceId)) {
                     APP_STATE.favoriteResources.delete(resourceId);
@@ -3979,7 +4724,11 @@
                 }
             },
 
-            // 分享资源
+            /*
+            分享资源
+            参数：resourceId - 资源ID
+            返回：无
+            */
             shareResource: (resourceId) => {
                 const resource = RESOURCE_LIBRARY.items.find(r => r.id === resourceId);
                 if (!resource) return;
@@ -4002,7 +4751,11 @@
                 }
             },
 
-            // 跟踪资源访问
+            /*
+            跟踪资源访问
+            参数：resourceId - 资源ID
+            返回：无
+            */
             trackResourceVisit: (resourceId) => {
                 const resource = RESOURCE_LIBRARY.items.find(r => r.id === resourceId);
                 if (resource) {
@@ -4010,14 +4763,22 @@
                 }
             },
 
-            // 跳转到指定页面
+            /*
+            跳转到指定页面
+            参数：page - 页码
+            返回：无
+            */
             goToPage: (page) => {
                 APP_STATE.currentPage = page;
                 RESOURCE_MANAGER.filterAndRender();
                 UI_CONTROLLER.scrollToResources();
             },
 
-            // 打开资源详情
+            /*
+            打开资源详情
+            参数：resourceId - 资源ID
+            返回：无
+            */
             openResourceDetail: (resourceId) => {
                 const resource = RESOURCE_LIBRARY.items.find(r => r.id === resourceId);
                 if (!resource) return;
@@ -4096,12 +4857,20 @@
                 UI_CONTROLLER.openModal('resource-detail-modal');
             },
 
-            // 打开文档
+            /*
+            打开文档
+            参数：resourceId - 资源ID（可选）
+            返回：无
+            */
             openDocumentation: (resourceId = null) => {
                 UI_CONTROLLER.openDocumentation(resourceId);
             },
 
-            // 打开网站预览 - 修复后的通用版本
+            /*
+            打开网站预览
+            参数：resourceId - 资源ID
+            返回：无
+            */
             openWebsitePreview: (resourceId) => {
                 const resource = RESOURCE_LIBRARY.items.find(r => r.id === resourceId);
                 if (!resource) {
@@ -4121,7 +4890,11 @@
             }
         };
 
-        // ==================== 应用启动入口 ====================
+        /*
+        ===============================================
+        应用启动入口
+        ===============================================
+        */
         document.addEventListener('DOMContentLoaded', APP_CONTROLLER.initialize);
     </script>
 </body>
